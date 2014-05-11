@@ -43,7 +43,6 @@ Command.receive.verifyInput = function(d){
 	return d;
 }
 
-
 Command.send = function(text){
 	var pack = Command.send.parse(text);
 	if(pack) socket.emit('Command.send',pack); 
@@ -630,8 +629,10 @@ Command.list['email,activate'].doc = {
 	],
 }
 Command.list['team,join'] = function(key,name){
-	name = escape.user(name);
-	List.all[key].team = name;
+	if(name[0] === '@') return;	//reserved
+	
+	Actor.teamJoin(List.all[key],name);
+			
 	Chat.add(key, 'You are now in team "' + name + '".');
 }
 Command.list['team,join'].doc = {

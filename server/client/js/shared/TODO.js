@@ -4,6 +4,7 @@
 ==PRESDK==
 SKIPPED: trade, craft,db.filter, passive
 
+too many error => restart
 
 BUG: spawn monster in map that was deleted
 
@@ -20,11 +21,9 @@ exp+drop system like skillplot
 
 
 highscore
-s.teamForEach
 boss summon
 
-puush support
-
+team => same active quest
 
 trading is brokens
 

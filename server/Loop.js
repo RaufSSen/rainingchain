@@ -1,9 +1,11 @@
 Loop = function(){
+	Loop.error();
+	
 	try {
 	Loop.frame++;
 	Performance.loop();
 	Test.loop();
-   
+	
 	Collision.loop();
     Loop.bullet();
 	Loop.strike();
@@ -81,13 +83,18 @@ Loop.logOut = function(){
 	}
 }
 
-Loop.team = function(){
-	if(!Loop.interval(50)) return;
-	List.team = {};
-	for(var i in List.main){
-		var team = List.actor[i].team;
-		List.team[team] = List.team[team] || {};
-		List.team[team][i] = i;
+Loop.team = function(){	
+	if(!Loop.interval(500)) return;
+	for(var i in List.team){
+		if(List.team[i].$length() === 0) delete List.team[i]
+	}
+
+}
+
+Loop.error = function(){
+	ERROR.count = Math.max(--ERROR.count,0);
+	if(ERROR.count > 1000){
+		Server.reset();
 	}
 
 }

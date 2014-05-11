@@ -16,34 +16,36 @@ var updateItemDb = function (){
 		if(count < itemIdList.length){ 
 			count++;
 			updatePrice(itemIdList[count]);
+			exports.lastUpdate = Date.now();
 		} else {
 			count = 0;
-			exports.lastUpdate = Date.now();
 			clearInterval( interval );
 			if(exports.displayUpdate >= 1) INFO('Item Database Updated');
-			db.update('rscalc',{},{'$set':{item:itemDb,lastUpdate:Date.now()}},db.err);
+			//db.update('rscalc',{},{'$set':{item:itemDb,lastUpdate:Date.now()}},db.err);
 		}	
 	}, 5000);
 }
 
 
 var updatePrice = function (id){
-	if(idToObj[id].price === 0) return;
-	
-	var str = 'http://services.runescape.com/m=itemdb_rs/api/graph/' + id + '.json';
-	
-	request(str, function (e, res, body) {
-		try {
-			var price = JSON.parse(body).daily;
-			for(var i in price){ }
-			price = price[i];
-			
-			idToObj[id].price = price;
-			
-			if(exports.displayUpdate >= 2) INFO('Item: ' + idToName[id] + ' - New Price: ' + idToObj[id].price);
-			
-		} catch (err) { ERROR(3,str);}
-	});
+	try {
+		if(idToObj[id].price === 0) return;
+		
+		var str = 'http://services.runescape.com/m=itemdb_rs/api/graph/' + id + '.json';
+		
+		request(str, function (e, res, body) {
+			try {
+				var price = JSON.parse(body).daily;
+				for(var i in price){ }
+				price = price[i];
+				
+				idToObj[id].price = price;
+				
+				if(exports.displayUpdate >= 2) INFO('Item: ' + idToName[id] + ' - New Price: ' + idToObj[id].price);
+				
+			} catch (err) { ERROR(3,str);}
+		});
+	} catch (err) { ERROR(3,str);}
 }
 
 var parseExp = function (str){
@@ -57,10 +59,11 @@ var parseExp = function (str){
 		obj[apiSkillList[i]] = str[i][2];
 	}
 		
-	return JSON.stringify(obj);	
+	return JSON.stringify(obj);
+
 }
 Init.db.rscalc = function(){
-	
+	/*
 	db.findOne('rscalc',{},{},function(err,res){
 		if(err) return ERROR.err(err);
 		
@@ -73,6 +76,7 @@ Init.db.rscalc = function(){
 			} catch(err){ ERROR.err(err); }	
 		}
 	});
+	*/
 }
 
 

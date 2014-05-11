@@ -1,5 +1,6 @@
 eval('INFO = function(){ co' + 'nsole.log.apply(co' + 'nsole,arguments); }');
 ERROR = function(lvl){ 
+	ERROR.count++;
 	//1: fatal, reset server || 2: shouldnt happen || 3: warn, somewhat possible
 	if(lvl === undefined) lvl = 3;
 	
@@ -17,10 +18,11 @@ ERROR = function(lvl){
 	INFO(str);
 }
 ERROR.err = function(err){
+	ERROR.count++;
 	if(typeof err === 'object') INFO('\nMessage: ' + err.message + '\n' + err.stack)
 	else INFO('ERROR.err :: argument is not an object \n' + new Error().stack);
 }
-
+ERROR.count = 0;
 
 
 

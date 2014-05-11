@@ -214,8 +214,17 @@ q.event = {
 };	
 
 
+q.event.testest = function(key){
+	s.teamForEach(key,function(key){
+		return true;
+	},function(key){
+		s.teleport(key,'goblinLand','ek');
+	});
+}
 
-
+q.item['test'] = s.item('Potion','heal.pot',[
+	['Drink',q.event.testest,'Transform into an orc.'],
+]);
 
 q.item['potion'] = s.item('Potion','heal.pot',[
 	['Drink',q.event.itemPotion,'Transform into an orc.'],

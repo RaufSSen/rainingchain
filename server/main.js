@@ -1,7 +1,7 @@
 var db = requireDb();
 
 Db = {};
-List = {all:{},actor:{},bullet:{},strike:{},group:{},drop:{},map:{},main:{},socket:{},nameToKey:{},btn:{}};
+List = {all:{},actor:{},bullet:{},strike:{},group:{},drop:{},map:{},main:{},socket:{},nameToKey:{},btn:{},team:{}};
 
 
 

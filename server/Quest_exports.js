@@ -44,9 +44,11 @@ exports.init = function(version,questname){	//}
 	s.abandonQuest = function(key){
 		Quest.abandon(key,Q);
 	}
+	
 	s.completeQuest = function(key){
 		Quest.complete(key,Q);
 	}
+	
 	s.get = function(key,attr){
 		if(!List.main[key]) return;	//case enemy
 		var mq = List.main[key].quest[Q];		
@@ -73,6 +75,25 @@ exports.init = function(version,questname){	//}
 	s.setTimeout = function(key,name,time,func){
 		Actor.setTimeout(s.getAct(key),Q + '-' + name,time,func);	
 	};
+	
+	s.teamForEach = function(key,func,action){
+		var bool = true;
+		
+		var team = List.team[s.getAct(key).team];
+		
+		for(var i in team){
+			var teammate = s.getAct(i); if(!teammate){ ERROR(3,'no teammate'); continue; }
+			bool = bool && func(i);
+		}
+		
+		
+		if(bool && action){
+			for(var i in team)	action(i);
+		}
+		return bool;	
+	}
+	
+	
 	
 	s.chat = Chat.add;
 	s.question = Chat.question;
@@ -371,6 +392,7 @@ exports.init = function(version,questname){	//}
 		if(Quest.requirement.template[arguments[0]])
 			return Quest.requirement.template[arguments[0]](arguments[1],arguments[2],arguments[3],arguments[4]);	
 	}
+	
 	s.challenge = function(){
 		if(Quest.challenge.template[arguments[0]])
 			return Quest.challenge.template[arguments[0]](arguments[1],arguments[2],arguments[3],arguments[4]);	

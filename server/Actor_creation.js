@@ -330,9 +330,31 @@ Actor.remove = function(act){
 		if(!List.group[act.group]) return ERROR(3,'no group','name',act.name);
 		delete List.group[act.group].list[act.id];		//BUG
 	}
+	Actor.teamLeave(act);
+}
+
+Actor.teamJoin = function(act,name){
+	Actor.teamLeave(act);
+	
+	act.team = name;
+	
+	List.team[name] = List.team[name] || {};
+	
+	for(var i in List.team[name]){
+		Chat.add(i,act.name + ' joined your team.');
+	}
+	
+	List.team[name][act.id] = act.id;	
 }
 
 
+Actor.teamLeave = function(act){
+	if(!List.team[act.team]){ return; }	//normal if player loggin in
+	
+	delete List.team[act.team][act.id];
+	if(List.team[act.team].$length === 0) delete List.team[act.team];
+	
+}
 
 
 
