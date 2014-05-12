@@ -57,6 +57,12 @@ Cst.equip = {
 	Cst.isArmor = function(piece){
 		return Cst.equip.armor.piece.have(piece);
 	}
+	Cst.getPiece = function(txt){
+		return txt.split('-')[0];
+	}
+	Cst.getType = function(txt){
+		return txt.split('-')[1];
+	}
 })();
 
 Cst.skill = {

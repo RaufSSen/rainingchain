@@ -13,8 +13,6 @@ group
 
 tofix: summon
 
-exp+drop system like skillplot
-
 
 boss summon
 

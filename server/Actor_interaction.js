@@ -101,30 +101,27 @@ Actor.click.pushable = function(pusher,beingPushed){
 
 Actor.click.skillPlot = function(act,eid){	
 	var e = List.all[eid];
-	if(!e.skillPlot) return;
-	var type = e.skillPlot.type;
-	if(type === 'down'){
-		Chat.add(act.id,'This plot is down. Completing the quest ' + Db.quest[e.skillPlot.quest].name + ' will revive this plot.');
-		return;
-	}
-	var plot = Db.skillPlot[type];
+	if(!e.skillPlot) return ERROR(3,'not skillplot');
+	if(e.skillPlot.type === 'down')	return Chat.add(act.id,'This plot is down. You need to complete the quest ' + Db.quest[e.skillPlot.quest].name + ' to harvest this plot again.');
+	
+	var plot = Db.skillPlot[e.skillPlot.type];
 	
 	var key = act.id;
-	var main = List.main[key];
-	var inv = main.invList;
+	var inv = List.main[key].invList;
 	var lvl = act.skill.lvl[plot.skill];
 	
 	if(Collision.distancePtPt(act,e) > DIST) return TOOFAR(act.id);
 	if(!Itemlist.empty(inv,1)){ Chat.add(key,"Your inventory is full."); return;}
 	if(lvl < plot.lvl) {Chat.add(key,"You need at least level " + plot.lvl + ' ' + plot.skill.capitalize() + " to harvest this resource."); return;}
-	if(Math.random() > plot.chance(lvl)) {Chat.add(key,"You failed to harvest this resource."); return;}
+	if(!plot.getSuccess(lvl)) {Chat.add(key,"You failed to harvest this resource."); return;}
 	
 	var item = plot.item.random();
 	Itemlist.add(inv,item,1);
 	
-	main.quest[e.skillPlot.quest]._skillPlot[e.skillPlot.num] = 1;
+	List.main[key].quest[e.skillPlot.quest]._skillPlot[e.skillPlot.num] = 1;
 	
-	Chat.add(key,"You manage to harvest this resource.");
+	Chat.add(key,"You harvested the item: " + Db.item[item].name + '.');
+	Skill.addExp(key,plot.skill,plot.exp);
 	
 	Server.log(3,key,'harvest',item);
 }

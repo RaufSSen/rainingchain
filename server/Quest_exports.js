@@ -25,7 +25,7 @@ exports.init = function(version,questname){	//}
 		else return convertSetEvent(event);
 	}
 	var parseExtra = function(extra){
-		if(!extra) return {};
+		if(!extra) return {quest:Q};
 		if(extra.viewedIf) extra.viewedIf = parseViewedIf(extra.viewedIf);
 		extra.quest = Q;
 		return extra;
@@ -181,7 +181,9 @@ exports.init = function(version,questname){	//}
 		return success;
 	}
 	
-	
+	s.getTeam = function(key){	//TODO
+		
+	}
 
 	//Cutscene
 	s.cutscene = function(key,map,path){
@@ -375,6 +377,37 @@ exports.init = function(version,questname){	//}
 		
 		m.actor(spot,'loot',sprite + 'On',extraOn);
 	}
+	
+	
+	m.skillPlot = function(spot,type,num){
+		var plot = Db.skillPlot[type];
+		
+		//create 2 copy. if not harvest, view up tree. else view down
+		Actor.creation({'spot':spot,
+			"category":plot.category,"variant":plot.variant,"extra":{
+				skillPlot:{quest:Q,	num:num,type:type},
+				viewedIf:function(key,eid){
+					if(List.all[key].type !== 'player') return true;
+					var plot = List.all[eid].skillPlot;
+					return List.main[key].quest[plot.quest]._skillPlot[plot.num] == 0;			
+				}		
+			}
+		});
+
+		Actor.creation({'spot':spot,
+			"category":plot.category,"variant":"down","extra":{
+				skillPlot:{quest:Q,	num:num,type:'down'},
+				viewedIf:function(key,eid){
+					if(List.all[key].type !== 'player') return true;
+					var plot = List.all[eid].skillPlot;
+					return List.main[key].quest[plot.quest]._skillPlot[plot.num] == 1;			
+				},
+				
+			}
+		});
+	}
+	
+	
 	
 	//Boss
 	var b = s.boss = {};

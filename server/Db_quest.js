@@ -66,7 +66,10 @@ Quest.creation = function(q){
 	
 	//Variable
 	q.variable = Tk.useTemplate(Quest.template.variable(),q.variable);
-	for(var j in q.challenge) q.variable._challenge[j] = 0; 	//0:non-active, 1:active
+	for(var j in q.challenge){
+		q.variable._challenge[j] = 0; 	//0:non-active, 1:active
+		q.variable._challengeDone[j] = 0;
+	}
 	for(var j in q.requirement) q.variable._requirement += '0'; 	//0:non-met, 1:met
 	for(var j in q.highscore) q.variable._highscore[j] = null;
 	
@@ -203,7 +206,8 @@ Quest.template.variable = function(){
 		_active:0,
 		_deathCount:0,
 		_bonus:{
-			challenge:{passive:1,exp:1,item:1},
+			challengeDone:{passive:1,exp:1,item:1},
+			challenge:{passive:1,exp:1,item:1},	//only used so client can see, only hold success values
 			orb:{passive:1,exp:1,item:1},
 			cycle:{passive:1,exp:1,item:1},
 		},
@@ -213,6 +217,7 @@ Quest.template.variable = function(){
 		_skillPlot:[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
 		_orbAmount:0,
 		_highscore:{},
+		_enemyKilled:0,
 	};
 }
 
@@ -231,5 +236,22 @@ Quest.template.event = function(){
 		},
 	}
 }
+
+Quest.template.drop = function(){
+	return {
+		category:{},
+		getDropMod:function(amount,key){		//amount is _enemyKilled
+			return Math.min(1,100 / amount);	//below 100 => 1, at 200 => 1/2, 300 => 1/3	
+		},
+		plan:{},
+		getExp:function(mod,amount,key){	//mod is from getDropMod
+			return {};	
+		}
+	}
+}
+
+
+
+
 
 

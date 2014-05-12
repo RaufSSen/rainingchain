@@ -28,6 +28,10 @@ Cycle.day.passive = function(day){
 Cycle.day.quest = function(key){
 	var mq = List.main[key].quest;
 	for(var i in mq){
+		mq[i]._bonus.cycle.item = Math.max(mq[i]._bonus.cycle.item,1);	//incase lowered by completing it many times
+		mq[i]._bonus.cycle.exp = Math.max(mq[i]._bonus.cycle.exp,1);
+		mq[i]._bonus.cycle.passive = Math.max(mq[i]._bonus.cycle.passive,1);
+		
 		mq[i]._bonus.cycle.item += 0.02;
 		mq[i]._bonus.cycle.passive += 0.04;
 		mq[i]._bonus.cycle.exp += 0.08;

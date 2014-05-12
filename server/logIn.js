@@ -248,7 +248,7 @@ Save.main.compress = function(main){
 	for(var i in main.quest){
 		var mq = main.quest[i];
 		if(i !== main.questActive)
-			main.quest[i] = {
+			main.quest[i] = {	//what to save if not active
 				_rewardScore:mq._rewardScore,
 				_rewardPt:mq._rewardPt,
 				_complete:mq._complete,

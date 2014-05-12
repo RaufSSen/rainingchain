@@ -1,66 +1,42 @@
 var db = requireDb();
 
-Quest.reward = function(key,id){	//roll the perm stat bonus and check if last one was better	
-	var mq = List.main[key].quest[id];
+
+Quest.start = function(key,id){	//verification done in command
 	var q = Db.quest[id];
+	var mq = List.main[key].quest[id];
+	mq._active = 1;
+	List.main[key].questActive = id;
 	
-	var bonus = Quest.getBonus(key,id);
-	var reward = Quest.getReward(q,bonus);
+	if(q.event._start)	q.event._start(key);	
 	
-	if(mq._rewardScore === 0) mq._rewardScore = Math.pow(10,4*q.reward.passive.min/q.reward.passive.max);
-	mq._rewardScore += reward.passive;
-	
-	mq._rewardPt = Math.min(Math.log10(mq._rewardScore)/4,1) * q.reward.passive.max;
-	
-	Chat.add(key,"You total quest score is " + Tk.round(mq._rewardScore,1) + " equivalent to " + Tk.round(mq._rewardPt,3) + " passive point. Repeat the quest to improve your reward.");
-	Itemlist.add(key,reward.item);	//TOFIX test if space
-	Skill.addExp.bulk(key,reward.exp,false);
+	for(var i in mq._challenge){
+		if(mq._challenge[i]) q.challenge[i].on(key,id);
+	}
+	Quest.start.updateChallengeDoneBonus(key,id);
 }
 
-
-Quest.getBonus = function(key,id){
+Quest.start.updateChallengeDoneBonus = function(key,id){
 	var mq = List.main[key].quest[id];
 	var q = Db.quest[id];
-	var r = q.reward;
-	var b = mq._bonus;
+	var b = mq._bonus.challengeDone;
 	
-	var tmp = {
-		item:b.orb.item * b.cycle.item ,
-		exp:b.orb.exp * b.cycle.exp ,
-		passive:b.orb.passive * b.cycle.passive,
-	};
-	for(var i in mq._challenge){
-		if(!mq._challenge[i]) continue;
-		if(q.challenge[i].successIf(key)){
-			tmp.item *= q.challenge[i].bonus.success.item;
-			tmp.exp *= q.challenge[i].bonus.success.exp;
-			tmp.passive *= q.challenge[i].bonus.success.passive;
-		} else {
-			tmp.item *= q.challenge[i].bonus.failure.item;
-			tmp.exp *= q.challenge[i].bonus.failure.exp;
-			tmp.passive *= q.challenge[i].bonus.failure.passive;
-		}
+	b.item = 1;
+	b.exp = 1;
+	b.passive = 1;
+	
+	for(var i in mq._challengeDone){
+		if(!mq._challengeDone[i]) continue;
+		b.item *= q.challenge[i].bonus.perm.item;
+		b.exp *= q.challenge[i].bonus.perm.exp;
+		b.passive *= q.challenge[i].bonus.perm.passive;
 	}
 	
-	return tmp;
-}
-
-Quest.getReward = function(q,bonus){	//TODO item
-	var reward = Tk.deepClone(q.reward);
-	var tmp = {passive:0,item:{},exp:{}};
-	
-	tmp.passive = reward.passive.mod * bonus.passive;
-	
-	for(var i in reward.exp) tmp.exp[i] = reward.exp[i] * bonus.exp;
-	
-	return tmp;
-}
+}	
 
 
-
-
-Quest.updateHint = function(key,id){
-	if(Db.quest[id].event._hint) List.main[key].quest[id]._hint = Db.quest[id].event._hint(key);
+Quest.abandon = function(key,id){
+	if(Db.quest[id].event._abandon)	Db.quest[id].event._abandon(key);
+	Quest.reset(key,id,1);
 }
 
 Quest.complete = function(key,id){
@@ -74,10 +50,14 @@ Quest.complete = function(key,id){
 	
 	if(q.event._complete) q.event._complete(key); 
 	
+	mq._bonus.cycle.exp = Math.max(mq._bonus.cycle.exp-0.20,0);
+	mq._bonus.cycle.item = Math.max(mq._bonus.cycle.exp-0.20,0);
+	
 	Quest.reward(key,id);
 	Quest.reset(key,id);
 	Server.log(1,key,'Quest.complete',id);
 }
+
 Quest.complete.highscore = function(key,mq,q){
 	for(var i in q.highscore){
 		var score = q.highscore[i].getScore(key);
@@ -97,21 +77,108 @@ Quest.complete.highscore = function(key,mq,q){
 
 }
 
+Quest.complete.challenge = function(key,id){
+	var mq = List.main[key].quest[id];
+	var q = Db.quest[id];
+	
+	for(var i in mq._challenge){
+		if(!mq._challenge[i]) continue;
+		if(q.challenge[i].successIf(key)){	
+			if(!mq._challengeDone[i]){	//first time
+				mq._challengeDone[i] = 1;
+				Server.log(1,key,'Quest.complete.challenge',id,i);
+				sum += q.challenge[i].success
+			} else {
+			
+			}
+		}
+	}
+}
+
+
+
+Quest.reward = function(key,id){	//roll the perm stat bonus and check if last one was better	
+	var mq = List.main[key].quest[id];
+	var q = Db.quest[id];
+	
+	var bonus = Quest.getBonus(key,id);
+	var reward = Quest.getReward(q,bonus);
+	
+	if(mq._rewardScore === 0) mq._rewardScore = Math.pow(10,4*q.reward.passive.min/q.reward.passive.max);	//aka first time
+	mq._rewardScore += reward.passive;
+	
+	mq._rewardPt = Math.min(Math.log10(mq._rewardScore)/4,1) * q.reward.passive.max;
+	
+	Skill.addExp(key,reward.exp,false);
+	
+	Chat.add(key,"You total quest score is " + Tk.round(mq._rewardScore,1) + " equivalent to " + Tk.round(mq._rewardPt,3) + " passive point. Repeat the quest to improve your reward.");
+		
+}
+
+Quest.getBonus = function(key,id,includechallenge){
+	var mq = List.main[key].quest[id];
+	var q = Db.quest[id];
+	var r = q.reward;
+	var b = mq._bonus;
+	
+	var tmp = {
+		item:b.orb.item * b.cycle.item * b.challengeDone.item,
+		exp:b.orb.exp * b.cycle.exp * b.challengeDone.exp,
+		passive:b.orb.passive * b.challengeDone.passive,
+	};
+	
+	
+	
+	if(includechallenge !== false){
+		for(var i in mq._challenge){
+			if(!mq._challenge[i]) continue;
+			if(q.challenge[i].successIf(key)){
+				tmp.item *= q.challenge[i].bonus.success.item;
+				tmp.exp *= q.challenge[i].bonus.success.exp;
+				tmp.passive *= q.challenge[i].bonus.success.passive;
+			} else {
+				tmp.item *= q.challenge[i].bonus.failure.item;
+				tmp.exp *= q.challenge[i].bonus.failure.exp;
+				tmp.passive *= q.challenge[i].bonus.failure.passive;
+			}
+		}
+	}
+	return tmp;
+}
+
+
+Quest.getReward = function(q,bonus){	//TODO item? or not?
+	var reward = Tk.deepClone(q.reward);
+	var tmp = {passive:0,item:{},exp:{}};
+	
+	tmp.passive = reward.passive.mod * bonus.passive;
+	
+	for(var i in reward.exp) tmp.exp[i] = reward.exp[i] * bonus.exp;
+	
+	return tmp;
+}
+
+
+
+
+Quest.updateHint = function(key,id){
+	if(Db.quest[id].event._hint) List.main[key].quest[id]._hint = Db.quest[id].event._hint(key);
+}
 
 Quest.reset = function(key,qid,abandon){
 	var main = List.main[key];
 	var mq = main.quest[qid];
 	
 	var keep = ['_rewardScore','_rewardPt','_complete','_challengeDone'];
-	if(abandon) keep.push('_skillPlot');
+	if(abandon){ keep.push('_skillPlot'); keep.push('_enemyKilled'); }
 	var tmp = {};
 	for(var i in keep) tmp[keep[i]] = mq[keep[i]];
 	
 	
 	
 	for(var i in Db.quest[qid].item){
-		Itemlist.remove(main.invList,qid + '-' + i, 10000);
-		Itemlist.remove(main.bankList,qid + '-' + i, 10000);
+		Itemlist.remove(main.invList,qid + '-' + i, 100000);
+		Itemlist.remove(main.bankList,qid + '-' + i, 100000);
 	}
 	
 	for(var i in mq._challenge){
@@ -132,25 +199,6 @@ Quest.orb = function(key,quest,amount){	//when using orb on quest, only boost pa
 	mq._bonus.orb.passive = Craft.orb.upgrade.formula(mq._orbAmount);
 }
 
-
-Quest.start = function(key,id){	//verification done in command
-	var q = Db.quest[id];
-	var mq = List.main[key].quest[id];
-	mq._active = 1;
-	List.main[key].questActive = id;
-	
-	if(q.event._start)	q.event._start(key);	
-	
-	for(var i in mq._challenge){
-		if(mq._challenge[i]) q.challenge[i].on(key,id);
-	}
-	
-}
-
-Quest.abandon = function(key,id){
-	if(Db.quest[id].event._abandon)	Db.quest[id].event._abandon(key);
-	Quest.reset(key,id,1);
-}
 
 
 Quest.challenge = {};
@@ -209,16 +257,9 @@ Quest.challenge.template.speedrun = function(time,bonus){
 		},
 		timeLimit:time,
 		bonus:bonus || {
-			success:{
-				item:1.2,
-				passive:1.5,
-				exp:1.2,		
-			},	
-			failure:{
-				item:0.8,
-				passive:0.8,
-				exp:0.8,
-			}
+			success:{item:1.2,passive:1.5,exp:1.2},	
+			failure:{item:0.8,passive:0.8,exp:0.8},
+			perm:{item:1.02,passive:1.05,exp:1.02},	
 		},
 	}
 }
@@ -235,16 +276,9 @@ Quest.challenge.template.survivor = function(amount,bonus){
 		},
 		deathLimit:amount,
 		bonus:bonus || {
-			success:{
-				item:1.2,
-				passive:1.5,
-				exp:1.2,		
-			},	
-			failure:{
-				item:0.8,
-				passive:0.8,
-				exp:0.8,
-			}
+			success:{item:1.2,passive:1.5,exp:1.2},	
+			failure:{item:0.8,passive:0.8,exp:0.8},
+			perm:{item:1.02,passive:1.05,exp:1.02},	
 		},
 	}
 }
@@ -263,16 +297,9 @@ Quest.challenge.template.boost = function(boost,bonus){
 		successIf:function(key,qid){	return true;},
 		
 		bonus:bonus || {
-			success:{
-				item:1.2,
-				passive:1.5,
-				exp:1.2,		
-			},	
-			failure:{
-				item:0.8,
-				passive:0.8,
-				exp:0.8,
-			}
+			success:{item:1.2,passive:1.5,exp:1.2},	
+			failure:{item:0.8,passive:0.8,exp:0.8},
+			perm:{item:1.02,passive:1.05,exp:1.02},	
 		},
 	}
 }
@@ -291,7 +318,6 @@ Quest.requirement.update = function(key,id){
 	}
 	List.main[key].quest[id].requirement = temp;
 }
-
 
 Quest.requirement.template = {}
 
@@ -364,18 +390,11 @@ Quest.highscore.fetchRank = function(key,category,cb){
 	});
 }
 
-
 Quest.highscore.getQuest = function(str){
 	return str.split('-')[0];
 }
+
 Quest.highscore.getCategory = function(str){
 	return str.split('-')[1];
 }
 
-
-
-
-/*
-test = function(key){
-	Quest.highscore.fetchRank(key,'Qbtt-time',INFO);
-}*/

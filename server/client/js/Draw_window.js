@@ -960,23 +960,24 @@ Draw.window.quest.right = function(s,q,mq,hq){
 				'class="shadow" ' + 
 				'style="color:' + color + '" ' +
 				'onclick="Command.send(\'' + 'win,quest,toggleChallenge,' + q.id + ',' + i + '\')' + '" ' + 
-				'title="' + c.description + '"' +
+				'title="' + c.description + '"' +	//TOFIX, show perm + failure too
 				'>' + c.name + ' - (x' + c.bonus.success.passive + ')' +	//TOFIX only showing passive
 				'</span><br>';
 		}
 		str += '<br><br>';
 	}
 	
+	
 	//bonus
 	str += '<h2 class="u">Bonus:</h2>';
 	var b = mq._bonus;
-	var p = Tk.round(b.challenge.passive * b.orb.passive * b.cycle.passive,3);
-	var e = Tk.round(b.challenge.exp * b.orb.exp * b.cycle.exp,3);
-	var i = Tk.round(b.challenge.item * b.orb.item * b.cycle.item,3);
+	var p = Tk.round(b.challengeDone.passive * b.challenge.passive * b.orb.passive * b.cycle.passive,3);
+	var e = Tk.round(b.challengeDone.exp * b.challenge.exp * b.orb.exp * b.cycle.exp,3);
+	var i = Tk.round(b.challengeDone.item * b.challenge.item * b.orb.item * b.cycle.item,3);
 	
-	str += ' - Passive: <span title="' + Tk.round(b.challenge.passive,4) + '*' + Tk.round(b.orb.passive,4) + Tk.round(b.cycle.passive,4) + '"> x' + p + '</span><br>';
-	str += ' - Exp: <span title="' + Tk.round(b.challenge.exp,4) + '*' + Tk.round(b.orb.exp,4) + Tk.round(b.cycle.exp,4) + '"> x' + e + '</span><br>';
-	str += ' - Item: <span title="' + Tk.round(b.challenge.Item,4) + '*' + Tk.round(b.orb.Item,4) + Tk.round(b.cycle.Item,4) + '"> x' + i + '</span><br>';
+	str += ' - Passive: <span title="' + Tk.round(b.challengeDone.passive,4) + '*' + Tk.round(b.challenge.passive,4) + '*' + Tk.round(b.orb.passive,4) + '*' + Tk.round(b.cycle.passive,4) + '"> x' + p + '</span><br>';
+	str += ' - Exp: <span title="' + Tk.round(b.challengeDone.exp,4) + '*' + Tk.round(b.challenge.exp,4) + '*' + Tk.round(b.orb.exp,4) + '*' + Tk.round(b.cycle.exp,4) + '"> x' + e + '</span><br>';
+	str += ' - Item: <span title="' + Tk.round(b.challengeDone.item,4) + '*' + Tk.round(b.challenge.item,4) + '*' + Tk.round(b.orb.item,4) + '*' + Tk.round(b.cycle.item,4) + '"> x' + i + '</span><br>';
 	
 	hq.right.innerHTML = str;
 }

@@ -46,17 +46,34 @@ q.highscore = {
 
 };
 
-/*
+
+q.drop = {
+	category:{
+		'fish':1/2,
+		'regular':1/10,
+	},
+	getDropMod:function(amount){
+		return Math.min(1,100 / amount);	//below 100 => 1, at 200 => 1/2, 300 => 1/3	
+	},
+	plan:{
+		'melee-mace':1/2,
+		'amulet-ruby':1/2,
+		'melee-spear':1/100,
+	},
+	getExp:function(amount,key){
+		return {};	
+	}
+}
+
 q.challenge = {
 	speedrunner:s.challenge('speedrun','1:05:10.10'),
 };
 
 
 q.requirement = [
-	s.requirement('quest',"Qtest"),
-	s.requirement('skill',"melee",1)
+	//s.requirement('quest',"Qtest"),
+	//s.requirement('skill',"melee",1)
 ];
-*/
 
 
 q.variable = {
@@ -434,6 +451,8 @@ q.map.goblinLand = function(){
 	a.path = {blue:[{"x":1800,"y":5550},25,{"x":1700,"y":5300},50,{"x":1500,"y":5100},],};
 	
 	a.load = function(spot){
+		m.skillPlot(spot.e3,'tree-red',0);
+		
 		//Quest
 		m.actor(spot.n1,"npc","regular",{
 			name:'Ringo',

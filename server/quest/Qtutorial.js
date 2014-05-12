@@ -123,11 +123,11 @@ q.map.tutorial = function(){
 	};
 			
 	a.load = function(spot){
-		
-		SkillPlot.creation({'spot':spot.e,
+		/*	TOFIX use s.skillPlot
+		skill.creation({'spot':spot.e,
 			"quest":"Qtutorial",'num':0,"type":"treeRed"
 		});
-		
+		*/
 		
 		//grave
 		actor(spot.h,"waypoint","grave",{});

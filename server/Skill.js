@@ -1,21 +1,27 @@
 //Skill
 Skill = {};
-
-Skill.addExp = function(key,skill,amount,bonus){
-	var player = List.all[key];
-	var mod = bonus === false ? 1 : player.bonus.exp[skill];
-	amount = typeof amount !== 'function' ? amount : amount(player.skill.lvl[skill],key);
-	player.skill.exp[skill] += amount * mod;		
-	Skill.updateLvl(key,skill);
-	Server.log(2,key,'addExp',skill,amount);
+//TODO: same than itemlist
+Skill.addExp = function(key,skill,amount,bonus,globalmod){
+	if(typeof skill === 'object') Skill.addExp.action(key,skill,amount,bonus);
+	else {
+		var tmp = {}; tmp[skill] = amount || 0;
+		Skill.addExp.action(key,tmp,bonus,globalmod || 1);
+	} 
 }
 
 
-Skill.addExp.bulk = function(key,obj,bonus){
+
+Skill.addExp.action = function(key,obj,bonus,globalmod){
+	var player = List.all[key];
 	for(var i in obj){
-		Skill.addExp(key,i,obj[i],bonus);
+		var mod = globalmod * (bonus === false ? 1 : player.bonus.exp[i]);
+		var amount = typeof obj[i] === 'function' ? obj[i] : obj[i](player.skill.lvl[i],key);
+		player.skill.exp[i] += amount * mod;		
+		Skill.updateLvl(key,i);
+		Server.log(2,key,'addExp',i,amount);
 	}
 }
+
 
 Skill.updateLvl = function(key,sk){
 	var ps = List.all[key].skill;
@@ -85,14 +91,14 @@ Skill.getTotalLvl = function(key){
 
 
 Db.skillPlot = {
-	'treeRed':{
+	'tree-red':{
 		category:'tree',
 		variant:'red',
 		lvl:0,
 		skill:'woodcutting',
 		exp:100,
-		chance:function(lvl){
-			return 1;			
+		getSuccess:function(lvl){
+			return true;	
 		},
 		item:{
 			'wood-0':0.5,
@@ -102,44 +108,7 @@ Db.skillPlot = {
 }
 
 
-SkillPlot = {};
-SkillPlot.creation = function(data){	//spot, type, num, quest
-	var plot = Db.skillPlot[data.type];
-	
-	//create 2 copy. if not harvest, view up tree. else view down
-	var id = Actor.creation({'spot':data.spot,
-		"category":plot.category,"variant":plot.variant,"extra":{
-			skillPlot:{
-				quest:data.quest,
-				num:data.num,
-				type:data.type,
-			},
-			viewedIf:function(key,eid){
-				if(List.all[key].type !== 'player') return true;
-				var plot = List.all[eid].skillPlot;
-				return List.main[key].quest[plot.quest]._skillPlot[plot.num] == 0;			
-			}		
-		}
-	});
-	Db.quest[data.quest].skillPlot.push(id);
-	
-	Actor.creation({'spot':data.spot,
-		"category":plot.category,"variant":"down","extra":{
-			skillPlot:{
-				quest:data.quest,
-				num:data.num,
-				type:'down',
-			},
-			viewedIf:function(key,eid){
-				if(List.all[key].type !== 'player') return true;
-				var plot = List.all[eid].skillPlot;
-				return List.main[key].quest[plot.quest]._skillPlot[plot.num] == 1;			
-			},
-			
-		}
-	});
 
-}
 
 
 

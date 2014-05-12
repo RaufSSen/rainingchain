@@ -53,14 +53,12 @@ Actor.death.getKillers = function(act){
 	for(var i in act.damagedBy) if(!List.all[i]) delete act.damagedBy[i];
 
 	var tmp = Object.keys(act.damagedBy);	
-	if(!tmp.length) return [];
-	if(tmp.length === 1) return tmp;
 
-	var killer = null; var max = -1;
-	for(var i in act.damagedBy){
-		if(act.damagedBy[i] > max)	killer = i;
+	for(var i = tmp.length-1; i >= 0; i--){
+		if(!List.main[tmp[i]]) tmp.splice(i,1);	//remove non-player
 	}
-	return tmp.splice(tmp.indexOf(killer),1).unshift(killer);	//place main killer in [0]
+	return tmp;
+
 }
 
 Actor.death.npc = function(act,killers){
@@ -69,6 +67,8 @@ Actor.death.npc = function(act,killers){
 	if(act.deathEvent) for(var i in killers) act.deathEvent(killers[i],act,act.map); 
 	if(act.deathEventArray) act.deathEventArray(killers,act,act.map); 
 	
+	Actor.death.drop(act,killers);	//increase _enemyKilled here
+	Actor.death.exp(act,killers);
 	Actor.death.performAbility(act);				//custom death ability function
 	Activelist.clear(act);
 }
@@ -79,74 +79,59 @@ Actor.death.performAbility = function(act){
 	}
 }
 
-/*Actor.death.drop = function(act,killers){		//TOFIX toremove
-	return;	
-	var drop = act.drop;
-	
-	var quantity = (1 + drop.mod.quantity).mm(0); 
-	var quality = drop.mod.quality;
-	var rarity = drop.mod.rarity;
-	if(killers[0] && List.all[killers[0]]){ 
-		quantity += List.all[killers[0]].item.quantity; 
-		quality += List.all[killers[0]].item.quality; 	//only for plan
-		rarity += List.all[killers[0]].item.rarity; 		//only for plan
-	}
-	
-	//Category
-	var list = Drop.getCategoryList(drop.category,act.lvl,quantity);
-	
-	for(var i in list){
-		var item = list[i];
-		if(Math.random() < item.chance){	//quantity applied in Drop.getList
-			var killer = killers.random();
-			var amount = Math.round(item.amount[0] + Math.random()*(item.amount[1]-item.amount[0]));	
-			Drop.creation({'x':act.x,'y':act.y,'map':act.map,'item':item.name,'amount':amount,'timer':Drop.TIMER,'viewedIf':[killer]});			
-		}
-	}
-		
-	
-	//Plan
-	planLoop:
-	for(var i in drop.plan){
-		for(var j in drop.plan[i]){
-			
-			if(Math.pow(Math.random(),quantity)/5 < drop.plan[i][j]){
-				var randomKiller = killers.random();
-				
-				var id = Craft.equip({	//craft white
-					'rarity':rarity,
-					'quality':quality,
-					'piece':i,
-					'type':j,
-					'lvl':act.lvl,
-					'category':'equip',
-					'minAmount':0,
-					'maxAmount':0,
-				});
-			
-				Drop.creation({'x':act.x,'y':act.y,'map':act.map,'item':id,'amount':1,'timer':Drop.TIMER,'viewedIf':[killer]});	
-			}	
+Actor.death.drop = function(act,killers){		//TOFIX toremove
+	if(!act.quest) return;
+	for(var p in killers){
+		var key = killers[p];
 
-			if(Math.pow(Math.random(),quantity) < drop.plan[i][j]){
-				var randomKiller = killers.random();
-				
-				var id = Plan.creation({	//craft plan
-					'rarity':rarity,
-					'quality':quality,
-					'piece':i,
-					'type':j,
-					'lvl':act.lvl,
-					'category':'equip',
-				});
-			
-				Drop.creation({'x':act.x,'y':act.y,'map':act.map,'item':id,'amount':1,'timer':Drop.TIMER,'viewedIf':[killer]});	
-				break planLoop;
+		var drop = Db.quest[act.quest].drop;
+		var chanceMod = drop.getDropMod(List.main[key].quest[act.quest]._enemyKilled++,key);
+		
+		var quantity = List.all[key].item.quantity; 
+		var quality = List.all[key].item.quality; 	//only for plan
+		var rarity = List.all[key].item.rarity; 	//only for plan
+		
+		
+		
+		//Category
+		var list = Drop.getCategoryList(drop.category,act.lvl,quantity);
+		console.log(list);
+		
+		for(var i in list){
+			var item = list[i];
+			if(Math.random() < Math.probability(item.chance,chanceMod)){	//quantity applied in Drop.getList
+				var amount = Math.round(item.amount[0] + Math.random()*(item.amount[1]-item.amount[0]));	
+				Drop.creation({'x':act.x,'y':act.y,'map':act.map,'item':item.name,'amount':amount,'timer':Drop.TIMER,'viewedIf':[key]});			
 			}
+		}
+			
+		
+		//Plan
+		for(var i in drop.plan){
+			var random = Math.random();
+			var prob = Math.probability(drop.plan[i],chanceMod);
+			var type = '';
+			if(random/5 < prob) type = 'white'
+			else if(random < prob) type = 'regular';
+			else continue;
+			
+			var id = Plan.creation({	//craft plan
+				'rarity':rarity,
+				'quality':quality,
+				'piece':Cst.getPiece(i),
+				'type':Cst.getType(i),
+				'lvl':act.lvl,
+				'category':'equip',
+				'minAmount':type === 'white' ? 0 : undefined,
+				'maxAmount':type === 'white' ? 1 : undefined,
+			});
+		
+			Drop.creation({'x':act.x,'y':act.y,'map':act.map,'item':id,'amount':1,'timer':Drop.TIMER,'viewedIf':[key]});	
+			break;
 		}
 	}
 
 }
-*/
 
 Actor.death.respawn = function(act){	//for player
 	var rec = act.respawnLoc.recent;
@@ -164,4 +149,24 @@ Actor.death.respawn = function(act){	//for player
 	
 }
 //ts("Plan.creation({'rarity':0,'quality':0,'piece':'melee','lvl':10,'category':'equip',});")
+
+
+Actor.death.exp = function(act,killers){
+	if(!act.quest) return;
+	var q = Db.quest[act.quest].drop;
+	for(var i in killers){
+		var key = killers[i];
+		var amount = List.main[key].quest[act.quest]._enemyKilled;
+		var exp = q.getExp(q.getDropMod(amount,key),amount,key);
+		var mod = Math.pow(Math.max( (Actor.getCombatLevel(List.all[key]) + 5)/act.lvl , 1),2);	//if 5 less => 100%, if 10 less, lvl/lvl ^ 2
+		mod *= Quest.getBonus(key,act.quest,false).item;
+		Skill.addExp(key,exp,true,mod);
+	}
+}
+
+
+
+
+
+
 
