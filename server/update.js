@@ -88,7 +88,7 @@ Init.changeUpdate = function(){
 				{'array':['tradeList'],'filter':Change.send.convert.itemlist,'condition':(function(m){ return m.tradeList.toUpdate; })},
 				{'array':['optionList'],'filter':Change.send.convert.optionList},
 				
-				{'array':['temp']},
+				{'array':['selectInv']},
 			],
 			'slow':[
 				{'array':['social','list']},	

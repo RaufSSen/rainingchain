@@ -98,12 +98,9 @@ Button.reset = function(key){	//called when player clicks. used to remove popup
 		
 		for(var i in m.popupList)	m.popupList[i] = 0;
 		
-		for(var i in m.temp.reset){	//TOFIX only used for selectInv
-			if(--m.temp.reset[i] < 0){
-				delete m.temp[i];
-				delete m.temp.reset[i];
-			}
-		}
+		if(m.selectInv && --m.selectInv.count < 0) m.selectInv = '';
+		
+		
 	}
 	if(!SERVER){
 		if(!main.optionList || !main.optionList.count || --main.optionList.count < 0) main.optionList = null;

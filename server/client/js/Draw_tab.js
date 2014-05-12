@@ -174,8 +174,8 @@ Draw.tab.inventory = function (){ ctxrestore();
 			var numY = s.y + 5 + 50*Math.floor(i/amountX);
 			
 			var text = 'Use ' + main.invList[i][2];
-			// !(temp.selectInv && temp.reset && temp.reset.selectInv) ? 'Use ' + main.invList[i][0] : temp.selectInv.name + ' on ' + invList[i][0];
-			
+			if(main.selectInv) text = 'Use Orb on ' + main.invList[i][2];
+						
 			Button.creation(0,{
 				"rect":[numX,numX+32,numY,numY+32],
 				"left":{"func":Command.send,"param":['tab,inv,click,left,' + i]},

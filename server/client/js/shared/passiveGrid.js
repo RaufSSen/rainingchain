@@ -201,6 +201,9 @@ Passive.getUsablePt = function(key){
 	for(var i in mq) sum += mq[i]._rewardPt;
 	
 	sum += 5;		//TOFIX
+	
+	if(sum > 25)	sum = 25 + Math.pow(sum-25,0.8);	//diminushing returns
+	
 	return Math.floor(sum);
 }
 

@@ -14,7 +14,12 @@
 		<link rel="stylesheet" href="/css/login.css" type="text/css"/>
 		<link rel="stylesheet" href="/css/progress.css" type="text/css" />
 		
-		 
+		<script src="/js/shared/BISON.js"></script>
+		
+		<script src="/library/jquery.min.js"></script>
+		<script src="/library/jqueryui/js/jquery-ui-1.10.4.custom.min.js"></script>
+		<script type="text/javascript" src="/library/tooltipster/js/jquery.tooltipster.min.js"></script>
+		
 		<title>Raining Chain</title>
 	</head>
 	
@@ -30,12 +35,6 @@
 		Init.db = {};
 		</script>
 		
-		
-		<script src="/js/shared/BISON.js"></script>
-		
-		<script src="/library/jquery.min.js"></script>
-		<script src="/library/jqueryui/js/jquery-ui-1.10.4.custom.min.js"></script>
-
 		<script src="/js/shared/constant.js"></script>
 		<script src="/js/shared/customMod.js"></script>
 		<script src="/js/shared/Db_stat.js"></script>
@@ -257,7 +256,7 @@
 			<input type="submit" value="Submit" onclick="Chat.report()">
 		</div>
 		
-		<script>
+		<script>$(document).ready(function() {
 		/*Jquery 101:
 		$( "#myId" );	$( ".myClass" );	$( "input[name='first_name']" );
 		$( "div:visible" );
@@ -265,6 +264,8 @@
 		
 		$( document ).tooltip();
 		$( document ).tooltip('option','show',100);
+		
+		
 		
 		$( "#help" ).dialog({autoOpen: false,width: 1200});
 		$.get('/js/help.html').success(function(data){ $('#help').html(Init.help(data));});
@@ -297,7 +298,7 @@
 		});
 		$("#lg-username")[0].value = localStorage.getItem('username') || $("#lg-username")[0].value;
 		
-		var html = {
+		html = {
 			'chat':{'div': $("#chatBoxDiv")[0],'text': $("#chatBoxText")[0],'input': $("#chatBoxInput")[0]},
 			'pm':{'div':$("#pmBoxDiv")[0],'text':$("#pmBoxText")[0]},
 			'dialogue':{'div':$("#dialogueBoxDiv")[0],'text':$("#dialogueBoxText")[0]},
@@ -347,7 +348,9 @@
 		
 		
 		
-		</script>
+		
+		
+		});</script>
 		
 	</body>
 	<script type="text/javascript">var sc_project=9738829; var sc_invisible=0; var sc_security="f32083c8"; var scJsHost = (("https:" == document.location.protocol) ?"https://secure." : "http://www.");document.write("<sc"+"ript type='text/javascript' src='" +scJsHost+"statcounter.com/counter/counter.js'></"+"script>");</script><noscript><div class="statcounter"><a title="web analytics"href="http://statcounter.com/" target="_blank"><imgclass="statcounter"src="http://c.statcounter.com/9738829/0/f32083c8/0/"alt="web analytics"></a></div></noscript>

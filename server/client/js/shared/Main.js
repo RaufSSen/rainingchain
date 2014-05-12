@@ -128,8 +128,7 @@ Main.examine = function(main, type, id){
 }
 
 Main.selectInv = function(main,obj){
-	main.temp.selectInv = obj;
-	main.temp.reset.selectInv = 1;
+	main.selectInv = {count:1,data:obj};
 }
 
 Main.abilityModClick = function(main,id){

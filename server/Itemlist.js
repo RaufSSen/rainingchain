@@ -206,12 +206,10 @@ Itemlist.click.inventory = function(inv,side,slot,amount){
 	//No Window
 	var item = Db.item[inv.data[slot][0]];
 	if(side === 'left'){	
-		if(m.temp.selectInv){	//select inv
-			var array = [inv.data[slot][0]];
-			for(var i = List.main[key].temp.selectInv.param.length-1 ; i >= 0 ; i--){
-				array.unshift(List.main[key].temp.selectInv.param[i]); }
-				
-			applyFunc.key(key,List.main[key].temp.selectInv.func,array);
+		if(m.selectInv){	//select inv
+			var param = Tk.deepClone(m.selectInv.data.param);
+			param.push(inv.data[slot][0]);				
+			applyFunc.key(key,m.selectInv.data.func,param);
 			return;
 		}
 		var opt = item.option[0];

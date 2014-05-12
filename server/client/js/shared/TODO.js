@@ -7,7 +7,6 @@ SKIPPED: trade, craft,db.filter, passive
 
 BUG: spawn monster in map that was deleted
 
-change tooltip for the one bookmarked
 
 tip of the day below gameDiv
 group
@@ -31,8 +30,6 @@ save rs items price
 
 tooltip not disappearing
 
-main.temp = bad... only used for item on another item
-
 email if server is down	//http://nodejs.org/api/domain.html
 
 add ability with globalMod
@@ -49,10 +46,8 @@ BISON doesnt send dialogue if too close from npc? it returns undefined
 add more Skill.unlockableContent
 
 
-only preload maps used
 
-passive formula be diminshing returns
-
+change tooltip for the one bookmarked //not working? hide element and need to call function everytime new one created
 
 ===POST SDK===
 stat window
@@ -60,9 +55,8 @@ plan revamp: already know what min and max mods are
 custom look
 revamp a*
 
-hide quest in quest tab
 
-boss documentation
+boss documentation, req chal highscore
 customMod,
 
 fix pvp map
