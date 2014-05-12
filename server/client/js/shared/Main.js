@@ -105,12 +105,15 @@ Main.openWindow = function(main,name,param){
 		Quest.requirement.update(key,param);
 		Quest.updateHint(key,param);
 	}
-	if(name === 'trade'){
+	if(name === 'trade'){	//TOFIX BROKEN
 		var tradermain = List.main[param];
 		if(tradermain.windowList.trade || tradermain.windowList.bank) return Chat.add(key,'This player is busy.');
 		Main.closeAllWindow(tradermain);
 		main.windowList.trade = {'trader':param,'tradeList':tradermain.tradeList,'confirm':{'self':0,'other':0}};
 		tradermain.windowList.trade = {'trader':key,'tradeList':main.tradeList,'confirm':{'self':0,'other':0}};		
+	}
+	if(name === 'highscore'){	
+		main.windowList.highscore = param;
 	}
 }
 

@@ -96,7 +96,7 @@ Db.query.quest.challenge = function(info){	//dunno if good
 }	
 
 Db.query.highscore = function(d,cb){	//TOFIX temp
-	if(!Quest.highscore.list[d.id]) return;
+	if(!Db.highscore[d.id]) return;
 	
 	Quest.highscore.fetch(d.id,function(res){
 		Quest.highscore.fetchRank(d.key,d.id,function(res2){

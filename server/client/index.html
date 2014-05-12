@@ -200,7 +200,8 @@
 				</div>
 				
 				<div id="highscoreWinDiv"	class="posAbs"> 
-					<select id="highscoreWinSelect"></select>
+					<select class="selectHighscore" id="highscoreWinSelectQuest"></select>
+					<select class="selectHighscore" id="highscoreWinSelectCategory"></select>
 					<div id="highscoreWinTable" class="CSSTableGenerator posAbs" style="width:500px"></div>
 					
 				</div>
@@ -317,7 +318,8 @@
 						},	
 			'highscoreWin':{'div':$("#highscoreWin" + "Div")[0],
 						'table':$("#highscoreWin" + "Table")[0],
-						'template':$("#highscoreWin" + "Select")[0],
+						'selectQuest':$("#highscoreWin" + "SelectQuest")[0],
+						'selectCategory':$("#highscoreWin" + "SelectCategory")[0],
 						},	
 						
 			'win':{'div':$("#win" + "Div")[0],'title':$("#win" + "Title")[0]},	

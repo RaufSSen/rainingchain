@@ -39,6 +39,7 @@ require(serverPath + 'Actor_equip');
 require(serverPath + 'Actor_loop');
 require(serverPath + 'Actor_loop_ai');
 require(serverPath + 'Actor_creation');
+require(serverPath + 'Team');
 require(clientPath + 'Main');
 require(serverPath + 'Attack');
 require(serverPath + 'Attack_loop');

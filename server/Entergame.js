@@ -82,7 +82,7 @@ Load.enterGame.initData = function(key,player,main){
 	var q = {};	for(var i in Db.quest) if(Db.quest[i].visible) q[i] = Db.quest[i].name;
 	data.other.quest = q;
 	
-	var h = {}; for(var i in Quest.highscore.list) h[i] = Quest.highscore.list[i].name;
+	var h = {}; for(var i in Db.highscore) h[i] = Db.highscore[i].name;
 	data.other.highscore = h;
 	
 	return data;

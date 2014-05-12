@@ -197,9 +197,9 @@ Draw.tab.quest = function(){ ctxrestore();
 	var count = 0;
 	
 	var divX = 10;
-	var divX = 5;
+	var divY = 10;
 	var numX = s.x + divX;
-	var numY = s.y + divX;
+	var numY = s.y + divY;
 	var charY = 22;
 	var iconY = 40;
 	
@@ -234,6 +234,13 @@ Draw.tab.quest = function(){ ctxrestore();
 			
 		}
 	}
+	
+	Draw.icon('tab.quest',numX + 135,numY,24,{
+		"left":{"func":Command.send,"param":['win,open,highscore,' + Db.highscoreList.randomAttribute()]},
+		'text':'Open Highscore Window',
+	});
+	
+	
 }
 	
 Draw.tab.skill = function(){ ctxrestore();

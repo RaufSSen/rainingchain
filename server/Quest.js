@@ -66,6 +66,9 @@ Quest.updateHint = function(key,id){
 Quest.complete = function(key,id){
 	var mq = List.main[key].quest[id];
 	var q = Db.quest[id];
+	
+	Quest.complete.highscore(key,mq,q);
+	
 	Chat.add(key,"Congratulations! You have completed the quest \"" + q.name + '\"!');
 	mq._complete++;
 	
@@ -75,6 +78,25 @@ Quest.complete = function(key,id){
 	Quest.reset(key,id);
 	Server.log(1,key,'Quest.complete',id);
 }
+Quest.complete.highscore = function(key,mq,q){
+	for(var i in q.highscore){
+		var score = q.highscore[i].getScore(key);
+		if(!typeof score === 'number') continue;
+		if(mq._highscore[i] == null
+			|| (q.highscore[i].order === 'ascending' && score < mq._highscore[i])
+			|| (q.highscore[i].order === 'descending' && score > mq._highscore[i])){
+			mq._highscore[i] = score;
+			
+			var tmp = {'$set':{}};	tmp['$set'][q.highscore.id] = score;
+			
+			db.update('highscore',{username:List.all[key].username},tmp);
+			Chat.add(key,'New Highscore for ' + q.highscore[i].name + ': ' + Tk.round(score,5) + '.'); 
+		}
+	}
+
+
+}
+
 
 Quest.reset = function(key,qid,abandon){
 	var main = List.main[key];
@@ -126,8 +148,8 @@ Quest.start = function(key,id){	//verification done in command
 }
 
 Quest.abandon = function(key,id){
-	Quest.reset(key,id,1);
 	if(Db.quest[id].event._abandon)	Db.quest[id].event._abandon(key);
+	Quest.reset(key,id,1);
 }
 
 
@@ -330,7 +352,7 @@ Quest.highscore.fetchRank = function(key,category,cb){
 	var score = List.main[key].quest[Quest.highscore.getQuest(category)]._highscore[Quest.highscore.getCategory(category)];
 	
 	var tmp = {};
-	if(Quest.highscore.list[category].order === 'ascending') tmp[category] = {$lt: score || Cst.bigInt,$ne:null};
+	if(Db.highscore[category].order === 'ascending') tmp[category] = {$lt: score || Cst.bigInt,$ne:null};
 	else tmp[category] = {$gt: score || 0,$ne:null};
 	
 	db.count('highscore',tmp,function(err,result){	
@@ -342,7 +364,6 @@ Quest.highscore.fetchRank = function(key,category,cb){
 	});
 }
 
-Quest.highscore.list = {};
 
 Quest.highscore.getQuest = function(str){
 	return str.split('-')[0];

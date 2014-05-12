@@ -213,6 +213,7 @@ Command.list['win,close'].doc = {
 }
 Command.list['win,open'] = function(key,win,param0){
 	if(win === 'quest' && !Db.quest[param0]){ Chat.add(key,'Wrong Input'); return; }
+	if(win === 'highscore' && !Db.highscore[param0]){ Chat.add(key,'Wrong Input'); return; }
 	
 	Main.openWindow(List.main[key],win,param0);
 }
@@ -306,7 +307,7 @@ Command.list['win,quest,orb'].doc = {
 	],
 }
 
-Command.list['win,quest,start'] = function(key,id,amount){
+Command.list['win,quest,start'] = function(key,id){
 	var mq = List.main[key].quest[id];
 	if(!mq) return Chat.add(key,'Wrong Input.');
 	
@@ -315,6 +316,10 @@ Command.list['win,quest,start'] = function(key,id,amount){
 	
 	Quest.requirement.update(key,id);
 	for(var i in mq._requirement) if(mq._requirement[i] === '0') return Chat.add(key,'You do not meet the requirements to start this quest.');
+	
+	
+	if(!Team.testQuest(List.all[key],List.all[key].team,id)) return Chat.add(key,"You can't start this quest because one of your teammates already started another quest. Leave this team or start the same quest."); 
+	
 	
 	Quest.start(key,id);
 }
@@ -629,11 +634,9 @@ Command.list['email,activate'].doc = {
 	],
 }
 Command.list['team,join'] = function(key,name){
-	if(name[0] === '@') return;	//reserved
+	if(name[0] === '@' || name[0] === '!') return Chat.add(key,"You can't join this team.");	//reserved
 	
-	Actor.teamJoin(List.all[key],name);
-			
-	Chat.add(key, 'You are now in team "' + name + '".');
+	Team.join(List.all[key],name);
 }
 Command.list['team,join'].doc = {
 	'description':"Join a team.",
@@ -656,6 +659,17 @@ Command.list['team,tele'].doc = {
 	'description':"Teleport to a teammate.",
 	'help':1,'param':[
 		{type:'Letters',name:'Player Name',optional:0},
+	],
+}
+
+Command.list['team,leave'] = function(key){
+	Chat.add(key, 'You left your team.');
+	Team.join(List.all[key],'!TEMP-' + List.all[key].name);
+}
+Command.list['team,leave'].doc = {
+	'description':"Leave your team.",
+	'help':1,'param':[
+		
 	],
 }
 

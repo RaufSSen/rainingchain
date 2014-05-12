@@ -80,7 +80,8 @@ Actor.creation.boost = function(e){
 
 Actor.creation.db = function(cr){
 	var e = Tk.deepClone(Db.npc[cr.category][cr.variant]);
-	e.lvl = Actor.creation.lvl(List.map[cr.map].lvl,cr.lvl); 
+	if(!List.map[cr.map]){ ERROR(3,'map dont exist?',cr.map); }
+	else e.lvl = Actor.creation.lvl(List.map[cr.map].lvl,cr.lvl); 
 	
 	e.id = Math.randomId();
 	e.publicId = Math.randomId(6);
@@ -330,30 +331,7 @@ Actor.remove = function(act){
 		if(!List.group[act.group]) return ERROR(3,'no group','name',act.name);
 		delete List.group[act.group].list[act.id];		//BUG
 	}
-	Actor.teamLeave(act);
-}
-
-Actor.teamJoin = function(act,name){
-	Actor.teamLeave(act);
-	
-	act.team = name;
-	
-	List.team[name] = List.team[name] || {};
-	
-	for(var i in List.team[name]){
-		Chat.add(i,act.name + ' joined your team.');
-	}
-	
-	List.team[name][act.id] = act.id;	
-}
-
-
-Actor.teamLeave = function(act){
-	if(!List.team[act.team]){ return; }	//normal if player loggin in
-	
-	delete List.team[act.team][act.id];
-	if(List.team[act.team].$length === 0) delete List.team[act.team];
-	
+	Team.leave(act);
 }
 
 

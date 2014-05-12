@@ -1,5 +1,5 @@
 Loop = function(){
-	Loop.error();
+	if(Loop.error()) return;	//aka reset
 	
 	try {
 	Loop.frame++;
@@ -86,17 +86,18 @@ Loop.logOut = function(){
 Loop.team = function(){	
 	if(!Loop.interval(500)) return;
 	for(var i in List.team){
-		if(List.team[i].$length() === 0) delete List.team[i]
+		if(List.team[i].list.$length() === 0) delete List.team[i]
 	}
 
 }
 
 Loop.error = function(){
-	ERROR.count = Math.max(--ERROR.count,0);
+	ERROR.count = Math.max(ERROR.count - 0.1,0);
 	if(ERROR.count > 1000){
 		Server.reset();
+		ERROR.count = 0;
+		return true;
 	}
-
 }
 
 Activelist = {};	//Actor.loop.activeList is where the update happens

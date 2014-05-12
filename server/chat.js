@@ -77,7 +77,7 @@ Chat.receive.public = function(key,d){
 	for(var i in act.activeList)
 		if(List.main[i]) Chat.add(i,pack);
 		
-	for(var i in List.team[act.team])
+	for(var i in List.team[act.team].list)
 		if(List.main[i] && i !== key) Chat.add(i,pack);
 	
 }

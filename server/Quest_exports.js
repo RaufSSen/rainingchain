@@ -79,7 +79,7 @@ exports.init = function(version,questname){	//}
 	s.teamForEach = function(key,func,action){
 		var bool = true;
 		
-		var team = List.team[s.getAct(key).team];
+		var team = List.team[s.getAct(key).team].list;
 		
 		for(var i in team){
 			var teammate = s.getAct(i); if(!teammate){ ERROR(3,'no teammate'); continue; }
@@ -181,10 +181,7 @@ exports.init = function(version,questname){	//}
 		return success;
 	}
 	
-	s.getTeam = function(key){	//TODO
-		//for(var i in List.team[
 	
-	}
 
 	//Cutscene
 	s.cutscene = function(key,map,path){

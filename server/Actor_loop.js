@@ -45,6 +45,7 @@ Actor.loop = function(act){
 		Actor.loop.move(act);  	//move the actor
 	}
 	if(act.type === 'player'){
+		if(interval(2)) Actor.loop.bumper.death(act);
 		if(interval(6)) Actor.loop.ability.chargeClient(act);
 		if(interval(3)) Actor.loop.fall(act);						//test if fall
 		if(interval(25)) Actor.loop.friendList(act);   				//check if any change in friend list
@@ -274,6 +275,13 @@ Actor.loop.bumper = function(act){	//HOTSPOT
 			{x:Math.floor((act.x + act.bumperBox[i].x)/32),y:Math.floor((act.y + act.bumperBox[i].y)/32)}	//bit faster than PosMap
 		,act.map,act);
 	}
+	
+}
+
+Actor.loop.bumper.death = function(act){	//quick fix if manage to past thru wall
+	var bool = true;
+	for(var i in act.bumper) bool = bool && act.bumper[i];
+	if(bool) act.hp = -1;	
 }
 
 Actor.loop.fall = function(act){

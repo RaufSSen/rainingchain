@@ -195,7 +195,7 @@ Load = function (key,account,socket,cb){
 			
 			List.main[key] = main;
 			List.btn[key] = [];
-			Actor.teamJoin(player,player.team);
+			Team.join(player,player.team);
 			
 			//Main
 			Passive.updateBoost(key);

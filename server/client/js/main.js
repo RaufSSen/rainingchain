@@ -136,8 +136,15 @@ Init.game.other = function(data){
 	Db.highscoreList = data.other.highscore; //TOFIX
 	
 	var str = '';
-	for(var i in Db.highscoreList) str += '<option value="' + i + '">' + Db.highscoreList[i] + '</option>';
-	$("#highscoreWinSelect")[0].innerHTML = str;
+	for(var i in Db.questNameConvert) str += '<option value="' + i + '">' + Db.questNameConvert[i] + '</option>';
+	$("#highscoreWinSelectQuest")[0].innerHTML = str;
+	$(document).on('change','#highscoreWinSelectQuest',function(){
+		Draw.window.highscore.changeQuest();
+	});
+	
+	$(document).on('change','#highscoreWinSelectCategory',function(){
+		Command.send('win,open,highscore,' + this.value);
+	});
 	
 }
 Init.game.addCanvas = function(name,id,z){

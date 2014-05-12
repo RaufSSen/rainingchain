@@ -888,19 +888,17 @@ Draw.window.quest.info = function(s,q,mq,hq){
 
 Draw.window.quest.start = function(s,q,mq,hq){
 	
-	hq.start.style.left = 200 + 50 + s.dw/2 + 'px'; 
-	hq.start.style.top = -40 + 'px'; 
+	hq.start.style.left = 200 + 45 + s.dw/2 + 'px'; 
+	hq.start.style.top = -35 + 'px'; 
 	
 	hq.start.style.font = s.charY*1.5 + 'px Kelly Slab';
-	hq.start.style.width = 220 + 'px';
-	hq.start.style.height = s.charY*1.5*1.2 + 'px';
 	
 	if(!mq._active){
-		var second = $('<p class="u">Start Quest</p>')[0];
+		var second = $('<p class="u gradientBoxesWithOuterShadows" style="cursor: pointer;">Start Quest</p>')[0];
 		second.onclick = function(){ Command.send('win,quest,start,' + q.id); };
 		second.title = "Start this quest.";
 	} else {
-		var second = $('<p class="u">Abandon Quest</p>')[0];
+		var second = $('<p class="u gradientBoxesWithOuterShadows" style="cursor: pointer;">Abandon Quest</p>')[0];
 		second.onclick = function(){Command.send('win,quest,abandon,' + q.id);}
 		second.title = "Abandon this quest. You will lose your progression and be teleported to the starting location.";
 	}
@@ -1365,16 +1363,28 @@ Draw.window.highscore = function (){ ctxrestore();
 	hq.div.style.left = s.mx + 'px'; 
 	hq.div.style.top = s.my + 'px'; 
 	
+	//Select Quest
+	var rank = Db.query('highscore',main.windowList.highscore);
+	if(!rank) return;
+	
 	//Table
-	hq.table.style.left = 50 + 'px'; 
+	hq.table.style.left = 350 + 'px'; 
 	hq.table.style.top = 0 + 'px'; 
 	
 	var str = '<table>';
 	str += '<tr>';
-	str += '<td>Action</td>'
-	str += '<td>Key Id</td>'
-	str += '<td>Key Name</td>'
+	str += '<td>Rank</td>'
+	str += '<td>Name</td>'
+	str += '<td>Score</td>'
 	str += '</tr>';
+	
+	for(var i in rank){
+		str += '<tr>';
+		str += '<td>'+ rank[i].rank + '</td>'
+		str += '<td>'+ rank[i].username + '</td>'
+		str += '<td>'+ (rank[i].score || 0) +'</td>'
+		str += '</tr>';
+	}
 	str += '</table>';
 	
 	
@@ -1382,5 +1392,21 @@ Draw.window.highscore = function (){ ctxrestore();
 	
 	
 }
+
+Draw.window.highscore.changeQuest = function(){
+	var quest = $("#highscoreWinSelectQuest")[0].value;
+	
+	var str = '';
+	for(var i in Db.highscoreList){
+		if(!i.have(quest)) continue;
+		str += '<option value="' + i + '">' + Db.highscoreList[i] + '</option>';
+	}	
+	$("#highscoreWinSelectCategory")[0].innerHTML = str;
+}
+
+
+
+
+
 
 

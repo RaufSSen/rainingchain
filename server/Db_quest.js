@@ -1,4 +1,6 @@
 Db.quest = {};
+Db.highscore = {};
+
 var questList = [
 	//'Qtutorial',
 	//'Qopenbeta2',
@@ -72,8 +74,10 @@ Quest.creation = function(q){
 	q.event = Tk.useTemplate(Quest.template.event(),q.event);
 	
 	//Highscore
-	for(var j in q.highscore) Quest.highscore.list[q.id + '-' + j] = q.highscore[j];
-	
+	for(var j in q.highscore){
+		q.highscore[j].id = q.id + '-' + j;
+		Db.highscore[q.id + '-' + j] = q.highscore[j];
+	}
 	
 	
 	Db.dialogue[q.id] = {};
@@ -221,7 +225,6 @@ Quest.template.event = function(){
 		_signIn:null,
 		_hint:null,
 		_death:null,
-		_highscore:null,
 		_test:{
 			signIn:null,
 			firstSignIn:null,

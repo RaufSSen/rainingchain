@@ -19,7 +19,9 @@ q.variable = {
 	time:0,
 };
 q.highscore = {
-	time:{name:'Fastest Time',order:'ascending'},
+	time:{name:'Fastest Time',order:'ascending',getScore:function(key){
+		return s.get(key,'time');	
+	}},
 }
 
 var TARGETAMOUNT = 10;
@@ -53,11 +55,6 @@ q.event = {
 	_complete:function(key){
 		
 		
-	},
-	_highscore:function(key){
-		return {
-			time:s.get(key,'time'),		
-		};	
 	},
 	talkJenny:function(key){
 		if(!s.get(key,'_active')){ s.startQuest(key); return; }

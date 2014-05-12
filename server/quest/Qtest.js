@@ -7,6 +7,16 @@ q.variable = {
 	
 };
 
+q.highscore = {
+	'boab':{name:'Testaing',order:'descending',getScore:function(key){
+		return Math.round(Math.random()*10000);
+	}},
+	'baaa':{name:'Tesatinasdg',order:'descending',getScore:function(key){
+		return Math.round(Math.random()*10000);
+	}},
+
+};
+
 q.event = {
 	_start:function(key){
 		var act = s.getAct(key);

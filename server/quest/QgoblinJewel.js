@@ -36,11 +36,22 @@ q.reward = {
 	passive:{min:0.1,max:0.5,mod:10},
 };
 
-q.challenge = {
-	//speedrunner:s.challenge('speedrun','1:05:10.10'),
+q.highscore = {
+	'bob':{name:'Testing',order:'descending',getScore:function(key){
+		return Math.round(Math.random()*10000);
+	}},
+	'baa':{name:'Testinasdg',order:'descending',getScore:function(key){
+		return Math.round(Math.random()*10000);
+	}},
+
 };
 
 /*
+q.challenge = {
+	speedrunner:s.challenge('speedrun','1:05:10.10'),
+};
+
+
 q.requirement = [
 	s.requirement('quest',"Qtest"),
 	s.requirement('skill',"melee",1)

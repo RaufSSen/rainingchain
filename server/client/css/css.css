@@ -215,6 +215,12 @@ details details summary {
 }
 
 
+.selectHighscore {
+    font-size: 20px;
+    font-family: 'Averia Libre', cursive;
+}​
+
+
 /* Upload Mods */
 .fileUpload {
 	position: relative;

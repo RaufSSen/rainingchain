@@ -581,7 +581,7 @@ Draw.command = function(){
 Draw.setInnerHTML = function(el,str,name){
 	name = name || (new Error()).stack.split('\n    at ')[2];
 
-	if(Draw.old[name] !== str){	
+	if(Draw.old[name] !== str){
 		Draw.old[name] = str;
 		el.innerHTML = str;
 	}
