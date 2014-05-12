@@ -85,6 +85,8 @@ Load.enterGame.initData = function(key,player,main){
 	var h = {}; for(var i in Db.highscore) h[i] = Db.highscore[i].name;
 	data.other.highscore = h;
 	
+	data.other.infoDay = Load.enterGame.infoDay.random();
+	
 	return data;
 }
 
@@ -138,5 +140,30 @@ Load.enterGame.quest = function(key){
 	if(mq && Db.quest[mq].event._signIn)
 		Db.quest[mq].event._signIn(key);	
 }
+
+
+Load.enterGame.infoDay = [ //{
+	"If popup text doesn't disappear, press Esc.",
+	"Press Tab to reply to last player who PMed you.",
+	"Press Esc to remove current input in chat.",
+	"If someone is bothering you, add him to your mute list. ($mute,[name] or right-click his name in the chat.)",
+	"This game started off as a Flash game.",
+	"Coding for this game was done exclusively with Notepad++.",
+	"There are 3 modes for map instances: public, team and solo.",
+	"You can use any ability with any weapon. However, the damage will be decreased if they don't match well.",
+	"If you plan on sharing your Passive Build, don't forget that you can freeze the values to prevent popularity changes.",
+	"Every day, every quest receives a bonus to its rewards (stackable bonus). Completing the quest will reset this bonus.",
+	"You can only harvest Skill Plots once (ex: trees). To harvest it again, you need to complete the related quest. This is to prevent farming/grinding and botters.",
+	"Monsters give exp and items upon killing. However, the loot has diminishing returns. (The more you kill, the less likely you will get loot.) Completing the quest related to the enemies will reset the diminishing returns.",
+	"Levelling your combat stats will increase damage dealt and your defence. It will also allow you to wear better weapons and armors.",
+	"If you no longer need an equip, you can salvage it into shards that can be used to craft new better equips.",
+	
+	"In a regular game, random tips like this one are shown on loading screens. Unfortunately, this game has none so I needed to show them that way XD.",
+	"This game supports <a title=\"Puush is a 3rd party software that allows images and texts sharing instantly via a keyboard shortcut.\" href=\"http://puush.me/\" target=\"blank\">puush</a> links. Just copy paste the link in the chat and it will turn into a clickable link. By default, you can only click puush links from your friends.",
+	
+];//}
+
+
+
 
 

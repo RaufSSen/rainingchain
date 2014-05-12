@@ -130,10 +130,10 @@ Init.game.other = function(data){
 	Db.passiveGrid.height = 20;
 	Db.passiveGrid.width = 20;
 	
-	Db.questNameConvert = data.other.quest;	//TOFIX
+	Db.questNameConvert = data.other.quest;	//TOFIX crap name
 	
 	//highcore
-	Db.highscoreList = data.other.highscore; //TOFIX
+	Db.highscoreList = data.other.highscore; //TOFIX crap name
 	
 	var str = '';
 	for(var i in Db.questNameConvert) str += '<option value="' + i + '">' + Db.questNameConvert[i] + '</option>';
@@ -145,6 +145,13 @@ Init.game.other = function(data){
 	$(document).on('change','#highscoreWinSelectCategory',function(){
 		Command.send('win,open,highscore,' + this.value);
 	});
+	
+	
+	$("#infoDay")[0].innerHTML = 'Info of the day: ' + data.other.infoDay;
+	
+	setTimeout(function(){
+		$("#infoDay")[0].innerHTML = '';
+	},30000);
 	
 }
 Init.game.addCanvas = function(name,id,z){

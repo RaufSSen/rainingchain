@@ -7,8 +7,6 @@ SKIPPED: trade, craft,db.filter, passive
 
 BUG: spawn monster in map that was deleted
 
-
-tip of the day below gameDiv
 group
 
 
