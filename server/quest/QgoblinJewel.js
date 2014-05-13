@@ -49,8 +49,7 @@ q.highscore = {
 
 q.drop = {
 	category:{
-		'fish':1/2,
-		'regular':1/10,
+		'woodcutting':1,
 	},
 	getDropMod:function(amount){
 		return Math.min(1,100 / amount);	//below 100 => 1, at 200 => 1/2, 300 => 1/3	
@@ -461,7 +460,11 @@ q.map.goblinLand = function(){
 			nevermove:1,
 			dialogue:q.event.talkRingo,
 		});
-
+		
+		m.actorGroup(spot.n1,25*5,[
+			["slime","normal",2],
+		]);
+		
 		m.loot(spot.q1,'!haveFlower',q.event.getFlower,"flower");
 		
 		m.actorGroup(spot.e1,25*15,[
@@ -650,6 +653,7 @@ q.boss['test'] = function(){
 		'dmg':{'main':50,'ratio':{'melee':1,'range':1,'magic':1,'fire':1,'cold':1,'lightning':1}},	
 		'spd':20
 	};
+	
 	boss.attack['offcenter'] = {
 		'type':"bullet",'angle':20,'amount':5, 'aim': 0,
 		'objImg':{'name':"fireball",'sizeMod':1},
@@ -672,13 +676,19 @@ q.boss['test'] = function(){
 		'objImg':{'name':"fireball",'sizeMod':0.75},
 		'dmg':{'main':25,'ratio':{'melee':1,'range':1,'magic':1,'fire':1,'cold':1,'lightning':1}},	
 	};
+	boss.attack['summon'] = {
+		'category':'bat',
+		'variant':'normal',
+		'amount':2,
+	};
+	
 	
 	boss.phase[0] = {
 		loop:function(boss){
 			if(!s.interval(25)) return;	//every 25 frame
 			
 			if(Math.random() < 0.5){
-				b.attack(boss,'center',{'angle':boss.angle});			
+				b.attack(boss,'center',{'angle':boss.angle});
 			} else {
 				b.attack(boss,'offcenter',{'angle':boss.angle+boss.opening});
 				b.attack(boss,'offcenter',{'angle':boss.angle-boss.opening});			
@@ -695,6 +705,8 @@ q.boss['test'] = function(){
 			b.attack(boss,'slowfire',{'angle':boss.angle});
 		},
 		transitionIn:function(boss){
+			if(Boss.getSummon(boss,'summon').length < 10) b.attack(boss,'summon');
+			
 			b.attack(boss,'360fire',{'angle':boss.angle});
 			boss.noattack = 25;
 			s.setSprite(boss.parent,'',2);

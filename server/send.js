@@ -41,7 +41,7 @@ Change.send = function(){
 			
 			if(typeof anim.target === 'string'){	//aka target is an obj
 				var targ = List.all[anim.target];
-				if(!targ){ ERROR(2,'noact'); continue; }
+				if(!targ){ ERROR(2,'noact'); continue; }	//possible if summoned died
 				if(player.id === targ.id || Activelist.test(player,targ)){
 					sa.a.push(Change.send.init.anim(anim)); 
 				}

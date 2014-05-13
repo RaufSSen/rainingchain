@@ -1,12 +1,15 @@
 Init.db.drop = function(){
 	Db.drop = {
-		'regular':[
-			{lvl:0,chance:0.5,table:[
-				{name:'wood',amount:[1],chance:1/4},
-				{name:'logs',amount:[1,5],chance:1/4},
+		'woodcutting':[
+			{lvl:0,chance:1/10,table:[	//chance is real chance, chance in quest is mod that should be 1 normally
+				{name:'leaf-0',amount:[1],chance:1},	//chance here is relative and is ratioed
+				{name:'wood-0',amount:[1],chance:1},
 			]},
-			{lvl:10,chance:0.5,table:[
-				{name:'gold',amount:[1,10],chance:1/4},
+			{lvl:20,chance:1/10,table:[
+				{name:'leaf-0',amount:[1],chance:1},
+				{name:'wood-0',amount:[1],chance:1},
+				{name:'leaf-20',amount:[1],chance:4},
+				{name:'wood-20',amount:[1],chance:4},
 			]},
 		],
 		
@@ -24,10 +27,15 @@ Init.db.drop = function(){
 
 	for(var i in Db.drop){
 		for(var j in Db.drop[i]){
+			var sum = 0;
 			for(var k in Db.drop[i][j].table){
 				var d = Db.drop[i][j].table[k];				
 				if(!d.amount) d.amount = [1,1];
 				if(d.amount.length === 1) d.amount[1] = d.amount[0];
+				sum += d.chance;
+			}
+			for(var k in Db.drop[i][j].table){
+				Db.drop[i][j].table[k].chance /= sum;
 			}
 		}
 	}
@@ -61,6 +69,8 @@ Drop.getCategoryList = function(drop,lvl,qu){
 }
 
 Drop.creation = function(d){
+	if(!Db.item[d.item]){ ERROR(3,'drop with non-existing item',drop.item); d.item = 'bugged-drop'; }
+	
 	Map.convertSpot(d);
 	
 	var drop = Tk.useTemplate(Drop.template(),d);
@@ -71,6 +81,8 @@ Drop.creation = function(d){
 	List.drop[drop.id] = drop;
 	List.all[drop.id] = drop;
 	Map.enter(drop);
+	
+	
 }
 
 

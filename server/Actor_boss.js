@@ -17,9 +17,9 @@ Boss.creation = function(name,e){
 }
 
 
-Boss.creation.model = function(boss){
+Boss.creation.model = function(boss){	
 	for(var i in boss.attack){
-		if(boss.attack.dmg)	boss.attack.dmg.ratio = Tk.convertRatio(boss.attack.dmg.ratio);
+		if(boss.attack[i].dmg)	boss.attack[i].dmg.ratio = Tk.convertRatio(boss.attack[i].dmg.ratio);
 	}
 }
 
@@ -43,11 +43,22 @@ Boss.template = function(){
 }
 
 Boss.attack = function(boss,name,extra){
-	if(boss.noattack < 0)
-		Combat.attack.simple(List.actor[boss.parent],boss.attack[name],extra);
+	if(boss.noattack > 0) return;
+	
+	if(boss.attack[name].category)	Combat.summon.simple(boss.parent,boss.attack[name],extra);	
+	else Combat.attack.simple(List.actor[boss.parent],boss.attack[name],extra);
+ 
 }
 
-
+Boss.getSummon = function(boss,nameofattack){
+	var attack = boss.attack[nameofattack];
+	var name = attack.category + '-' + attack.variant;
+	if(!List.actor[boss.parent].summon[name]) return [];
+	var tmp = [];
+	for(var i in List.actor[boss.parent].summon[name].child)
+		tmp.push(List.actor[boss.parent].summon[name].child[i]);
+	return tmp;
+}
 
 
 Boss.loop = function(boss){

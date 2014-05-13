@@ -31,7 +31,6 @@ Actor.creation.template = function(){
 
 Actor.creation.group = function(gr,el){
    	if(Test.no.npc) return;
-	
 	/*
 	gr: x y map respawn
     el: [  {'amount':1,"category":"slime","variant":"Big","lvl":0,'modAmount':1},
@@ -51,6 +50,10 @@ Actor.creation.group = function(gr,el){
 		'list':{},              //hold enemies
 		'respawn':gr.respawn,   //time before respawn when all monster dead
 	};
+	if(!List.map[gr.map]){ return ERROR(3,'spawn group but map not exist');}
+	List.map[gr.map].list.group[id] = id;
+	
+	
 	
 	for(var i in el){
 		var amount = el[i].amount || 1;

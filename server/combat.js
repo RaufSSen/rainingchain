@@ -91,8 +91,8 @@ Combat.attack.perform = function(player,atk,extra){   //extra used for stuff lik
 Combat.attack.simple = function(player,attack,extra){
 	Combat.attack(player,Tk.useTemplate(Attack.template(),attack),Tk.deepClone(extra));	
 }
-	
-Combat.summon = function(key,action,enemy){		//action:{name,maxChild,time,distance} || {"category":"slime","variant":"Big","lvl":0,'amount':1,"modAmount":0}
+
+Combat.summon = function(key,action,enemy){	//action:{name,maxChild,time,distance} || {"category":"slime","variant":"Big","lvl":0,'amount':1,"modAmount":0}
 	var name = action.name || Math.randomId();
 	action.maxChild = action.maxChild || 1;
 	action.time = action.time || Cst.bigInt;
@@ -113,15 +113,18 @@ Combat.summon = function(key,action,enemy){		//action:{name,maxChild,time,distan
 		defMod = master.bonus.summon.def;
 	}
 	
-	if(action.maxChild*amountMod < master.summon[name].child.$length()){ if(List.main[key]) Chat.add(key,"You already have maximum minions.");  return}	
-	var param0 = {'x':master.x,'y':master.y,'map':master.map};
+	if(action.maxChild*amountMod < master.summon[name].child.$length()){ if(List.main[key]) Chat.add(key,"You already have maximum amount of minions.");  return}	
+	var param0 = {'x':master.x,'y':master.y,'map':master.map,'respawn':false};
 	
 	enemy = Tk.deepClone(Tk.arrayfy(enemy));
 	for(var i in enemy){
-		enemy[i].extra = {
+		enemy[i].extra = {	//assume no other extra
 			'summoned':{'father':master.id,'time':action.time*timeMod,'distance':action.distance},
-			'targetIf':'summoned',
-			'damageIf':'summoned',
+			'targetIf':master.targetIf,	//'summoned',
+			'damageIf':master.damageIf, //'summoned',
+			'damagedIf':master.damagedIf, //'summoned',
+			'viewedIf':master.viewedIf, //'summoned',
+			'awareNpc':1,
 		}
 	}
 	var childList = Actor.creation.group(param0,enemy);
@@ -135,6 +138,18 @@ Combat.summon = function(key,action,enemy){		//action:{name,maxChild,time,distan
 		if(defMod !== 1){ Actor.boost(List.all[cid],{'name':'summon','stat':'globalDef','time':action.time*timeMod,'type':'*','amount':defMod}); }
 	
 	}	
+}
+
+Combat.summon.simple = function(key,attack){
+	var action = {
+		name:attack.category + '-' + attack.variant,
+		maxChild:1000,
+		time:Cst.bigInt,
+		distance:500,
+	}
+	
+	Combat.summon(key,action,Tk.deepClone(attack));	
+
 }
 
 Combat.boost = function(key,info){

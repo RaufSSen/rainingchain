@@ -200,9 +200,14 @@ Group.loop = function(g){
 		if(!e.dead){ alldead = false; }
 	}
 	
-	if(alldead && --g.respawn <= 0){ //aka all dead
-		Actor.creation.group(g.param[0],g.param[1]); 		
-		Group.remove(g);
+	if(alldead){	
+		if(g.respawn === false){ return Group.remove(g); } 
+	
+		if(--g.respawn <= 0){	//= false if no respawn like summon
+			Actor.creation.group(g.param[0],g.param[1]); 	
+			Group.remove(g);
+		}
+		
 	}	
 
 }

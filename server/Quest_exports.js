@@ -222,7 +222,16 @@ exports.init = function(version,questname){	//}
 
 	s.actor = function(key,spot,cat,variant,extra,lvl){
 		var spot = s.getSpot(s.getAct(key).map,Q,spot);
-		Actor.creation({spot:spot,category:cat,variant:variant,lvl:lvl || 0,extra:parseExtra(extra)});
+		return Actor.creation({spot:spot,category:cat,variant:variant,lvl:lvl || 0,extra:parseExtra(extra)});
+	}
+	s.actorGroup = function(key,spot,respawn,list,extra){
+		var spot = s.getSpot(s.getAct(key).map,Q,spot);
+		var tmp = [];
+		for(var i in list){
+			var m = list[i];
+			tmp.push({"category":m[0],"variant":m[1],'amount':m[2] || 1,'modAmount':true,'extra':parseExtra(m[3])});
+		}
+		return Actor.creation.group({'spot':spot,'respawn':respawn},tmp);
 	}
 	
 	s.drop = function(key,e,item,amount){
@@ -253,7 +262,7 @@ exports.init = function(version,questname){	//}
 	}
 	
 	m.actor = function(spot,cat,variant,extra,lvl){
-		Actor.creation({spot:spot,category:cat,variant:variant,lvl:lvl || 0,extra:parseExtra(extra)});
+		return Actor.creation({spot:spot,category:cat,variant:variant,lvl:lvl || 0,extra:parseExtra(extra)});
 	}
 	
 	m.actorGroup = function(spot,respawn,list,extra){
@@ -262,7 +271,7 @@ exports.init = function(version,questname){	//}
 			var m = list[i];
 			tmp.push({"category":m[0],"variant":m[1],'amount':m[2] || 1,'modAmount':true,'extra':parseExtra(m[3])});
 		}
-		Actor.creation.group({'spot':spot,'respawn':respawn},tmp);
+		return Actor.creation.group({'spot':spot,'respawn':respawn},tmp);
 	}
 
 	m.collision = function(spot,cb){

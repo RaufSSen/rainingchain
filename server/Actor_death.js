@@ -9,6 +9,7 @@ Actor.death = function(act){
 Actor.death.summon = function(act){
 	for(var i in act.summon){
 		for(var j in act.summon[i].child){
+			console.log('delete');
 			Actor.remove(List.all[j]);
 		}		
 	}
@@ -108,11 +109,7 @@ Actor.death.drop = function(act,killers){		//TOFIX toremove
 		//Plan
 		for(var i in drop.plan){
 			var random = Math.random();
-			var prob = Math.probability(drop.plan[i],chanceMod);
-			console.log(prob);
-			if(random/5 > prob) continue;
-		
-			if(random < prob){	//regular
+			if(Math.random() < Math.probability(drop.plan[i],chanceMod)){	//regular
 				var id = Plan.creation({	//plan
 					'rarity':rarity,
 					'quality':quality,
@@ -123,7 +120,9 @@ Actor.death.drop = function(act,killers){		//TOFIX toremove
 					'minAmount':0,
 					'maxAmount':1,
 				});
-			} else {
+				Drop.creation({'x':act.x,'y':act.y,'map':act.map,'item':id,'amount':1,'timer':Drop.TIMER,'viewedIf':[key]});	
+			
+			} else if(Math.random() < Math.probability(drop.plan[i],chanceMod*5)){	
 				var id = Craft.equip({	//craft white
 					'rarity':rarity,
 					'quality':quality,
@@ -134,9 +133,10 @@ Actor.death.drop = function(act,killers){		//TOFIX toremove
 					'minAmount':0,
 					'maxAmount':0,
 				});
+				Drop.creation({'x':act.x,'y':act.y,'map':act.map,'item':id,'amount':1,'timer':Drop.TIMER,'viewedIf':[key]});	
+			
 			}
 		
-			Drop.creation({'x':act.x,'y':act.y,'map':act.map,'item':id,'amount':1,'timer':Drop.TIMER,'viewedIf':[key]});	
 			break;
 		}
 	}

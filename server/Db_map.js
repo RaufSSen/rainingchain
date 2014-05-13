@@ -89,7 +89,7 @@ Map.creation.model = function(map){	//create the model that will be in Db.map | 
 }
 
 Map.remove = function(map){
-	if(Map.getVersion(map.id) === "MAIN") return; //cant delete main maps
+	//if(Map.getVersion(map.id) === "MAIN") return; //cant delete main maps
 	for(var i in map.list.group) Group.remove(List.group[i]);
 	for(var i in map.list.actor) Actor.remove(List.all[i]);
 	for(var i in map.list.drop) Drop.remove(List.all[i]);
