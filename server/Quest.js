@@ -10,7 +10,7 @@ Quest.start = function(key,id){	//verification done in command
 	if(q.event._start)	q.event._start(key);	
 	
 	for(var i in mq._challenge){
-		if(mq._challenge[i]) q.challenge[i].on(key,id);
+		if(mq._challenge[i]) q.challenge[i].start(key,id);
 	}
 	Quest.start.updateChallengeDoneBonus(key,id);
 }
@@ -32,7 +32,6 @@ Quest.start.updateChallengeDoneBonus = function(key,id){
 	}
 	
 }	
-
 
 Quest.abandon = function(key,id){
 	if(Db.quest[id].event._abandon)	Db.quest[id].event._abandon(key);
@@ -138,7 +137,6 @@ Quest.getBonus = function(key,id,includechallenge){
 	return tmp;
 }
 
-
 Quest.getReward = function(q,bonus){	//TODO item? or not?
 	var reward = Tk.deepClone(q.reward);
 	var tmp = {passive:0,item:{},exp:{}};
@@ -208,7 +206,7 @@ Quest.challenge.signIn = function(key){
 	var qa = List.main[key].questActive;
 	if(!qa) return;
 	for(var i in mq[qa]._challenge){
-		if(mq[qa]._challenge[i])		Db.quest[qa].challenge[i].on(key,qa);
+		if(mq[qa]._challenge[i])	Db.quest[qa].challenge[i].signIn(key,qa);
 	}
 
 }
@@ -236,13 +234,13 @@ Quest.challenge.template.speedrun = function(time,bonus){
 		name:'Speedrunner',
 		description:'Complete the quest in less than ' + time.toChrono() + '.',
 		
-		on:function(key,qid){
+		start:function(key,qid){
 			var main = List.main[key];
-			if(!main.chrono[qid])
-				Actor.setTimeout(List.all[key],'timerquest',50,function(){
-					Main.chrono(main,qid,'start',Db.quest[qid].name)
-				});
+			Actor.setTimeout(List.all[key],'timerquest',50,function(){
+				Main.chrono(main,qid,'start',Db.quest[qid].name)
+			});
 		},
+		signIn:function(key,qid){},
 		off:function(key,qid){
 			Main.chrono(List.main[key],qid,'stop');
 		},
@@ -263,7 +261,8 @@ Quest.challenge.template.survivor = function(amount,bonus){
 		name:'Survivor',
 		description:'Complete the quest dying less than ' + amount + ' times.',
 		
-		on:function(key,qid){},
+		start:function(key,qid){},
+		signIn:function(key,qid){},
 		off:function(key,qid){},
 		successIf:function(key,qid){
 			return List.main[key].quest[qid]._deathCount < this.deathLimit;
@@ -282,7 +281,10 @@ Quest.challenge.template.boost = function(boost,bonus){
 		name:'Nerfed Stats',
 		description:'Complete this quest with nerfed stats.',
 		
-		on:function(key,qid){
+		start:function(key,qid){
+			Actor.permBoost(List.all[key],qid + 'boostChallenge', boost);
+		},
+		signIn:function(key,qid){
 			Actor.permBoost(List.all[key],qid + 'boostChallenge', boost);
 		},
 		off:function(key,qid){

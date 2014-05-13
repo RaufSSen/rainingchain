@@ -834,6 +834,18 @@ Init.db.npc = function(){
 		"maxSpd":0,
 		"moveRange":{'ideal':50,"confort":25,"aggressive":500,"farthest":600},	
 	}; //}	
+	
+	a["system"]["target"] = {  //{
+		"name":"Target",
+		"sprite":{'name':"system-target",'sizeMod':1},
+		"nevermove":1,
+		"mastery":{'def':{'melee':0.0001,'range':0.0001,'magic':0.0001,'fire':0.0001,'cold':0.0001,'lightning':0.0001},
+					'dmg':{'melee':1,'range':1,'magic':1,'fire':1,'cold':1,'lightning':1}},	
+		
+		'resource,hp,max':1,
+		'modAmount':false,
+		//"moveRange":{'ideal':50,"confort":25,"aggressive":500,"farthest":600},	
+	}; //}	
 	//}
 	
 	

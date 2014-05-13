@@ -452,7 +452,10 @@ q.map.goblinLand = function(){
 	a.load = function(spot){
 		m.skillPlot(spot.e3,'tree-red',0);
 		
+		m.actor(spot.n1,"system","target");
+		
 		//Quest
+		/*
 		m.actor(spot.n1,"npc","regular",{
 			name:'Ringo',
 			'sprite,name':"villager-male0",
@@ -460,10 +463,7 @@ q.map.goblinLand = function(){
 			nevermove:1,
 			dialogue:q.event.talkRingo,
 		});
-		
-		m.actorGroup(spot.n1,25*5,[
-			["slime","normal",2],
-		]);
+		*/
 		
 		m.loot(spot.q1,'!haveFlower',q.event.getFlower,"flower");
 		
@@ -705,7 +705,7 @@ q.boss['test'] = function(){
 			b.attack(boss,'slowfire',{'angle':boss.angle});
 		},
 		transitionIn:function(boss){
-			if(Boss.getSummon(boss,'summon').length < 10) b.attack(boss,'summon');
+			//if(Boss.getSummon(boss,'summon').length < 10) b.attack(boss,'summon');
 			
 			b.attack(boss,'360fire',{'angle':boss.angle});
 			boss.noattack = 25;

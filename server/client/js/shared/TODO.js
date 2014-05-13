@@ -6,17 +6,10 @@ SKIPPED: trade, craft,db.filter, passive
 
 BUG: spawn monster in map that was deleted
 
-group
-
-
-tofix: summon
-
-
-boss summon
-
+quest cahllenge, active once
+chrono overwrite
 
 trading is broken
-summoning is broken
 
 save rs items price
 

@@ -18,6 +18,7 @@ q.variable = {
 	killTarget:0,
 	time:0,
 };
+
 q.highscore = {
 	time:{name:'Fastest Time',order:'ascending',getScore:function(key){
 		return s.get(key,'time');	
@@ -85,18 +86,6 @@ q.event = {
 
 
 
-
-q.npc["target"] = {  
-	"name":"Target",
-	"sprite":{'name':"goblin",'sizeMod':1.2},
-	"nevermove":1,
-	"abilityList":[],
-	'resource,hp,max':1,
-	'modAmount':false,
-	"mastery":{'def':{'melee':0.5,'range':0.5,'magic':0.5,'fire':2,'cold':2,'lightning':2},
-				'dmg':{'melee':1,'range':1,'magic':1,'fire':1,'cold':1,'lightning':1}},	
-}; 
-
 q.dialogue['jenny'] = {'face':{'image':'villager-female.0','name':'Jenny'},
 	'intro':{
 		'first':{
@@ -124,16 +113,16 @@ q.map.btt001 = function(){
 	a.variable = {}; 
 	a.load = function(spot){
 	
-		m.actor(spot.e1,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.e2,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.e3,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.e4,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.e5,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.e6,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.e7,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.e8,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.ea,q.id,"target",{deathEvent:q.event.killTarget});
-		m.actor(spot.eb,q.id,"target",{deathEvent:q.event.killTarget});	
+		m.actor(spot.e1,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.e2,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.e3,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.e4,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.e5,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.e6,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.e7,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.e8,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.ea,'system',"target",{deathEvent:q.event.killTarget});
+		m.actor(spot.eb,'system',"target",{deathEvent:q.event.killTarget});	
 	
 	} 
 	a.loop = function(spot){} 
