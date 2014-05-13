@@ -93,24 +93,35 @@ exports.init = function(version,questname){	//}
 		return bool;	
 	}
 	
-	
+	s.highscoreWindow = function(key,category){
+		if(!Db.highscore[Q + '-' + category]) return ERROR(2,'hs category not exist',Q + '-' + category);
+		Main.openWindow(List.main[key],'highscore',Q + '-' + category);
+	}
 	
 	s.chat = Chat.add;
 	s.question = Chat.question;
 	
-	s.dialogue = function(key,npc,convo,node){
+	s.dialogue = function(key,npc,convo,node){		
+		if(!s.get(key,'_active')){ s.startQuest(key); return; }
 		Dialogue.start(key,{group:Q,npc:npc,convo:convo,node:node});
 	}
 
-	s.teleport = function(key,map,letter,instance){	//type: 0=immediate, 1=popup
+	s.teleport = function(key,map,letter,instance,newmap){	//type: 0=immediate, 1=popup
 		if(List.main[key].questActive !== Q) return Chat.add(key,"Can't teleport because quest not active.");
+		var p = s.getAct(key);
 		
 		if(instance === 'team') map += '@';
 		if(instance === 'solo') map += '@@';
-		
-		var spot = s.getSpot(map,Q,letter);
-		
-		
+		if(newmap){
+			var targetmap = Actor.teleport.getMapName(p,map);
+			if(List.map[targetmap]){	//TODO verify if other players in instance
+				if(p.map === targetmap){	//if player in map, teleport out,
+					Actor.teleport(p,{x:0,y:0,map:'test@MAIN'});
+				} 
+				Map.remove(List.map[targetmap]);
+			}
+		}
+		var spot = s.getSpot(map,Q,letter);		
 		Actor.teleport(s.getAct(key),spot);
 		
 		/*

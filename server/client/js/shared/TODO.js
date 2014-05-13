@@ -4,14 +4,16 @@
 SKIPPED: trade, craft,db.filter, passive
 
 
-BUG: spawn monster in map that was deleted
+draw win select highscore is bad and if only 1 cat, cant select
 
-quest cahllenge, active once
-chrono overwrite
+score mod for quest depending on success
 
 trading is broken
 
 save rs items price
+
+visibleIf linked with html.div CONTINUE
+
 
 ==REVAMP==
 
@@ -22,8 +24,6 @@ email if server is down	//http://nodejs.org/api/domain.html
 add ability with globalMod
 
 
-
-throw error instead of just bypassing !List.all[key]
 
 BISON doesnt send dialogue if too close from npc? it returns undefined
 

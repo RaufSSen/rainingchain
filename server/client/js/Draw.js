@@ -8,14 +8,9 @@ Draw.loop = function (){
 		if(i === 'minimap') continue;	//managed  in Draw.minimap
 		List.ctx[i].clearRect(0, 0, Cst.WIDTH, Cst.HEIGHT);
 	}
-	for(var i in html){ 
-		if(i === 'warning') continue;
-		if(i === 'map') continue;
-		//if(i === 'command') continue;
-		//if(i === 'context') continue;
-		if(i === 'chat') continue;
-		html[i].div.style.visibility = 'hidden';
-	}
+	Draw.loop.visibility();
+	
+	
 	List.btn = [];
 	Input.event.mouse.drag.update();
 	
@@ -49,6 +44,27 @@ Draw.loop = function (){
 	Draw.hint();
 	Draw.command();		
 	
+}
+
+Draw.loop.visibility = function(){	
+	for(var i in html){ 
+		if(!Draw.loop.visibility.test[i]){ html[i].div.style.visibility = 'hidden'; continue; }
+		
+		if(Draw.loop.visibility.test[i]() && html[i].div.style.visibility !== 'visible'){	//aka true
+			html[i].div.style.visibility = 'visible'
+		}
+		if(!Draw.loop.visibility.test[i]() && html[i].div.style.visibility !== 'hidden'){	//aka true
+			html[i].div.style.visibility = 'hidden'
+		}
+	}
+}
+Draw.loop.visibility.test = {
+	warning:function(){	return true;},
+	map:function(){ return true; },
+	pm:function(){ return true; },
+	highscoreWin:function(){ return !!main.windowList.highscore; },
+	chat:function(){ return !main.dialogue; },
+	dialogue:function(){ return !!main.dialogue; },
 }
 
 Draw.map = function (layer){ ctxrestore();
@@ -234,7 +250,6 @@ Draw.chat = function(){ ctxrestore();
 		Draw.chat.dialogue();
 	} else {
 		var s = Draw.chat.constant();
-		html.chat.div.style.visibility = "visible";
 		ctx.beginPath();
 		ctx.moveTo(s.x,s.y+s.h-s.personalChatY-3);
 		ctx.lineTo(s.w,s.y+s.h-s.personalChatY-3);
@@ -246,8 +261,6 @@ Draw.chat.main = function(){
 	var s = Draw.chat.constant();
 	
 	//PM
-	html.pm.div.style.visibility = 'visible';
-	html.dialogue.div.style.visibility = "hidden";
 	html.pm.div.style.left = (s.x + s.divX) + 'px'; 
 	html.pm.div.style.top = (s.y + s.divY - s.pmY - s.pmDivY - s.disPmY) + 'px'; 
 	
@@ -281,11 +294,13 @@ Draw.chat.main = function(){
 	html.chat.input.maxlength="150";	
 	html.chat.input.style.font = s.personalChatY + 'px Kelly Slab';
 	html.chat.input.style.height = s.personalChatY + 'px'
-		
+	
+	/*	
 	html.dialogue.div.style.width = (s.w - 2*s.divX) + 'px';
 	html.dialogue.div.style.height = (s.h - 2*s.divY) + 'px'
 	html.dialogue.div.style.left = (s.x + s.divX) + 'px'; 
 	html.dialogue.div.style.top = (s.y + s.divY + s.dialogueTopDiffY) + 'px'; 
+	*/
 	
 	//MainBox
 	ctx.globalAlpha = 0.8;
@@ -305,11 +320,10 @@ Draw.chat.dialogue = function(){
 	if(dia.face){	s.numX += s.faceX;} 
 	if(dia.option){ var nY = s.y+s.h-10-dia.option.length*20; }	
 			
-	html.chat.div.style.visibility = "hidden"; //dunno if useful
-	html.dialogue.div.style.visibility = "visible";
 	html.dialogue.text.style.width = s.w - 2*s.textBorder + 'px';
 	html.dialogue.text.style.font = '20px Kelly Slab';
-
+	html.dialogue.div.style.top = (s.y + s.divY*2) + 'px';
+		
 	if(dia.face){
 		html.dialogue.text.style.width = s.w - 2*s.textBorder-s.faceX + 'px';
 		html.dialogue.div.style.left = (s.x + s.divX + s.textBorder + s.faceX) + 'px';

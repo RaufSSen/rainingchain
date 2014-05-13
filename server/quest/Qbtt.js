@@ -48,6 +48,10 @@ q.event = {
 		
 		
 	},
+	_getScoreMod:function(key){
+		if(s.get(key,'time') < 10000) return 2;
+		return 1;
+	},
 	_abandon:function(key){
 		s.teleport(key,'goblinLand','n1');
 		s.setRespawn(key,'goblinLand','n1');
@@ -58,11 +62,11 @@ q.event = {
 		
 	},
 	talkJenny:function(key){
-		if(!s.get(key,'_active')){ s.startQuest(key); return; }
 		s.dialogue(key,'jenny','intro','first');
 	},
 	teleportCourse:function(key){
-		s.teleport(key,'btt001','q1','solo');
+		s.teleport(key,'btt001','q1','solo',1);
+		s.chrono(key,'timer','remove');
 		s.freeze(key,2*25,q.event.startCourse);
 	},
 	startCourse:function(key){
@@ -77,11 +81,17 @@ q.event = {
 	},
 	endCourse:function(key){
 		var time = s.chrono(key,'timer','stop');
+		s.set(key,'time',time);
 		s.chat(key,'Your time is : ' + time + ' milliseconds.');
-		s.completeQuest(key);
 		s.teleport(key,'goblinLand','n1');
+		s.highscoreWindow(key,'time');
+		s.completeQuest(key);
 	},
 };	
+
+
+
+
 
 
 

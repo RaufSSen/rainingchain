@@ -24,9 +24,8 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 		
 	
 	Actor.setTimeout(act,'bugAbility',2*25,Test.setAbility);	//TOFIX
-	if(!List.main[key].questActive) Quest.start(key,'QgoblinJewel');
+	//if(!List.main[key].questActive) Quest.start(key,'QgoblinJewel');
 	
-	//Load.enterGame.fixAbilityCharge(key);	//BUG?
 }
 
 Load.enterGame.testing = function(key){
@@ -160,6 +159,8 @@ Load.enterGame.infoDay = [ //{
 	
 	"In a regular game, random tips like this one are shown on loading screens. Unfortunately, this game has none so I needed to show them that way XD.",
 	"This game supports <a title=\"Puush is a 3rd party software that allows images and texts sharing instantly via a keyboard shortcut.\" href=\"http://puush.me/\" target=\"blank\">puush</a> links. Just copy paste the link in the chat and it will turn into a clickable link. By default, you can only click puush links from your friends.",
+	
+	"In the quest tab, you can shift-left click to start/abandon quests quickly. (Useful for speedruns)",
 	
 ];//}
 

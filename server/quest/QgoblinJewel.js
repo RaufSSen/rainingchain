@@ -122,7 +122,6 @@ q.event = {
 		s.setRespawn(key,'goblinLand','n1');
 	},
 	talkRingo:function(key){
-		if(!s.get(key,'_active')){ s.startQuest(key); return; }
 		if(!s.get(key,'talkRingo')){ s.dialogue(key,'ringo','intro','first'); return; }
 		
 		if(s.haveItem(key,'jewel')){ 

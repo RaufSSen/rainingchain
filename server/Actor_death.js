@@ -9,7 +9,6 @@ Actor.death = function(act){
 Actor.death.summon = function(act){
 	for(var i in act.summon){
 		for(var j in act.summon[i].child){
-			console.log('delete');
 			Actor.remove(List.all[j]);
 		}		
 	}

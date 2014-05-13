@@ -48,6 +48,8 @@ Draw.actor.chatHead = function(act){
 }		
 
 Draw.actor.status = function(act){	//hp + status
+	if(act.resource.hp.max <= 5) return; //QUICKFIX for targets
+	
 	ctx = List.ctx.stage;
 	
 	var spriteServer = act.sprite;

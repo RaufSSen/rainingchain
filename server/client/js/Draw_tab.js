@@ -227,7 +227,7 @@ Draw.tab.quest = function(){ ctxrestore();
 			'<br><span ' + 
 			'class="shadow" ' + 
 			'style="color:' + color + '" ' +
-			'onclick="Command.send(\'' + 'win,open,quest,' + i + '\')' + '" ' + 
+			'onclick="Draw.tab.quest.click(\'' + i + '\')' + '" ' + 
 			'title="Check '+ name + '" ' 
 			+ '>' + name + 
 			'</span>';
@@ -241,6 +241,12 @@ Draw.tab.quest = function(){ ctxrestore();
 	});
 	
 	
+}
+
+Draw.tab.quest.click = function(id){
+	if(!event.shiftKey) Command.send('win,open,quest,'+ id );
+	else if(main.questActive === id) Command.send('win,quest,abandon,' + id);
+	else Command.send('win,quest,start,' + id);
 }
 	
 Draw.tab.skill = function(){ ctxrestore();

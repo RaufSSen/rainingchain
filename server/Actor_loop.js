@@ -452,9 +452,13 @@ Actor.setTimeout = function(act,name,time,cb){
 
 Actor.freeze = function(act,time,cb){
 	act.move = 0;
+	var oldcombat = act.combat;
+	if(oldcombat) act.combat = 0;
+	
 	time = time || Cst.MIN*10;	
 	Actor.setTimeout(act,'freeze',time,function(key){
 		List.all[key].move = 1;
+		if(oldcombat) List.all[key].combat = 1;
 		if(cb) cb(key);
 	});
 }

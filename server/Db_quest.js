@@ -7,10 +7,10 @@ var questList = [
 	'Qtest',
 	'QgoblinJewel',
 	'Mtest',
-	//'Qbtt',
+	'Qbtt',
 ];
 Quest = {};
-Quest.test = 'QgoblinJewel';	//give player vaTester for this quest
+Quest.test = 'Qbtt';	//give player vaTester for this quest
 //QgoblinJewel
 
 Init.db.quest = function(){
@@ -75,6 +75,7 @@ Quest.creation = function(q){
 	
 	//Event
 	q.event = Tk.useTemplate(Quest.template.event(),q.event);
+	q.drop = Tk.useTemplate(Quest.template.drop(),q.drop);
 	
 	//Highscore
 	for(var j in q.highscore){
@@ -234,6 +235,7 @@ Quest.template.event = function(){
 			signIn:null,
 			firstSignIn:null,
 		},
+		_getScoreMod:null,	//return NUMBER
 	}
 }
 
@@ -249,7 +251,6 @@ Quest.template.drop = function(){
 		}
 	}
 }
-
 
 
 

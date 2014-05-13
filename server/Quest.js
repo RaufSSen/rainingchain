@@ -94,6 +94,7 @@ Quest.reward = function(key,id){
 	
 	var bonus = Quest.getBonus(key,id);
 	var reward = Quest.getReward(q,bonus);
+	if(q.event._getScoreMod) reward.passive *= q.event._getScoreMod(key) || 0;
 	
 	if(mq._rewardScore === 0) mq._rewardScore = Math.pow(10,4*q.reward.passive.min/q.reward.passive.max);	//aka first time
 	mq._rewardScore += reward.passive;
@@ -237,7 +238,7 @@ Quest.challenge.template.speedrun = function(time,bonus){
 		start:function(key,qid){
 			var main = List.main[key];
 			Actor.setTimeout(List.all[key],'timerquest',50,function(){
-				Main.chrono(main,qid,'start',Db.quest[qid].name)
+				Main.chrono(main,qid,'start',Db.quest[qid].name);	//this is importnat part, timeout not needed
 			});
 		},
 		signIn:function(key,qid){},

@@ -15,7 +15,7 @@ Skill.addExp.action = function(key,obj,bonus,globalmod){
 	var player = List.all[key];
 	for(var i in obj){
 		var mod = globalmod * (bonus === false ? 1 : player.bonus.exp[i]);
-		var amount = typeof obj[i] === 'function' ? obj[i] : obj[i](player.skill.lvl[i],key);
+		var amount = typeof obj[i] !== 'function' ? obj[i] : obj[i](player.skill.lvl[i],key);
 		player.skill.exp[i] += amount * mod;		
 		Skill.updateLvl(key,i);
 		Server.log(2,key,'addExp',i,amount);

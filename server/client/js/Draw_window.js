@@ -859,7 +859,6 @@ Draw.window.quest.refreshIf = function(q,mq){
 	var bool = Draw.refresh.winQuest !== str;
 	Draw.refresh.winQuest = str;
 	return bool;
-
 }
 
 Draw.window.quest.info = function(s,q,mq,hq){
@@ -889,7 +888,7 @@ Draw.window.quest.info = function(s,q,mq,hq){
 Draw.window.quest.start = function(s,q,mq,hq){
 	
 	hq.start.style.left = 200 + 45 + s.dw/2 + 'px'; 
-	hq.start.style.top = -35 + 'px'; 
+	hq.start.style.top = -45 + 'px'; 
 	
 	hq.start.style.font = s.charY*1.5 + 'px Kelly Slab';
 	
@@ -1369,8 +1368,9 @@ Draw.window.highscore = function (){ ctxrestore();
 	if(!rank) return;
 	
 	//Table
-	hq.table.style.left = 350 + 'px'; 
-	hq.table.style.top = 0 + 'px'; 
+	
+	hq.table.style.left = 250 + 'px'; 
+	hq.table.style.top = 50 + 'px'; 
 	
 	var str = '<table>';
 	str += '<tr>';
@@ -1390,8 +1390,6 @@ Draw.window.highscore = function (){ ctxrestore();
 	
 	
 	Draw.setInnerHTML(hq.table,str);
-	
-	
 }
 
 Draw.window.highscore.changeQuest = function(){

@@ -241,7 +241,7 @@ Init.db.sprite = function(){
 
     //}	
     //{ System
-	a["system-target"] ={"src":"picture/target.png","size":1,"preBumperBox":[ -48,48,-48,48 ]};
+	a["system-target"] ={"src":"picture/target.png","size":0.5,"preBumperBox":[ -48,48,-48,48 ]};
 	
 	a["pushable-rock1x1"] ={"src":"picture/pushable-rock2x2.png","size":0.5,"preBumperBox":[ -32,32,-32,32 ]};
 	a["waypoint-grave"] ={"src":"picture/waypoint-grave.png","size":2,"preBumperBox":[ -16,16,-16,16 ]};
