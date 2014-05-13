@@ -65,13 +65,6 @@ Server.admin = [
 if(Server.testing) Server.admin = ['rc','sam','sama','admin','idk whats rc','idkwhatsrc']; 
 
 
-Server.mute = function(name){
-	for(var i in List.main){
-		if(List.all[i].name === name)
-			List.main[i].social.muted = 1;	
-	}
-}
-
 
 
 Server.log = function(lvl,key,type){	//only logs then, no display
@@ -137,11 +130,37 @@ Server.reset = function(save){
 	
 	for(var i in List)	List[i] = {};
 	db.update('account',{},{'$set':{online:0}});
+	INFO("SERVER HAS BEEN RESET");
 }
 
 
+Server.ban = function(name){
+	db.update('account',{username:name},{'$set':{'banned':1}});
+	for(var i in List.main){
+		if(List.all[i].name === name){
+			Sign.off(i,"You have been banned.");
+		}
+	}
+}
+Server.ban.remove = function(name){
+	db.update('account',{username:name},{'$set':{'banned':0}});
+}
 
-
-
+Server.mute = function(name){
+	for(var i in List.main){
+		if(List.all[i].name === name){
+			List.main[i].social.muted = 1;	
+			Chat.add(i,"You have been muted.");
+		}
+	}
+}
+Server.mute.remove = function(name){
+	for(var i in List.main){
+		if(List.all[i].name === name){
+			List.main[i].social.muted = 0;	
+			Chat.add(i,"You are no longer muted.");
+		}
+	}
+}
 
 

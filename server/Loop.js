@@ -93,7 +93,7 @@ Loop.team = function(){
 
 Loop.error = function(){
 	ERROR.count = Math.max(ERROR.count - 0.1,0);
-	if(ERROR.count > 1000){
+	if(ERROR.count > 100){
 		Server.reset();
 		ERROR.count = 0;
 		return true;

@@ -95,10 +95,20 @@ Db.query.quest.challenge = function(info){	//dunno if good
 	return tmp;
 }	
 
-Db.query.highscore = function(d,cb){	//TOFIX temp
+Db.query.highscore = function(d,cb){
 	if(!Db.highscore[d.id]) return;
 	
 	Quest.highscore.fetch(d.id,function(res){
+		for(var i in res){	//test if already there
+			if(List.nameToKey[res[i].username] === d.key){
+				cb({
+					info:res,
+					db:'highscore',
+					id:d.id,
+				});	
+				return;
+			}
+		}
 		Quest.highscore.fetchRank(d.key,d.id,function(res2){
 			res.push(res2);
 			cb({

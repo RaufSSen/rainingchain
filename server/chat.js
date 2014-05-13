@@ -4,6 +4,8 @@ var db = requireDb();
 Chat = {};
 Chat.parse = function(data){
 	data = data.replaceCustomPattern('http://puu.sh/','.png',Chat.parse.puush);
+	data = data.replaceCustomPattern('http://puu.sh/','.jpg',Chat.parse.puush);
+	data = data.replaceCustomPattern('http://puu.sh/','.txt',Chat.parse.puush);
 	return data.replacePattern(Chat.parse.item);
 }
 

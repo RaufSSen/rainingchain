@@ -61,7 +61,7 @@ q.event = {
 		s.dialogue(key,'jenny','intro','first');
 	},
 	teleportCourse:function(key){
-		s.teleport(key,'btt001@@','q1');
+		s.teleport(key,'btt001','q1','solo');
 		s.freeze(key,2*25,q.event.startCourse);
 	},
 	startCourse:function(key){

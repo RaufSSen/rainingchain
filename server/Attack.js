@@ -202,7 +202,7 @@ Attack.creation.strike = function(s){
 	s.x = s.crX + s.middleX;
 	s.y = s.crY + s.middleY;
 	List.strike[s.id] = s;
-	Activelist.update(s);	//could use Map.enter instead
+	Activelist.init(s);	//could use Map.enter instead
 	
 	Attack.creation.neverbullet(s);
 	return s;

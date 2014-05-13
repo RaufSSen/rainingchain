@@ -161,7 +161,7 @@ q.event = {
 		
 		if(s.haveItem(key,'potion')){
 			s.chat(key,"You drank the potion and entered the camp."); 
-			s.teleport(key,'goblinCamp@','t3');
+			s.teleport(key,'goblinCamp','t3','team');
 		}
 		else s.chat(key,"You don't want the goblins to be even more mad against human.");
 	},
@@ -188,7 +188,7 @@ q.event = {
 		return !s.haveItem(key,'jewel');
 	},
 	teleOutUnderground:function(key){
-		if(s.haveItem(key,'jewel')) s.teleport(key,'goblinCamp@','t2');
+		if(s.haveItem(key,'jewel')) s.teleport(key,'goblinCamp','t2','team');
 		else s.chat(key,"You should get the jewel first.");
 	},
 	csTestBoss:function(key){
@@ -207,7 +207,7 @@ q.event = {
 		s.setTimeout(key,'csInBoss',3*25,q.event.csOutBoss);
 	},
 	teleInBossZone:function(key){
-		s.teleport(key,'goblinCamp@','q4');
+		s.teleport(key,'goblinCamp','q4','team');
 	},
 	csOutBoss:function(key){
 		s.unfreeze(key);

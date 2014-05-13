@@ -93,8 +93,6 @@ Combat.attack.simple = function(player,attack,extra){
 }
 	
 Combat.summon = function(key,action,enemy){		//action:{name,maxChild,time,distance} || {"category":"slime","variant":"Big","lvl":0,'amount':1,"modAmount":0}
-	return; //TOFIX
-	
 	var name = action.name || Math.randomId();
 	action.maxChild = action.maxChild || 1;
 	action.time = action.time || Cst.bigInt;

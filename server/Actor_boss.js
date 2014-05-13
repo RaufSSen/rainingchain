@@ -94,7 +94,7 @@ Boss.loop.transition = function(boss){
 
 }
 
-Boss.loop.target = function(boss){
+Boss.loop.target = function(boss){	//TOFIX can only have player target
 	//Update Boss Target. can have multiple targets unlike regular enemy
 	var act = List.all[boss.parent];
 	boss.target = {};

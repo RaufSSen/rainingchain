@@ -1,6 +1,5 @@
 
 
-
 ==PRESDK==
 SKIPPED: trade, craft,db.filter, passive
 
@@ -8,7 +7,6 @@ SKIPPED: trade, craft,db.filter, passive
 BUG: spawn monster in map that was deleted
 
 group
-
 
 
 tofix: summon
@@ -33,8 +31,6 @@ add ability with globalMod
 
 
 throw error instead of just bypassing !List.all[key]
-
-server ban
 
 BISON doesnt send dialogue if too close from npc? it returns undefined
 
@@ -100,11 +96,6 @@ werewolf:
 
 troll:
 
-
-
-==OPTIMIZATION==
-activeList: double checking for actor
-activeList of attack has actor with no combat
 
 
 

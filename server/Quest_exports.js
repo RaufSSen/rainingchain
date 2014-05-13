@@ -102,11 +102,20 @@ exports.init = function(version,questname){	//}
 		Dialogue.start(key,{group:Q,npc:npc,convo:convo,node:node});
 	}
 
-	s.teleport = function(key,map,letter,popup){	//type: 0=immediate, 1=popup
+	s.teleport = function(key,map,letter,instance){	//type: 0=immediate, 1=popup
 		if(List.main[key].questActive !== Q) return Chat.add(key,"Can't teleport because quest not active.");
+		
+		if(instance === 'team') map += '@';
+		if(instance === 'solo') map += '@@';
+		
 		var spot = s.getSpot(map,Q,letter);
 		
+		
+		Actor.teleport(s.getAct(key),spot);
+		
+		/*
 		if(!popup) Actor.teleport(s.getAct(key),spot);
+		
 		else {
 			Chat.question(key,{
 				//could show text to where hes going
@@ -114,6 +123,7 @@ exports.init = function(version,questname){	//}
 				option:true,
 			});
 		}
+		*/
 	}
 	
 	s.setRespawn = function(key,map,letter,safe){	//must be same map

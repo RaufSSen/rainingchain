@@ -44,6 +44,7 @@ Quest.complete = function(key,id){
 	var q = Db.quest[id];
 	
 	Quest.complete.highscore(key,mq,q);
+	Quest.complete.challenge(key,mq,q);
 	
 	Chat.add(key,"Congratulations! You have completed the quest \"" + q.name + '\"!');
 	mq._complete++;
@@ -73,14 +74,9 @@ Quest.complete.highscore = function(key,mq,q){
 			Chat.add(key,'New Highscore for ' + q.highscore[i].name + ': ' + Tk.round(score,5) + '.'); 
 		}
 	}
-
-
 }
 
-Quest.complete.challenge = function(key,id){
-	var mq = List.main[key].quest[id];
-	var q = Db.quest[id];
-	
+Quest.complete.challenge = function(key,mq,q){
 	for(var i in mq._challenge){
 		if(!mq._challenge[i]) continue;
 		if(q.challenge[i].successIf(key)){	
@@ -88,16 +84,12 @@ Quest.complete.challenge = function(key,id){
 				mq._challengeDone[i] = 1;
 				Server.log(1,key,'Quest.complete.challenge',id,i);
 				sum += q.challenge[i].success
-			} else {
-			
-			}
+			} 
 		}
 	}
 }
 
-
-
-Quest.reward = function(key,id){	//roll the perm stat bonus and check if last one was better	
+Quest.reward = function(key,id){
 	var mq = List.main[key].quest[id];
 	var q = Db.quest[id];
 	
@@ -169,7 +161,7 @@ Quest.reset = function(key,qid,abandon){
 	var main = List.main[key];
 	var mq = main.quest[qid];
 	
-	var keep = ['_rewardScore','_rewardPt','_complete','_challengeDone'];
+	var keep = ['_rewardScore','_rewardPt','_complete','_challengeDone','_highscore'];
 	if(abandon){ keep.push('_skillPlot'); keep.push('_enemyKilled'); }
 	var tmp = {};
 	for(var i in keep) tmp[keep[i]] = mq[keep[i]];
@@ -247,7 +239,9 @@ Quest.challenge.template.speedrun = function(time,bonus){
 		on:function(key,qid){
 			var main = List.main[key];
 			if(!main.chrono[qid])
-				Main.chrono(main,qid,'start',Db.quest[qid].name);
+				Actor.setTimeout(List.all[key],'timerquest',50,function(){
+					Main.chrono(main,qid,'start',Db.quest[qid].name)
+				});
 		},
 		off:function(key,qid){
 			Main.chrono(List.main[key],qid,'stop');
@@ -341,6 +335,17 @@ Quest.requirement.template.quest = function(quest){
 	}
 }
 
+Quest.requirement.template.map = function(map,name){	//unused, bad... cant know map name cuz not model created yet
+	return {
+		func:function(key){
+			if(!List.all[key].map.have(map,1)) return false;	//could add zone	
+			return true;			
+		},		
+		name:'Map "' + name + '"',
+		description:'You need to be in the map "' + name + '".',
+	}
+}
+
 
 
 
@@ -369,7 +374,7 @@ Quest.highscore.fetch = function(category,cb){
 			delete res[i][category];
 		}
 		cb(res);
-	}).sort(sort).limit(25);
+	}).sort(sort).limit(15);
 	
 	//ts("Quest.highscore.fetch(key,'Qbtt-time')")
 }

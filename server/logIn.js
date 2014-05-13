@@ -259,7 +259,10 @@ Save.main.compress = function(main){
 			}
 	}
 	
-	
+	//chrono
+	for(var i in main.chrono){
+		if(!main.chrono[i].active) delete main.chrono[i];
+	}
 	
 	
     return main;
