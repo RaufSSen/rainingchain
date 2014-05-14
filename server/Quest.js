@@ -13,6 +13,7 @@ Quest.start = function(key,id){	//verification done in command
 		if(mq._challenge[i]) q.challenge[i].start(key,id);
 	}
 	Quest.start.updateChallengeDoneBonus(key,id);
+	
 }
 
 Quest.start.updateChallengeDoneBonus = function(key,id){
@@ -158,6 +159,7 @@ Quest.updateHint = function(key,id){
 
 Quest.reset = function(key,qid,abandon){
 	var main = List.main[key];
+	Actor.setCombatContext(List.all[key],'regular');
 	var mq = main.quest[qid];
 	
 	var keep = ['_rewardScore','_rewardPt','_complete','_challengeDone','_highscore'];

@@ -27,7 +27,42 @@ q.highscore = {
 
 var TARGETAMOUNT = 10;
 
+q.ability['fireNova'] = {'type':'attack','name':'Fire Nova','icon':'attackMagic.fireball',
+	'spd':{'main':1,'support':0},'period':{'own':50,'global':50},
+	'action':{'func':'Combat.attack','param':{
+		'type':"bullet",'angle':0,'amount':1,
+		'objImg':{'name':"fireball",'sizeMod':1},'hitImg':{'name':"fireHit",'sizeMod':0.5},
+		'dmg':{'main':100,'ratio':{'melee':0,'range':0,'magic':0,'fire':100,'cold':0,'lightning':0}},
+		
+		spd:4,
+		nova:{					
+			period:1,				
+			rotation:3,
+			attack:{		//attack info
+				'type':"bullet",'angle':0,'amount':1,
+				'objImg':{'name':"fireball",'sizeMod':0.5},'hitImg':{'name':"fireHit",'sizeMod':0.3},
+				'dmg':{'main':25,'ratio':{'melee':0,'range':0,'magic':0,'fire':100,'cold':0,'lightning':0}},
+			},		
+		},
+	}
+}};
+	
+q.equip['start-body'] = {'name':"Body",'piece':'body','type':'metal','icon':'body.metal',
+	'def':{'main':2.451,'ratio':{'melee':1,'range':1,'magic':1,'fire':1,'cold':1,'lightning':1}},'boost':[]
+}
+	
+q.preset = {
+	bob:{
+		equip:{'body':'start-body'},
+		ability:['fireNova'],	
+	}
+}
+
+
 q.event = {
+	test:function(key){
+		s.usePreset(key,'bob');
+	},
 	_hint:function(key){
 		if(!s.get(key,'_active')) return 'You can start this quest by talking to the girl south west of Goblin Land';
 		return "Good luck!";
@@ -92,6 +127,15 @@ q.event = {
 
 
 
+
+q.ability.simple = {'type':'attack','name':'Fire Basic','icon':'attackMagic.fireball',
+	'spd':{'main':1,'support':0},'period':{'own':25,'global':25},
+	'action':{'func':'Combat.attack','param':{
+		'type':"bullet",'angle':0,'amount':1,
+		'objImg':{'name':"fireball",'sizeMod':1.2},'hitImg':{'name':"fireHit",'sizeMod':0.5},
+		'dmg':{'main':100,'ratio':{'melee':100,'range':100,'magic':100,'fire':100,'cold':100,'lightning':100}},
+	}
+}};
 
 
 

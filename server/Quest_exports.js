@@ -98,6 +98,24 @@ exports.init = function(version,questname){	//}
 		Main.openWindow(List.main[key],'highscore',Q + '-' + category);
 	}
 	
+	s.usePreset = function(key,name){
+		var preset = Db.quest[Q].preset[name];
+		if(!preset) return ERROR(3,'no preset with name',name);
+		preset = Tk.deepClone(preset);
+		var act = s.getAct(key);
+		Actor.setCombatContext(act,'quest');
+		act.abilityList.quest = preset.ability;
+		
+		var count = 0;
+		for(var i in preset.ability){
+			Actor.ability.swap(act,i,count++);		
+		}
+		
+		act.equip.quest.piece = preset.equip;
+	
+	}
+	
+	
 	s.chat = Chat.add;
 	s.question = Chat.question;
 	

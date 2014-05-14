@@ -58,6 +58,7 @@ Draw.loop.visibility = function(){
 		}
 	}
 }
+
 Draw.loop.visibility.test = {
 	warning:function(){	return true;},
 	map:function(){ return true; },

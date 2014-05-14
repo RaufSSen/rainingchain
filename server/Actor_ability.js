@@ -29,7 +29,7 @@ Actor.ability.swap = function(act,name,position){
 }
 
 Actor.ability.add = function(act,name){
-	if(!Db.ability[name]) return;
+	if(!Db.ability[name]) return ERROR(3,'ability not exist',name);
 	Chat.add(act.id,"You have learnt a new ability: \"" + Db.ability[name].name + '".');
 	Actor.getAbilityList(act)[name] = 1;
 	Server.log(1,act.id,'learnAbility',name);

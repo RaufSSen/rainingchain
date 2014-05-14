@@ -64,8 +64,6 @@ q.item['equipGenerator'] = {'name':'Equip Gen','icon':'system.gold','stack':1,'o
 	{'name':'Open Bank','func':'Main.openWindow','param':['bank']},
 ]};	
 
-//}	
-
 q.equip['weapon'] = {'piece': 'melee','type': 'mace','icon':'melee.mace',
 	'name':"Mace",'sprite':{'name':"mace",'sizeMod':1},
 	'dmg':{'main':10,'ratio':{'melee':1,'range':1,'magic':1,'fire':1,'cold':1,'lightning':1}},

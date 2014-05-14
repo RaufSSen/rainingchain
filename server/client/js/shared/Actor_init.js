@@ -207,6 +207,11 @@ Actor.template.equip = function(info){
 			"def":Cst.element.template(1),
 			"dmg":Cst.element.template(1),
 		},
+		quest:{
+			"piece":{"bracelet":'',"helm":'',"amulet":'',"gloves":'',"body":'',"shield":'',"boots":'',"pants":'',"ring":'',"melee":'',"range":'',"magic":'',},
+			"def":Cst.element.template(1),
+			"dmg":Cst.element.template(1),
+		},
 	}
 };
 

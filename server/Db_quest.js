@@ -109,6 +109,22 @@ Quest.creation = function(q){
 		Ability.creation(q.ability[i]);
 	}
 	
+	
+	
+	
+	for(var i in q.preset){
+		/*preset.bob = {
+			ability:['asd','asdsd'],
+			equip:{melee:'asdsd',helm:'asd',}		
+		}*/
+		var tmp = {'ability':{},'equip':{"melee":"","range":"","magic":"","":"","helm":"","ring":"","gloves":"","body":"","shield":"","bracelet":"","pants":"","boots":""}};
+		var p = q.preset[i];
+		
+		for(var j in p.ability)	tmp.ability[q.id + '-' + p.ability[j]] = 1;
+		for(var j in p.equip)	if(p.equip[j]) tmp.equip[j] = q.id + '-' + p.equip[j];
+		q.preset[i] = tmp;
+	}
+	
 	for(var i in q.plan){
 		q.plan[i].id = q.id+'-'+ i;
 		Plan.creation(q.plan[i]);
@@ -118,6 +134,8 @@ Quest.creation = function(q){
 
 	return q;
 }
+
+
 
 Quest.creation.tester = function(q){
 	var item = {"id":q.id + '-QuestTester','name':q.id + " Tester",'icon':'system.gold','stack':1,'drop':0,'option':[]};

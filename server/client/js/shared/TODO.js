@@ -3,6 +3,8 @@
 ==PRESDK==
 SKIPPED: trade, craft,db.filter, passive
 
+preset equip and ability
+
 
 draw win select highscore is bad and if only 1 cat, cant select
 
