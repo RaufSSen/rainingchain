@@ -17,6 +17,7 @@ q.challenge = {
 q.variable = {
 	killTarget:0,
 	time:0,
+	lastReset:0,
 };
 
 q.highscore = {
@@ -27,34 +28,16 @@ q.highscore = {
 
 var TARGETAMOUNT = 10;
 
-q.ability['fireNova'] = {'type':'attack','name':'Fire Nova','icon':'attackMagic.fireball',
-	'spd':{'main':1,'support':0},'period':{'own':50,'global':50},
-	'action':{'func':'Combat.attack','param':{
-		'type':"bullet",'angle':0,'amount':1,
-		'objImg':{'name':"fireball",'sizeMod':1},'hitImg':{'name':"fireHit",'sizeMod':0.5},
-		'dmg':{'main':100,'ratio':{'melee':0,'range':0,'magic':0,'fire':100,'cold':0,'lightning':0}},
-		
-		spd:4,
-		nova:{					
-			period:1,				
-			rotation:3,
-			attack:{		//attack info
-				'type':"bullet",'angle':0,'amount':1,
-				'objImg':{'name':"fireball",'sizeMod':0.5},'hitImg':{'name':"fireHit",'sizeMod':0.3},
-				'dmg':{'main':25,'ratio':{'melee':0,'range':0,'magic':0,'fire':100,'cold':0,'lightning':0}},
-			},		
-		},
-	}
-}};
+	
 	
 q.equip['start-body'] = {'name':"Body",'piece':'body','type':'metal','icon':'body.metal',
 	'def':{'main':2.451,'ratio':{'melee':1,'range':1,'magic':1,'fire':1,'cold':1,'lightning':1}},'boost':[]
 }
 	
 q.preset = {
-	bob:{
-		equip:{'body':'start-body'},
-		ability:['fireNova'],	
+	target:{
+		equip:{},
+		ability:['simple','boomerang','5ways','','reset','fastmove'],	
 	}
 }
 
@@ -102,6 +85,7 @@ q.event = {
 	teleportCourse:function(key){
 		s.teleport(key,'btt001','q1','solo',1);
 		s.chrono(key,'timer','remove');
+		s.usePreset(key,'target');
 		s.freeze(key,2*25,q.event.startCourse);
 	},
 	startCourse:function(key){
@@ -122,22 +106,55 @@ q.event = {
 		s.highscoreWindow(key,'time');
 		s.completeQuest(key);
 	},
+	resetCourse:function(key){
+		if(Date.now() - s.get(key,'lastReset') < 2000) return;
+		s.set(key,'lastReset',Date.now())
+		s.set(key,'killTarget',0);
+		q.event.teleportCourse(key);
+	},
 };	
 
-
-
-
-
-q.ability.simple = {'type':'attack','name':'Fire Basic','icon':'attackMagic.fireball',
-	'spd':{'main':1,'support':0},'period':{'own':25,'global':25},
+q.ability['simple'] = {'type':'attack','name':'Ghost','icon':'attackMagic.fireball',
+	'spd':{'main':1,'support':0},'period':{'own':15,'global':15},
 	'action':{'func':'Combat.attack','param':{
 		'type':"bullet",'angle':0,'amount':1,
-		'objImg':{'name':"fireball",'sizeMod':1.2},'hitImg':{'name':"fireHit",'sizeMod':0.5},
+		'objImg':{'name':"arrow",'sizeMod':1.2},'hitImg':{'name':"fireHit",'sizeMod':0.5},
 		'dmg':{'main':100,'ratio':{'melee':100,'range':100,'magic':100,'fire':100,'cold':100,'lightning':100}},
 	}
 }};
 
+q.ability['boomerang'] = {'type':'attack','name':'Boomerang','icon':'attackMagic.fireball',
+	'spd':{'main':1,'support':0},'period':{'own':25,'global':15},
+	'action':{'func':'Combat.attack','param':{
+		'type':"bullet",'angle':0,'amount':1,
+		'objImg':{'name':"bone",'sizeMod':1},'hitImg':{'name':"strikeHit",'sizeMod':0.5},
+		'dmg':{'main':100,'ratio':{'melee':0,'range':1,'magic':0,'fire':0,'cold':0,'lightning':0}},
+		'boomerang':{'spdBack':0.3,'spd':1},
+		pierce:{chance:1,amount:100,dmgReduc:1},
+		ghost:1,
+	}
+}};
 
+q.ability['5ways'] = {'type':'attack','name':'4 Bullets','icon':'attackMagic.fireball',
+	'spd':{'main':1,'support':0},'period':{'own':100,'global':15},
+	'action':{'func':'Combat.attack','param':{
+		'type':"bullet",'angle':360,'amount':5,
+		'objImg':{'name':"fireball",'sizeMod':1.2},'hitImg':{'name':"fireHit",'sizeMod':0.5},
+		'dmg':{'main':100,'ratio':{'melee':100,'range':100,'magic':100,'fire':100,'cold':100,'lightning':100}},
+		ghost:1,
+	}
+}};
+
+	
+q.ability['reset'] = {'type':'boost','name':'Reset','icon':'attackMagic.fireball',
+	'spd':{'main':1,'support':0},'period':{'own':10,'global':10},
+	'action':{'func':q.event.resetCourse,'param':{},
+}};
+
+q.ability['fastmove'] = {'type':'dodge','name':'Invincibility','icon':'blessing.spike',
+	'spd':{'main':1,'support':0},'period':{'own':25,'global':25,'bypassGlobalCooldown':true},'cost':{"mana":50},
+	'action':{'animOnSprite':'boostWhite','func':'Actor.dodge','param':[4,200]}
+};	
 
 
 q.dialogue['jenny'] = {'face':{'image':'villager-female.0','name':'Jenny'},

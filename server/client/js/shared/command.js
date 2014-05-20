@@ -418,7 +418,7 @@ Command.list['win,ability,swap'] = function(key,name,position){
 		if(ab[i] && ab[i].id === name) ab[i] = null; 
 	}	//prevent multiple
 	
-	Actor.ability.swap(List.all[key],name,position);
+	Actor.ability.swap(List.all[key],name,position,true);
 }
 Command.list['win,ability,swap'].doc = {
 	'description':"Set an Ability to a Key",

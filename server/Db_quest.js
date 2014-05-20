@@ -114,14 +114,13 @@ Quest.creation = function(q){
 	
 	for(var i in q.preset){
 		/*preset.bob = {
-			ability:['asd','asdsd'],
+			ability:['asd','','asdsd'],
 			equip:{melee:'asdsd',helm:'asd',}		
 		}*/
-		var tmp = {'ability':{},'equip':{"melee":"","range":"","magic":"","":"","helm":"","ring":"","gloves":"","body":"","shield":"","bracelet":"","pants":"","boots":""}};
-		var p = q.preset[i];
+		var tmp = {'ability':q.preset[i].ability,'equip':{"melee":"","range":"","magic":"","":"","helm":"","ring":"","gloves":"","body":"","shield":"","bracelet":"","pants":"","boots":""}};
 		
-		for(var j in p.ability)	tmp.ability[q.id + '-' + p.ability[j]] = 1;
-		for(var j in p.equip)	if(p.equip[j]) tmp.equip[j] = q.id + '-' + p.equip[j];
+		for(var j in tmp.ability) if(tmp.ability[j]) tmp.ability[j] = q.id + '-' + tmp.ability[j];
+		for(var j in q.preset[i].equip)	if(q.preset[i].equip[j]) tmp.equip[j] = q.id + '-' + q.preset[i].equip[j];
 		q.preset[i] = tmp;
 	}
 	

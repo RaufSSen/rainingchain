@@ -104,15 +104,18 @@ exports.init = function(version,questname){	//}
 		preset = Tk.deepClone(preset);
 		var act = s.getAct(key);
 		Actor.setCombatContext(act,'quest');
-		act.abilityList.quest = preset.ability;
+		act.abilityList.quest = {};
 		
-		var count = 0;
-		for(var i in preset.ability){
-			Actor.ability.swap(act,i,count++);		
+		for(var i = 0 ; i < preset.ability.length; i++){
+			if(preset.ability[i]){
+				act.abilityList.quest[preset.ability[i]] = 1;
+				Actor.ability.swap(act,preset.ability[i],i);
+			}
 		}
 		
+		
 		act.equip.quest.piece = preset.equip;
-	
+		s.rechargeAbility(key);
 	}
 	
 	
@@ -275,6 +278,17 @@ exports.init = function(version,questname){	//}
 	s.chrono = function(key,name,action,text){
 		return Main.chrono(List.main[key],Q + '-' + name, action, text);
 	}
+	
+	s.rechargeAbility = function(key){
+		var p = s.getAct(key);
+		var ab = Actor.getAbility(p);
+		p.abilityChange.globalCooldown = 0;
+		for(var i in ab){
+			var ss = ab[i]; if(!ss) continue;	//cuz can have hole if player
+			p.abilityChange.charge[ss.id] = 1000;
+		}
+	}
+	
 	
 	//Map
 	var m = s.map = {};

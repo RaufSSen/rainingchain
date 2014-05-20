@@ -58,8 +58,10 @@ Test.invincible = function(key){
 			{stat:'globalDef',value:1000,type:'+'},
 			{stat:'globalDmg',value:1000,type:'+'},
 		]);	
+		Chat.add(key,'Invincible');
 	} else {
 		Actor.permBoost(List.all[key],'Test.invincible');
+		Chat.add(key,'Not Invincible');
 	}
 }
 

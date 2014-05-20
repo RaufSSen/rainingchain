@@ -76,6 +76,9 @@ Draw.state.ability = function(s){ ctxrestore();
 		Draw.icon(ab.icon,numX,numY,size,str + ': ' + ab.name);
 		ctx.globalAlpha = 1;
 		
+		//if(
+		
+		
 		if(charge !== 1){	//loading circle
 			ctx.globalAlpha = 0.5;
 			ctx.fillStyle = 'red';
@@ -244,3 +247,4 @@ Draw.performance = function(){
 	var text = '<span title="Performance">' + Loop.performance.result + '</span>';
 	Draw.setInnerHTML($("#performanceDiv")[0],text,'performanceDiv');
 }
+

@@ -25,7 +25,7 @@ Actor.teleport = function(act,spot){
 			
 	Activelist.update(act);
 
-	Chat.add(act.id,"You enter " + List.map[act.map].name + '.');
+	//Chat.add(act.id,"You enter " + List.map[act.map].name + '.');
 }
 
 Actor.teleport.getMapName = function(act,map){

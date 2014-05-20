@@ -20,7 +20,7 @@ Input.key = function(socket,d){
 		for(var i = 0 ; i < 4 ; i++){player.moveInput[i] = +move[i];}
 		player.abilityChange.press = d.i.slice(4);
 		
-		if(player.abilityChange.press !== '000000') Actor.loop.ability.test(player);
+		if(player.abilityChange.press !== '000000' && player.combat) Actor.loop.ability.test(player);
 	}
 	
 	if(d.m){

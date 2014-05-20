@@ -6,6 +6,8 @@ Actor.getCombatLevel = function(act){
 
 Actor.setCombatContext = function(act,type){
 	act.combatContext = type;
+	act.abilityChange = Actor.template.abilityChange(act.abilityList[type]);
+	
 	Actor.update.equip(act);
 
 }

@@ -3,12 +3,10 @@
 ==PRESDK==
 SKIPPED: trade, craft,db.filter, passive
 
-preset equip and ability
-
+show if shift hold
+jagex command test
 
 draw win select highscore is bad and if only 1 cat, cant select
-
-score mod for quest depending on success
 
 trading is broken
 

@@ -88,7 +88,7 @@ Attack.template.parabole = function(){
 }
 Attack.template.boomerang = function(){
 	return {
-		'comeBackTime':50,	//time before bullet turns 180 degre
+		'comeBackTime':30,	//time before bullet turns 180 degre
 		'spd':2,			//spd mod
 		'spdBack':1.5,		//spd mod when bullet comes back
 		'newId':1			//after turn back, renew id so it can hit enemy again
@@ -139,13 +139,19 @@ Attack.creation.info = function(act,b){
 Attack.creation.bullet = function(b){
 	
 	if(b.parabole){
-		b.parabole = Tk.useTemplate(Attack.template.parabole(),b.parabole);
+		var tmp = Attack.template.parabole();
+		for(var i in b.parabole) tmp[i] *= b.parabole[i];
+		b.parabole = tmp;
 		var diff = Math.pyt(b.mouseX - Cst.WIDTH2,b.mouseY - Cst.HEIGHT2);
 		b.parabole.dist = diff.mm(b.parabole.min,b.parabole.max);
 		b.parabole.timer *= b.parabole.dist/b.parabole.max;
 	}
 	if(b.nova){ b.angle = Math.random()*360;}	//otherwise, circle always the same. moveAngle is same tho
-	if(b.boomerang) b.boomerang = Tk.useTemplate(Attack.template.boomerang(),b.boomerang);
+	if(b.boomerang){
+		var tmp = Attack.template.boomerang();
+		for(var i in b.boomerang) tmp[i] *= b.boomerang[i];
+		b.boomerang = tmp;
+	}
 	
 	b.normal = !b.sin && !b.parabole && !b.boomerang;
 	

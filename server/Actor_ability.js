@@ -11,12 +11,12 @@ Actor.ability.remove = function(act,name){
 	Server.log(1,act.id,'removeAbility',name);
 }
 
-Actor.ability.swap = function(act,name,position){
+Actor.ability.swap = function(act,name,position,strict){
 	var ab = Actor.getAbility(act);
 	if(position === undefined)	for(position = 0; position < 100; position++) if(!ab[position]) break;
 
 	var ability = Ability.uncompress(name);
-	if(act.type === 'player'){
+	if(strict){
 		if(position === 4 && ability.type !== 'heal'){Chat.add(act.id,'This ability slot can only support Healing abilities.'); return;}	
 		if(position === 5 && ability.type !== 'dodge'){Chat.add(act.id,'This ability slot can only support Dodge abilities.'); return;}	
 	}

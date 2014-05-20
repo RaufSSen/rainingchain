@@ -65,15 +65,21 @@ Bullet.loop.move.boomerang = function(b){
 		b.x += b.spd * Tk.cos(b.moveAngle)*spdBoost;
 		b.y += b.spd * Tk.sin(b.moveAngle)*spdBoost;
 	}
-
+	
 	if(b.timer >= b.boomerang.comeBackTime/2){		//AKA come back
 		if(!List.actor[b.parent]) return;
+	
 		spdBoost *= b.boomerang.spdBack;
 		
-		if(b.boomerang.newId){
-			b.hitId = Math.random();
+		if(!b.boomerang.comingBack){
+			b.boomerang.comingBack = 1;
+			b.ghost = 1;
 			b.angle += 180;
-			b.boomerang.newId = 0;
+			
+			if(b.boomerang.newId){
+				b.boomerang.newId = 0;
+				b.hitId = Math.random();
+			}
 		}
 		
 		var diffX = b.x - List.actor[b.parent].x;
@@ -87,6 +93,7 @@ Bullet.loop.move.boomerang = function(b){
 		b.x -= Tk.cos(b.moveAngle)*b.spd*spdBoost;
 		b.y -= Tk.sin(b.moveAngle)*b.spd*spdBoost;
 		
+		console.log(Tk.cos(b.moveAngle)*b.spd*spdBoost,Tk.sin(b.moveAngle)*b.spd*spdBoost);
 		if(diff <= 10*spdBoost*b.boomerang.spdBack){ b.toRemove = 1;}
 		
 	}	

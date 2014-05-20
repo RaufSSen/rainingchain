@@ -65,8 +65,8 @@ Input.init = function(setup,save){
 	}
 	
 	Input.key.combo = [
-		{'key':16,'boost':1000,'symbol':'s'},	//shift
-		{'key':17,'boost':10000,'symbol':'c'}	//ctrl
+		{'key':16,'boost':1000,'symbol':'s'},	//shift	//line 105 if change that
+		// {'key':17,'boost':10000,'symbol':'c'}	//ctrl
 	];
 	Input.key.custom = [
 		{'keyCode':[9],'func':(function(){ Chat.send.reply(); })},	//tab
@@ -122,6 +122,7 @@ Input.event.key = function(code,dir,event){
 			}
 		}
 	}
+	Input.key.combo[0] = event.shiftKey;	//quickfix
 	
 	for(var i in Input.key.combo){
 		if(code === Input.key.combo[i].key){
