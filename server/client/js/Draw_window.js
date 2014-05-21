@@ -1396,11 +1396,14 @@ Draw.window.highscore.changeQuest = function(){
 	var quest = $("#highscoreWinSelectQuest")[0].value;
 	
 	var str = '';
+	var bool = true;
 	for(var i in Db.highscoreList){
 		if(!i.have(quest)) continue;
+		if(bool){ Command.send('win,open,highscore,' + category); bool = false; }
 		str += '<option value="' + i + '">' + Db.highscoreList[i] + '</option>';
 	}	
 	$("#highscoreWinSelectCategory")[0].innerHTML = str;
+	
 }
 
 

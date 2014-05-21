@@ -1,44 +1,4 @@
-Jagex HQ Visit: IRL Video
-This video covers the IRL highlights of my visit to the Jagex Game Studios in the UK and features Alkan, Chris Archie, James, Simon, A Frie(nd), Rogie, Omar, Sam, Munclesonkey, Rainy, Jake, Joking, KKComics, Gizzy, Cavemanfilms, Mexk, iAm_Naveed and many JMods.
 
-
-hey its idk and this video will be about the irl part of my trip to jagex hq
-
-okay so it all started with a 6 hours long night flight in which i tried to sleep with little success
-
-when i arrive, i visited the studios and we tested the legacy mode on the jagex computers
-we also talked about what was good, what was bad and so on but i couldnt record that
-
-after that, we went do some bowling!
-lots of fun
-alkan managed to slide and fall on his back on his first throw,
-right  there you can see a friend, and fun fact, because his name was too long, he was named a frie
-
-so now you can see my epic bowling skills
-i failed the first throw but it was intentional ofc
-second throw was a bit better
-
-after, we went to an italian restaurant
-i already have some problem with english cooking terms but serisouly, i couldnt understand half the menu
-the food was really good tho
-
-
-once we were done, i finally went to the appartement, it was really big
-so i was in same appartment than chris archie and alkan
-and if youre wondering, right there alkan is saying that im the most epic guy on earth
-so yeah, heres where i slept.
-i stayed up for over 30 hours without sleeping on the first day
-
-the next day we tested the legacy mode even more and i livestreamed killing vorago and getting trim comp cape
-
-
-there was also some kind of dance, 
-so yeah, overall, it was really good trip, i had lots of fun with the other runescape players
-and jagex, you can invite me again whenver you want.
-so this was the irl part of my trip, you can click the annotation on the screen to check my interview with mod mmg, my interview with the legacy team
-and my video about the legacy mode from a skiller point of view.
-
-thanksa gain for watching and cya.
 
 
 
@@ -47,10 +7,7 @@ thanksa gain for watching and cya.
 ==PRESDK==
 SKIPPED: trade, craft,db.filter, passive
 
-show if shift hold
 jagex command test
-
-draw win select highscore is bad and if only 1 cat, cant select
 
 trading is broken
 
@@ -58,9 +15,13 @@ save rs items price
 
 visibleIf linked with html.div CONTINUE
 
-lvl impact dmg
 
 bigger div for testings
+
+
+
+
+
 
 ==REVAMP==
 

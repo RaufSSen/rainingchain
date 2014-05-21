@@ -51,6 +51,7 @@ Skill.lvlUp = function(key,skill){
 	var sk = List.all[key].skill;
 	Chat.add(key,'You are level ' + sk.lvl[skill] + ' in ' + skill.capitalize() + '!');
 	Server.log(1,key,'Skill.lvlUp',skill,sk.lvl[skill]);
+	Skill.applyLvlDmgBoost(key);
 }
 
 Skill.unlockableContent = function(key){
@@ -88,6 +89,16 @@ Skill.getTotalLvl = function(key){
 		sum += List.all[key].skill.lvl[i];
 	return sum;
 }
+
+Skill.applyLvlDmgBoost = function(key){
+	var act = List.all[key];
+	var combatlvl = Actor.getCombatLevel(act);
+	var boost = (10+combatlvl)/(10+combatlvl/2);
+	
+	Actor.permBoost(act,'applyLvlDmgBoost',[{stat:'globalDmg',value:boost,type:'***'}]);
+	
+}
+
 
 
 Db.skillPlot = {

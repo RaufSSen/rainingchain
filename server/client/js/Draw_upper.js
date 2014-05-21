@@ -76,8 +76,10 @@ Draw.state.ability = function(s){ ctxrestore();
 		Draw.icon(ab.icon,numX,numY,size,str + ': ' + ab.name);
 		ctx.globalAlpha = 1;
 		
-		//if(
-		
+		if(Input.press.ability[i]){
+			ctx.strokeStyle = 'white';
+			ctx.strokeRect(numX,numY,size,size);
+		}
 		
 		if(charge !== 1){	//loading circle
 			ctx.globalAlpha = 0.5;

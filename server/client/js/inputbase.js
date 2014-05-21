@@ -122,13 +122,12 @@ Input.event.key = function(code,dir,event){
 			}
 		}
 	}
-	Input.key.combo[0] = event.shiftKey;	//quickfix
 	
-	for(var i in Input.key.combo){
-		if(code === Input.key.combo[i].key){
-			Input.press.combo[i] = num;
-		}
-	}
+	//for(var i in Input.key.combo){if(code === Input.key.combo[i].key){	Input.press.combo[i] = num;}}
+	Input.press.combo[0] = +event.shiftKey;	//quickfix
+	if(event.shiftKey){Input.press.ability[0] = 0; Input.press.ability[1] = 0; } //quickfix
+	if(!event.shiftKey){Input.press.ability[2] = 0; Input.press.ability[3] = 0; } //quickfix
+	
 	code += Input.event.combo();
 	
 	if(dir === 'down'){

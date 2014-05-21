@@ -109,7 +109,8 @@ Craft.equip.weapon = function(plan,equip){
 	if(equip.model) return equip; //aka using it has model
 	
 	var mod = 0.9 + Math.pow(Math.random(),1/(plan.quality+1))*0.2;
-	equip.dmg.main = (plan.lvl+10) * mod;
+		
+	equip.dmg.main = (10 + plan.lvl/2) * mod;
 	
 	equip.dmg.ratio = {melee:1/1000,range:0,magic:0,fire:0,cold:0,lightning:0};
 	
@@ -139,7 +140,7 @@ Craft.equip.weapon.sprite = {
 Craft.equip.armor = function(plan,equip){
 	var mod = 0.9 + Math.pow(Math.random(),1/(plan.quality+1))*0.2;
 	mod *= Craft.equip.armor.mod[plan.piece];
-	equip.def.main = (plan.lvl+10) * mod;
+	equip.def.main = (10+plan.lvl/2) * mod;
 	
 	var list = Craft.equip.armor.ratio[plan.type];
 	

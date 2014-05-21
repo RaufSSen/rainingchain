@@ -5,12 +5,33 @@ var q = s.quest; var m = s.map; var b = s.boss;
 q.name = "[NAME]";
 
 /* STEPS TO COMPLETE QUEST
-	-Talk with a guy and select the option to cheer him up.
-	
+	Goal: Cheer up the sad guy by giving him 3 gold.
+
+	STEPS:
+	-Kill Dragon and get 1 gold
+	-Answer Quizz and get 1 gold
+	-Activate switch to unlock chest
+	-Loot the chest to get 1 gold.
+	-Talk with sad guy and give him 3 gold.
+
+
 	NEED:
-	1 npc that has a dialogue.
-	dialogue has 2 options: cheer up and nope
-	if choose cheer up, quest complete
+	Item Gold
+
+	Dragon with deathFunc
+		Quest variable so player can't get multiple gold.
+		
+	NPC with dialogue (quizz)
+		Quest variable so player can't claim reward multiple times.
+
+	Toggle that opens chest 
+		Quest variable for chest locked/unlocked.
+
+	Chest
+		Quest variable if chest already looted.
+		
+	NPC with cheer up dialogue
+		Test if have 3 gold
 
 */
 
