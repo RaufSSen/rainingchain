@@ -250,7 +250,7 @@ Actor.creation.optionList = function(e){
 		e.awareNpc = 1;	//so blocked by other blocks but not himself
 	} 
 	
-	if(e.deathFunc && Quest.test.minimized){
+	if(e.deathFunc && Quest.test.minimized)
 		ol.option.push({'name':'Kill',"func":function(key,eid){ List.all[eid].hp = -1;},"param":[e.id]});
 	
 	e.optionList = ol.option.length ? ol : null;

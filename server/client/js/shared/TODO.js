@@ -1,6 +1,21 @@
 
 
 
+Raining Chain was originally a:
+
+C++ Game
+Flash Game
+
+
+
+
+
+
+
+
+
+
+
 
 
 

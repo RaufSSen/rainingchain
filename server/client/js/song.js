@@ -15,7 +15,7 @@ Init.db.song = function(){
 				'name':'Darknessbreaker',
 			}
 		},
-		'dark_war':{
+		/*'dark_war':{
 			'link':'http://www.newgrounds.com/audio/listen/564123',
 			'permission':true,
 			'author':{
@@ -23,7 +23,7 @@ Init.db.song = function(){
 				'newgroundsName':'DesideratumOfficial',
 			},
 			'tag':['epic'],
-		},
+		},*/
 		'digital_insanity':{
 			'link':'http://www.newgrounds.com/audio/listen/517360',
 			'permission':true,

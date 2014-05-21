@@ -1,4 +1,4 @@
-var request = require('request');
+try { var request = require('request'); }catch(err){};
 var db = requireDb();
 
 require('./client/js/shared/essentialsShare');
@@ -81,7 +81,7 @@ Init.db.rscalc = function(){
 
 
 
-if(NODEJITSU || true){
+if(NODEJITSU || false){
 	setInterval(updateItemDb,1000*60*60*4);	//each 4 hours
 	setTimeout(updateItemDb(),2000);	//to be after db fetch
 }

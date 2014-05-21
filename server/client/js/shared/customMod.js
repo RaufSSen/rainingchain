@@ -1,6 +1,6 @@
 if(SERVER){
 	var db = requireDb();
-	var request = require('request');
+	//var request = require('request');
 }
 if(!SERVER){
 	
