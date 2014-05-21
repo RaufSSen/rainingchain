@@ -2,6 +2,7 @@
 
 var gameStarted = false;
 var key = 0;
+var QuestTest = '';	//TOFIX...
 
 main = Main.template();
 
@@ -148,6 +149,8 @@ Init.game.other = function(data){
 	
 	
 	$("#infoDay")[0].innerHTML = 'Info of the day: ' + data.other.infoDay;
+	
+	QuestTest = data.other.questTest;	//TOFIX
 	
 	setTimeout(function(){
 		$("#infoDay")[0].innerHTML = '';

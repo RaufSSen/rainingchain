@@ -17,6 +17,11 @@ Loop = function(){
 	
 	if(Loop.frame % 500 === 0) $(".ui-tooltip-content").parents('div').remove();	//tooltip not disappearing
 	
+	if(QuestTest){	//BAD...
+		var tmp = {}; var q = main.quest[QuestTest];
+		for(var i in q) if(i[0] !== '_') tmp[i] = q[i];
+		$("#largeLog")[0].innerHTML = JSON.stringify(tmp);
+	}
 }
 
 	

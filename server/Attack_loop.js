@@ -93,7 +93,7 @@ Bullet.loop.move.boomerang = function(b){
 		b.x -= Tk.cos(b.moveAngle)*b.spd*spdBoost;
 		b.y -= Tk.sin(b.moveAngle)*b.spd*spdBoost;
 		
-		console.log(Tk.cos(b.moveAngle)*b.spd*spdBoost,Tk.sin(b.moveAngle)*b.spd*spdBoost);
+		
 		if(diff <= 10*spdBoost*b.boomerang.spdBack){ b.toRemove = 1;}
 		
 	}	

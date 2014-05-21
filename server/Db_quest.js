@@ -8,10 +8,12 @@ var questList = [
 	'QgoblinJewel',
 	'Mtest',
 	'Qbtt',
+	'Qmytest',
+	'QgimmeGold',
 ];
-Quest = {};
-Quest.test = 'Qbtt';	//give player vaTester for this quest
-//QgoblinJewel
+Quest = {test:{}};
+Quest.test.name = 'QgimmeGold';
+Quest.test.minimized = true;
 
 Init.db.quest = function(){
 	var questVar = {};
@@ -40,7 +42,7 @@ Init.db.quest.map = function(){	//called before Init.db.quest
 }
 
 Quest.creation = function(q){
-	if(Server.testing)	Quest.creation.tester(q);
+	Quest.creation.tester(q);
 		
 	//Default Event
 	for(var i in q.variable){
@@ -88,6 +90,7 @@ Quest.creation = function(q){
 	for(var i in q.dialogue)	Db.dialogue[q.id][i] = q.dialogue[i];		
 	
 	//load map via Init.db.quest.map
+	if(q.minimizedMap) Quest.creation.minimizedMap(q);
 	for(var i in q.mapAddon)	Db.map[i].addon[q.id] = q.mapAddon[i];
 	
 	Db.npc[q.id] = {};
@@ -134,11 +137,22 @@ Quest.creation = function(q){
 	return q;
 }
 
+Quest.creation.minimizedMap = function(q){
+	
+	q.mapAddon.minimizedMap = {
+		spot:{"a":{"x":240,"y":272},"b":{"x":400,"y":272},"c":{"x":560,"y":272},"d":{"x":720,"y":272},"e":{"x":880,"y":272},"f":{"x":1040,"y":272},"g":{"x":1200,"y":272},"h":{"x":1360,"y":272},"i":{"x":240,"y":464},"j":{"x":400,"y":464},"k":{"x":560,"y":464},"l":{"x":720,"y":464},"m":{"x":880,"y":464},"n":{"x":1040,"y":464},"o":{"x":1200,"y":464},"p":{"x":1360,"y":464},"q":{"x":240,"y":656},"r":{"x":400,"y":656},"s":{"x":560,"y":656},"t":{"x":720,"y":656},"u":{"x":880,"y":656},"v":{"x":1040,"y":656},"w":{"x":1200,"y":656},"x":{"x":1360,"y":656},"A":{"x":784,"y":752},"e1":{"x":240,"y":848},"e2":{"x":400,"y":848},"e3":{"x":560,"y":848},"e4":{"x":720,"y":848},"e5":{"x":880,"y":848},"e6":{"x":1040,"y":848},"e7":{"x":1200,"y":848},"e8":{"x":1360,"y":848},"n1":{"x":240,"y":1040},"n2":{"x":400,"y":1040},"n3":{"x":560,"y":1040},"n4":{"x":720,"y":1040},"t1":{"x":880,"y":1040},"t2":{"x":1040,"y":1040},"t3":{"x":1200,"y":1040},"t4":{"x":1360,"y":1040},"q1":{"x":240,"y":1232},"q2":{"x":400,"y":1232},"q3":{"x":560,"y":1232},"q4":{"x":720,"y":1232},"b1":{"x":880,"y":1232},"b2":{"x":1040,"y":1232},"b3":{"x":1200,"y":1232},"b4":{"x":1360,"y":1232}},
+		path:{},
+		variable:{},
+		load:q.minimizedMap,
+		loop:function(spot){} 
+	}
+
+}
 
 
 Quest.creation.tester = function(q){
 	var item = {"id":q.id + '-QuestTester','name':q.id + " Tester",'icon':'system.gold','stack':1,'drop':0,'option':[]};
-		
+	
 	item.option.push({name:'Teleport','func':function(key){
 		Chat.question(key,{text:"enter spot",func:function(key,param){
 			try{ 

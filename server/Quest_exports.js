@@ -86,7 +86,6 @@ exports.init = function(version,questname){	//}
 			bool = bool && func(i);
 		}
 		
-		
 		if(bool && action){
 			for(var i in team)	action(i);
 		}
@@ -128,6 +127,8 @@ exports.init = function(version,questname){	//}
 	}
 
 	s.teleport = function(key,map,letter,instance,newmap){	//type: 0=immediate, 1=popup
+		if(Quest.test.minimized) return Chat.add(key,"Can't teleport because in minimized mode.");
+		
 		if(List.main[key].questActive !== Q) return Chat.add(key,"Can't teleport because quest not active.");
 		var p = s.getAct(key);
 		
@@ -307,7 +308,7 @@ exports.init = function(version,questname){	//}
 	m.actor = function(spot,cat,variant,extra,lvl){
 		return Actor.creation({spot:spot,category:cat,variant:variant,lvl:lvl || 0,extra:parseExtra(extra)});
 	}
-	
+
 	m.actorGroup = function(spot,respawn,list,extra){
 		var tmp = [];
 		for(var i in list){
@@ -387,7 +388,7 @@ exports.init = function(version,questname){	//}
 		extraOff = parseExtra(extraOff);
 		extraOff.viewedIf = function(key){
 			if(s.getAct(key).type !== 'player') return true;
-			return viewedIf(key);
+			return viewedIf(key) === true;
 		};
 		extraOff.toggle = parseEvent(on);
 
@@ -397,7 +398,7 @@ exports.init = function(version,questname){	//}
 		extraOn = parseExtra(extraOn);
 		extraOn.viewedIf = function(key){
 			if(s.getAct(key).type !== 'player') return true;
-			return !viewedIf(key);
+			return viewedIf(key) === false;
 		};
 		if(off) extraOn.toggle = parseEvent(off);
 		
@@ -424,7 +425,7 @@ exports.init = function(version,questname){	//}
 		extraOff = parseExtra(extraOff);
 		extraOff.viewedIf = function(key){
 			if(s.getAct(key).type !== 'player') return true;
-			return viewedIf(key);
+			return viewedIf(key) === true;
 		};
 		extraOff.loot = open;
 
@@ -434,12 +435,11 @@ exports.init = function(version,questname){	//}
 		extraOn = parseExtra(extraOn);
 		extraOn.viewedIf = function(key){
 			if(s.getAct(key).type !== 'player') return true;
-			return !viewedIf(key);
+			return viewedIf(key) === false;
 		};
 		
 		m.actor(spot,'loot',sprite + 'On',extraOn);
 	}
-	
 	
 	m.skillPlot = function(spot,type,num){
 		var plot = Db.skillPlot[type];
@@ -469,6 +469,28 @@ exports.init = function(version,questname){	//}
 		});
 	}
 	
+	//Minimized
+	m.minimized = {count:0,list:['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','e1','e2','e3','e4','e5','e6','e7','n1','n2','n3','n4','t1','t2','t3','t4','q1','q2','q3','q4','b1','b2','b3','b4']};
+	
+	m.minimized.actor = function(name,extra){
+		var spot = List.map['minimizedMap@MAIN'].addon[Q].spot[m.minimized.list[m.minimized.count++]];
+		extra = parseExtra(extra);
+		
+		extra.context = name;
+		extra.nevermove = 1;
+		extra.nevercombat = 1;
+		extra.angle = 90;
+		m.actor(spot,'npc','regular',extra);
+	};
+	
+	m.minimized.toggle = function(viewedIf,on,off){ 
+		var spot = List.map['minimizedMap@MAIN'].addon[Q].spot[m.minimized.list[m.minimized.count++]];
+		m.toggle(spot,viewedIf,on,off);
+	}
+	m.minimized.loot = function(viewedIf,open){ 
+		var spot = List.map['minimizedMap@MAIN'].addon[Q].spot[m.minimized.list[m.minimized.count++]];
+		m.loot(spot,viewedIf,open);
+	}
 	
 	
 	//Boss

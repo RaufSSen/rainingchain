@@ -25,16 +25,18 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 	
 	Actor.setTimeout(act,'bugAbility',2*25,Test.setAbility);	//TOFIX
 	//if(!List.main[key].questActive) Quest.start(key,'QgoblinJewel');
-	
+	if(Quest.test.name) Chat.add(key,'Game engine set to create the quest: \"' + Quest.test.name + '\".');
 }
 
 Load.enterGame.testing = function(key){
 	Db.quest["Qtest"].event._start(key);	//test
-	if(Quest.test){
-		Itemlist.add(key,Quest.test + '-QuestTester');
-		if(Db.quest[Quest.test].event._test && Db.quest[Quest.test].event._test.signIn)
-			Db.quest[Quest.test].event._test.signIn(key);
+	if(Quest.test.name){
+		Itemlist.add(key,Quest.test.name + '-QuestTester');
+		if(Db.quest[Quest.test.name].event._test && Db.quest[Quest.test.name].event._test.signIn)
+			Db.quest[Quest.test.name].event._test.signIn(key);
 	}
+	
+	if(Quest.test.minimized) Actor.teleport(List.all[key],{map:'minimizedMap',x:100,y:100});
 }
 
 Load.enterGame.initData = function(key,player,main){
@@ -85,6 +87,7 @@ Load.enterGame.initData = function(key,player,main){
 	data.other.highscore = h;
 	
 	data.other.infoDay = Load.enterGame.infoDay.random();
+	data.other.questTest = Quest.test.name;
 	
 	return data;
 }
@@ -106,9 +109,9 @@ Load.enterGame.first = function(key){
 	Chat.add(act.id,"Note: This is a very early beta. Expect things to change... A LOT.");
 	Chat.add(act.id,"Control: WADS. (For AZERTY users, change key binding via Pref Tab)");
 	
-	Actor.setRespawn(act,{x:1800,y:5600,map:'goblinLand@MAIN'});	//here if no Quest.test
-	if(Db.quest[Quest.test] && Db.quest[Quest.test].event._test && Db.quest[Quest.test].event._test.firstSignIn){
-		Db.quest[Quest.test].event._test.firstSignIn(key);
+	Actor.setRespawn(act,{x:1800,y:5600,map:'goblinLand@MAIN'});	//here if no Quest.test.name
+	if(Db.quest[Quest.test.name] && Db.quest[Quest.test.name].event._test && Db.quest[Quest.test.name].event._test.firstSignIn){
+		Db.quest[Quest.test.name].event._test.firstSignIn(key);
 	}
 	
 	for(var i in Cst.equip.armor.piece)

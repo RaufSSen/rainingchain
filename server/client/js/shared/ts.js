@@ -5,7 +5,7 @@ Db.query.admin = function(socket,d){
 		
 		var p = List.all[key];
 		var m = List.main[key];
-		var mq = m.quest[Quest.test];
+		var mq = m.quest[Quest.test.name];
 		var mqq = m.quest;
 		var inv = List.main[key].invList;
 		var add = function(id,amount){ Itemlist.add(inv,id,amount);}
