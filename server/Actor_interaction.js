@@ -141,7 +141,8 @@ Actor.click.loot = function(act,eid){	//need work
 	if(Collision.distancePtPt(act,e) > DIST) return TOOFAR(act.id);
 	if(e.quest && e.quest !== List.main[act.id].questActive) return Chat.add(act.id,"You need to start this quest via the Quest Tab before making progression in it.");
 	
-	if(e.loot(act.id) !== false){
+	e.loot(act.id);
+	if(!e.viewedIf(act.id)){
 		Chat.add(act.id,"Nice loot!");
 		act.removeList[eid] = 1;
 	}

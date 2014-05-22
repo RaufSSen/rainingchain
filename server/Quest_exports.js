@@ -477,19 +477,25 @@ exports.init = function(version,questname){	//}
 		extra = parseExtra(extra);
 		
 		extra.context = name;
+		extra.name = name;
 		extra.nevermove = 1;
 		extra.nevercombat = 1;
 		extra.angle = 90;
 		m.actor(spot,'npc','regular',extra);
 	};
 	
-	m.minimized.toggle = function(viewedIf,on,off){ 
+	m.minimized.toggle = function(name,viewedIf,on,off){ 
 		var spot = List.map['minimizedMap@MAIN'].addon[Q].spot[m.minimized.list[m.minimized.count++]];
-		m.toggle(spot,viewedIf,on,off);
+		
+		var extra = {context:name,name:name};
+		m.toggle(spot,viewedIf,on,off,'box',extra,Tk.deepClone(extra));
 	}
-	m.minimized.loot = function(viewedIf,open){ 
+	m.minimized.loot = function(name,viewedIf,open){ 
 		var spot = List.map['minimizedMap@MAIN'].addon[Q].spot[m.minimized.list[m.minimized.count++]];
-		m.loot(spot,viewedIf,open);
+		
+		var extra = {context:name,name:name};
+		
+		m.loot(spot,viewedIf,open,'chest',extra,Tk.deepClone(extra));
 	}
 	
 	
@@ -513,7 +519,7 @@ exports.init = function(version,questname){	//}
 	}
 	
 	s.item = function(name,icon,option,description){
-		var tmp = {name:name,icon:icon,description:description||name,option:[],trade:0,stack:1,bank:0,drop:0,quest:Q};
+		var tmp = {name:name,icon:icon || 'minimapIcon.loot',description:description||name,option:[],trade:0,stack:1,bank:0,drop:0,quest:Q};
 		for(var i in option){
 			tmp.option.push({'name':option[i][0],'func':option[i][1],'description':option[i][2] || option[i][0],'param':[]});
 		}

@@ -1,25 +1,15 @@
-
-
-
-Raining Chain was originally a:
-
-C++ Game
-Flash Game
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 ==PRESDK==
+
+episode 2
+episode 3: making map graphic
+episode 4: map load
+episode 5: extending quest: 
+
+
+
+
+
+
 SKIPPED: trade, craft,db.filter, passive
 
 jagex command test
