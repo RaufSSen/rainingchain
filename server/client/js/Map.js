@@ -10,11 +10,12 @@ Init.db.map = function(){
 		'goblinUnderground':[1,2],
 		'btt001':[1,2],
 		'minimizedMap':[1,2],
+		'tinyTown':[1,2],
 	}
 	//map are loaded when needed. check Loop.actor
 }
 
-Map = {};
+Map = {}; 446
 Map.creation = function(name){
 	var m = {};
 	m.name = name;

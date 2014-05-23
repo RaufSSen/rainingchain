@@ -13,7 +13,7 @@ var questList = [
 ];
 Quest = {test:{}};
 Quest.test.name = 'QgimmeGold';
-Quest.test.minimized = true;
+Quest.test.minimized = false;
 
 Init.db.quest = function(){
 	var questVar = {};

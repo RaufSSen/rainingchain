@@ -20,10 +20,10 @@ Dialogue.end = function(key){
 }
 
 Dialogue.option = function(key,option){
-	if(option.event)	applyFunc.key(key,option.event);
 	
 	if(option.next)	Dialogue.start(key,option.next);
 	else Dialogue.end(key);
+	if(option.event)	applyFunc.key(key,option.event);
 }
 
 Db.dialogue = {};

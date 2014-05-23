@@ -1,7 +1,5 @@
-REM Most antivirus blocks .bat and .exe files. If you can't use STARTSERVER.bat, delete STARTSERVER.bat and rename this file (STARTSERVER.txt) into STARTSERVER.bat. 
-REM You will need to see the file extension to do so. By default, it is hidden on Windows 7 and Windows 8. 
-REM Windows 8: https://www.youtube.com/watch?v=Yhtye2NzqKI
-REM Windows 7: https://www.youtube.com/watch?v=ZkNTKItyISo
-REM If this doesn't work either, another way is to open a command prompt and use "cd.." and "cd [FOLDER NAME]" to go in the game engine folder then type "node app.js"
-node app.js
-PAUSE
+Most antivirus blocks .bat and .exe files. If you can't use STARTSERVER.bat, here's another way to run the server:
+-To make it easier, move the game engine folder (rainingchain) in an easily reachable folder. (Ex: C:Users\YOURNAME\rainingchain) (OPTIONAL but recommended) 
+-Open command prompt. (Search for command with window start search bar)
+-Move to the rainingchain directory using "cd.." (to exit folder) and "cd [folder_name]" (to enter folder)
+-Once inside the rainingchain folder, type "node app.js" in the command line.

@@ -27,6 +27,7 @@ exports.init = function(version,questname){	//}
 	var parseExtra = function(extra){
 		if(!extra) return {quest:Q};
 		if(extra.viewedIf) extra.viewedIf = parseViewedIf(extra.viewedIf);
+		if(extra.name) extra.context = extra.name;
 		extra.quest = Q;
 		return extra;
 	}
