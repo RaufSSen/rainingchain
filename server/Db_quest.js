@@ -1,20 +1,17 @@
-Db.quest = {};
-Db.highscore = {};
-
 var questList = [
-	//'Qtutorial',
-	//'Qopenbeta2',
 	'Qtest',
 	'QgoblinJewel',
 	'Mtest',
 	'Qbtt',
-	'Qmytest',
-	'QgimmeGold',
+	//'Qmytest',
+	//'QgimmeGold',
 ];
-Quest = {test:{}};
-Quest.test.name = 'QgimmeGold';
-Quest.test.minimized = false;
+Quest.test = 'QgoblinJewel';
 
+//##### DONT TOUCH BELOW ############
+Db.quest = {};
+Db.highscore = {};
+Quest.test = {name:Quest.test,simple:false};
 Init.db.quest = function(){
 	var questVar = {};
 	for(var i in Db.quest){
@@ -35,6 +32,11 @@ Init.db.quest.map = function(){	//called before Init.db.quest
 	for(var i in Db.quest){
 		for(var j in Db.quest[i].map){
 			if(Db.map[j]) ERROR(1,"THERES ALREADY A MAP WITH THAT NAME.",j,i); 
+			if(j === 'simple'){	
+				Quest.creation.simpleMap(Db.quest[i]);
+				if(i === Quest.test.name) Quest.test.simple = true; 
+				continue; 
+			}
 			Db.map[j] = Db.quest[i].map[j];
 			Db.quest[i].map[j] = Db.quest[i].map[j]().addon;
 		}
@@ -90,7 +92,6 @@ Quest.creation = function(q){
 	for(var i in q.dialogue)	Db.dialogue[q.id][i] = q.dialogue[i];		
 	
 	//load map via Init.db.quest.map
-	if(q.minimizedMap) Quest.creation.minimizedMap(q);
 	for(var i in q.mapAddon)	Db.map[i].addon[q.id] = q.mapAddon[i];
 	
 	Db.npc[q.id] = {};
@@ -137,16 +138,16 @@ Quest.creation = function(q){
 	return q;
 }
 
-Quest.creation.minimizedMap = function(q){
+Quest.creation.simpleMap = function(q){
 	
-	q.mapAddon.minimizedMap = {
+	q.mapAddon.simpleMap = {
 		spot:{"a":{"x":240,"y":272},"b":{"x":400,"y":272},"c":{"x":560,"y":272},"d":{"x":720,"y":272},"e":{"x":880,"y":272},"f":{"x":1040,"y":272},"g":{"x":1200,"y":272},"h":{"x":1360,"y":272},"i":{"x":240,"y":464},"j":{"x":400,"y":464},"k":{"x":560,"y":464},"l":{"x":720,"y":464},"m":{"x":880,"y":464},"n":{"x":1040,"y":464},"o":{"x":1200,"y":464},"p":{"x":1360,"y":464},"q":{"x":240,"y":656},"r":{"x":400,"y":656},"s":{"x":560,"y":656},"t":{"x":720,"y":656},"u":{"x":880,"y":656},"v":{"x":1040,"y":656},"w":{"x":1200,"y":656},"x":{"x":1360,"y":656},"A":{"x":784,"y":752},"e1":{"x":240,"y":848},"e2":{"x":400,"y":848},"e3":{"x":560,"y":848},"e4":{"x":720,"y":848},"e5":{"x":880,"y":848},"e6":{"x":1040,"y":848},"e7":{"x":1200,"y":848},"e8":{"x":1360,"y":848},"n1":{"x":240,"y":1040},"n2":{"x":400,"y":1040},"n3":{"x":560,"y":1040},"n4":{"x":720,"y":1040},"t1":{"x":880,"y":1040},"t2":{"x":1040,"y":1040},"t3":{"x":1200,"y":1040},"t4":{"x":1360,"y":1040},"q1":{"x":240,"y":1232},"q2":{"x":400,"y":1232},"q3":{"x":560,"y":1232},"q4":{"x":720,"y":1232},"b1":{"x":880,"y":1232},"b2":{"x":1040,"y":1232},"b3":{"x":1200,"y":1232},"b4":{"x":1360,"y":1232}},
 		path:{},
 		variable:{},
-		load:q.minimizedMap,
+		load:q.map.simple,
 		loop:function(spot){} 
 	}
-
+	delete q.map.simple;
 }
 
 

@@ -72,6 +72,7 @@ require(serverPath + 'Db_boost');
 require(serverPath + 'Db_material');
 require(serverPath + 'Db_map');
 
+Quest = {test:{}};	//TOFIX
 require(serverPath + 'Db_quest');
 require(serverPath + 'Quest');
 require(serverPath + 'clan');

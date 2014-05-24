@@ -38,8 +38,9 @@ exports.init = function(version,questname){	//}
 	
 	s.quest = Quest.template(Q);
 	
-	s.startQuest = function(key){
-		Main.openWindow(List.main[key],'quest',Q);	
+	s.startQuest = function(key,auto){
+		if(auto && !List.main[key].questActive) Quest.start(key,Q);
+		else Main.openWindow(List.main[key],'quest',Q);	
 	}
 	
 	s.abandonQuest = function(key){
@@ -128,7 +129,7 @@ exports.init = function(version,questname){	//}
 	}
 
 	s.teleport = function(key,map,letter,instance,newmap){	//type: 0=immediate, 1=popup
-		if(Quest.test.minimized) return Chat.add(key,"Can't teleport because in minimized mode.");
+		if(Quest.test.simple) return Chat.add(key,"Can't teleport because in simple mode.");
 		
 		if(List.main[key].questActive !== Q) return Chat.add(key,"Can't teleport because quest not active.");
 		var p = s.getAct(key);
@@ -471,10 +472,11 @@ exports.init = function(version,questname){	//}
 	}
 	
 	//Minimized
-	m.minimized = {count:0,list:['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','e1','e2','e3','e4','e5','e6','e7','n1','n2','n3','n4','t1','t2','t3','t4','q1','q2','q3','q4','b1','b2','b3','b4']};
+	m.actor.count = 0;
+	m.actor.list = ['a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','e1','e2','e3','e4','e5','e6','e7','n1','n2','n3','n4','t1','t2','t3','t4','q1','q2','q3','q4','b1','b2','b3','b4'];
 	
-	m.minimized.actor = function(name,extra){
-		var spot = List.map['minimizedMap@MAIN'].addon[Q].spot[m.minimized.list[m.minimized.count++]];
+	m.actor.simple = function(name,extra){
+		var spot = List.map['simpleMap@MAIN'].addon[Q].spot[m.actor.list[m.actor.count++]];
 		extra = parseExtra(extra);
 		
 		extra.context = name;
@@ -485,14 +487,14 @@ exports.init = function(version,questname){	//}
 		m.actor(spot,'npc','regular',extra);
 	};
 	
-	m.minimized.toggle = function(name,viewedIf,on,off){ 
-		var spot = List.map['minimizedMap@MAIN'].addon[Q].spot[m.minimized.list[m.minimized.count++]];
+	m.toggle.simple = function(name,viewedIf,on,off){ 
+		var spot = List.map['simpleMap@MAIN'].addon[Q].spot[m.actor.list[m.actor.count++]];
 		
 		var extra = {context:name,name:name};
 		m.toggle(spot,viewedIf,on,off,'box',extra,Tk.deepClone(extra));
 	}
-	m.minimized.loot = function(name,viewedIf,open){ 
-		var spot = List.map['minimizedMap@MAIN'].addon[Q].spot[m.minimized.list[m.minimized.count++]];
+	m.loot.simple = function(name,viewedIf,open){ 
+		var spot = List.map['simpleMap@MAIN'].addon[Q].spot[m.actor.list[m.actor.count++]];
 		
 		var extra = {context:name,name:name};
 		

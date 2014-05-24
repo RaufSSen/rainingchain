@@ -112,8 +112,9 @@ Plan.creation.req = function(plan){
 	
 	//Item
 	var lvlcap = Math.floor(plan.lvl/20);
-	
 	var main = array[plan.piece] ? array[plan.piece].random() : plan.type;
+	//OPENBETA
+	/*	
 	for(var i = 0 ; i <= lvlcap; i++){	
 		var amount = lvl < 20 ? lvl*5 : 100
 		plan.req.item.push([main + '-' + i*20,100]);
@@ -128,7 +129,10 @@ Plan.creation.req = function(plan){
 	if(lvl > 10){
 		plan.req.item.push(['shard-' + plan.color,5]);	
 	}	
-		
+	*/	
+	plan.req.item.push(['leaf-0',10]);
+	plan.req.item.push(['wood-0',10]);
+	
 	//Skill
 	var sk = skill[main];
 	plan.req.skill[sk] = plan.lvl;

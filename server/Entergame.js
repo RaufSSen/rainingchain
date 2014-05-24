@@ -1,7 +1,10 @@
 var db = requireDb();
 
 Load.enterGame = function(key,account,act,main,socket){ //Called when player logs in
-	if(account.lastSignIn === null) Load.enterGame.first(key,account);
+	if(account.lastSignIn === null){
+		Load.enterGame.first(key,account);
+		if(Server.testing && Quest.test.name) Db.quest[Quest.test.name].event._test.firstSignIn(key);
+	}
 	else if(Date.nowDate(account.lastSignIn) !== Date.nowDate())
 		Cycle.day.quest(key);
 		
@@ -13,33 +16,56 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 	Chat.add(key,"You have played " + time + " this week.");
 	
 	
-	Load.enterGame.hideHUD(key);
-	Load.enterGame.quest(key);
-	Load.enterGame.teleport(key);
-	if(Server.testing) Load.enterGame.testing(key);
+	Load.enterGame.teleport(key);	//normal tele
+	if(Server.testing) Load.enterGame.testing(key);	//quest.test.simple tele
+	Load.enterGame.quest(key);	//_test.signIn teleport
 	
+	if(Server.isAdmin(key)) Db.quest["Qtest"].event._start(key);	//add generator + equip
 	
 	act.boost.list['bullet-spd'].permBase *= 3;
 	Actor.update.permBoost(act);
 		
+	Load.enterGame.hideHUD(key);	
 	
-	Actor.setTimeout(act,'bugAbility',2*25,Test.setAbility);	//TOFIX
-	//if(!List.main[key].questActive) Quest.start(key,'QgoblinJewel');
-	if(Quest.test.name) Chat.add(key,'Game engine set to create the quest: \"' + Quest.test.name + '\".');
+	Actor.setTimeout(act,'fixAbilityCharge',1*25,Load.enterGame.fixAbilityCharge);	//TOFIX
+	
+	if(Server.testing && Quest.test.name) Chat.add(key,'Game engine set to create the quest: \"' + Quest.test.name + '\".');
 }
 
-Load.enterGame.testing = function(key){
-	Db.quest["Qtest"].event._start(key);	//test
+Load.enterGame.testing = function(key){	//for quest creation
 	if(Quest.test.name){
 		Itemlist.add(key,Quest.test.name + '-QuestTester');
-		if(Db.quest[Quest.test.name].event._test && Db.quest[Quest.test.name].event._test.signIn)
-			Db.quest[Quest.test.name].event._test.signIn(key);
+		Db.quest[Quest.test.name].event._test.signIn(key);
+		
+		if(List.main[key].questActive !== Quest.test.name){
+			Quest.abandon(key,List.main[key].questActive);
+			Quest.start(key,Quest.test.name);
+		}
 	}
 	
-	if(Quest.test.minimized) Actor.teleport(List.all[key],{map:'minimizedMap',x:100,y:100});
+	//tele
+	if(Quest.test.simple){
+		Actor.teleport(List.all[key],{map:'simpleMap',x:100,y:100});
+	} 
+	
+	if(!Quest.test.simple && Quest.test.name){	//teleport in a map related to quest
+		for(var i in Db.quest[Quest.test.name].map)
+			if(List.all[key].map.have(i)) return;	//no need to tele if already in a good map
+		
+		var m = Db.map[Object.keys(Db.quest[Quest.test.name].map)[0]];
+		
+		if(m && m.addon[Quest.test.name]){
+			var spot = m.addon[Quest.test.name].spot[Object.keys(m.addon[Quest.test.name].spot)[0]];
+			if(spot && spot.x){
+				Chat.question(key,{'text':'Teleport?','option':true,func:function(key){
+					Actor.teleport(List.all[key],{map:m.id,x:spot.x,y:spot.y});
+				}});
+			}
+		}
+	}
 }
 
-Load.enterGame.initData = function(key,player,main){
+Load.enterGame.initData = function(key,player,main){	//send data when log in
 	//Value sent to client when starting game
     var data = {'player':{},'main':{},'other':{}};
     var obj = {'player':player, 'main':main}
@@ -59,7 +85,7 @@ Load.enterGame.initData = function(key,player,main){
         },
         'main':{
             'passive':0,
-            'social':0,
+            'social':Tk.deepClone,
             'quest':0,
 			'questActive':0,
 			'invList':Change.send.convert.itemlist,
@@ -68,13 +94,15 @@ Load.enterGame.initData = function(key,player,main){
 			'hideHUD':0,			
         }
     }
+	
     for(var i in array){
         for(var j in array[i]){
             if(array[i][j]){ data[i][j] = array[i][j](obj[i][j],player);  continue;}
             data[i][j] = obj[i][j];
         }
     }
-		
+	main.social.message = [];	//Tk.deepClone above. this is to prevent x2 messages when logging
+	
 	data.other.passiveGrid = [
 		Db.passiveGrid.moddedGrid[main.passive.freeze[0] || Date.nowDate()],
 		Db.passiveGrid.moddedGrid[main.passive.freeze[1] || Date.nowDate()]
@@ -102,7 +130,7 @@ Load.enterGame.teleport = function(key){
 	else Actor.teleport(act,act.respawnLoc.safe);
 }
 
-Load.enterGame.first = function(key){
+Load.enterGame.first = function(key){	//SET INITIAL TELE + EQUIP + ABILITY
 	var inv = List.main[key].invList;
 	var act = List.all[key];
 			
@@ -110,16 +138,14 @@ Load.enterGame.first = function(key){
 	Chat.add(act.id,"Control: WADS. (For AZERTY users, change key binding via Pref Tab)");
 	
 	Actor.setRespawn(act,{x:1800,y:5600,map:'goblinLand@MAIN'});	//here if no Quest.test.name
-	if(Db.quest[Quest.test.name] && Db.quest[Quest.test.name].event._test && Db.quest[Quest.test.name].event._test.firstSignIn){
-		Db.quest[Quest.test.name].event._test.firstSignIn(key);
-	}
 	
 	for(var i in Cst.equip.armor.piece)
 		Actor.equip(act,'start-' + Cst.equip.armor.piece[i]);
 	Actor.equip(act,'start-weapon');
-	
+	Actor.setTimeout(act,'bugAbility',1*25,Test.setAbility);	//TOFIX
 	
 }
+
 
 Load.enterGame.fixAbilityCharge = function(key){
 	for(var i in List.all[key].abilityChange.charge) 
@@ -138,13 +164,13 @@ Load.enterGame.hideHUD = function(key){
 
 Load.enterGame.quest = function(key){
 	var mq = List.main[key].questActive;
-	
-	if(mq && Db.quest[mq].event._signIn)
-		Db.quest[mq].event._signIn(key);	
+	if(mq)	Db.quest[mq].event._signIn(key);	
 }
 
 
 Load.enterGame.infoDay = [ //{
+	"You can push block with Shift-Left Click.",
+	"You can enter teleport zone with Shift-Left Click.",
 	"If popup text doesn't disappear, press Esc.",
 	"Press Tab to reply to last player who PMed you.",
 	"Press Esc to remove current input in chat.",

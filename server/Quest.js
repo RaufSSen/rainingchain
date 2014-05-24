@@ -370,16 +370,16 @@ Quest.highscore.template = function(){
 Quest.highscore.fetch = function(category,cb){
 	var req = {}; req[category] = {$ne:null};
 	var proj = {username:1,_id:0};	proj[category] = 1;
-	var sort = {}; sort[category] = 1;
+	var sort = {}; sort[category] = Db.highscore[category].order === 'ascending' ? 1 : -1;
 	
-	db.find('highscore',req,proj,function(err,res){	if(err) throw err;
+	db.find('highscore',req,proj).limit(15).sort(sort,function(err,res){ if(err) throw err;
 		for(var i = 0; i < res.length; i++){
 			res[i].rank = i+1;
 			res[i].score = res[i][category];
 			delete res[i][category];
 		}
 		cb(res);
-	}).sort(sort).limit(15);
+	});	
 	
 	//ts("Quest.highscore.fetch(key,'Qbtt-time')")
 }

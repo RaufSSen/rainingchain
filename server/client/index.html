@@ -13,6 +13,7 @@
 		<link rel="stylesheet" href="/css/css.css" type="text/css" />
 		<link rel="stylesheet" href="/css/login.css" type="text/css"/>
 		<link rel="stylesheet" href="/css/progress.css" type="text/css" />
+		<link rel="stylesheet" href="/css/button.css" type="text/css" />
 		
 		<script src="/js/shared/BISON.js"></script>
 		
@@ -201,7 +202,9 @@
 				
 				<div id="highscoreWinDiv"	class="posAbs" style="font-size: 30px;"> 
 					Quest: <select class="selectHighscore" id="highscoreWinSelectQuest"></select> - 
-					Category: <select class="selectHighscore" id="highscoreWinSelectCategory"></select><br>
+					Category: <select class="selectHighscore" id="highscoreWinSelectCategory"></select> - 
+					<button class="myButton" onclick="Draw.window.highscore.update()">Update</button>
+					<br>
 					<div id="highscoreWinTable" class="CSSTableGenerator posAbs" style="width:500px"></div>
 					
 				</div>

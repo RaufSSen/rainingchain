@@ -1,12 +1,7 @@
 ==PRESDK==
 
-episode 2
-episode 3: making map graphic
-episode 4: map load
-episode 5: extending quest: 
 
-
-
+select icon
 
 
 

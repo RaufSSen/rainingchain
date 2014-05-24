@@ -9,7 +9,7 @@ Db.query.admin = function(socket,d){
 		var mqq = m.quest;
 		var inv = List.main[key].invList;
 		var add = function(id,amount){ Itemlist.add(inv,id,amount);}
-		var tele = function(x,y,map){		Actor.teleport(p,x,y,map);	}
+		var tele = function(x,y,map){ Actor.teleport(p,x,y,map); }
 		var act = p;
 		var q = m.quest;
 		

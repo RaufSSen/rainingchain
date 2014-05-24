@@ -11,7 +11,6 @@ reset pvp = bad
 */
 
 Server =  {
-	testing:!NODEJITSU,		//will trigger special testing func
 	frequence:{
 		save:Math.round(60*1000/40),	//save player
 		inactivity:10*60*1000,			//quit if no input
@@ -28,7 +27,7 @@ Server =  {
 	report:false,						//accept report
 	loginMessage:"Server is down. Come later.",
 }
-
+Server.testing = !NODEJITSU;		//will trigger special testing func
 
 Server.start = function(data){
 	if(Server.ready) return;
@@ -64,7 +63,9 @@ Server.admin = [
 ];
 if(Server.testing) Server.admin = ['rc','sam','sama','admin','idk whats rc','idkwhatsrc']; 
 
-
+Server.isAdmin = function(key){
+	return Server.admin.have(List.all[key].name);
+}
 
 
 Server.log = function(lvl,key,type){	//only logs then, no display

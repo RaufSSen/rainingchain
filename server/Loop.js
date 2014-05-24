@@ -213,6 +213,7 @@ Group.loop = function(g){
 }
 
 Group.remove = function(g){
+	if(!g) return ERROR(3,'no group');
 	for(var i in g.list){
 		var e = List.actor[i];
 		if(!e){ ERROR(2,'no actor');  continue; }

@@ -37,27 +37,21 @@ q.reward = {
 };
 
 q.highscore = {
-	'bob':{name:'Testing',order:'descending',getScore:function(key){
-		return Math.round(Math.random()*10000);
-	}},
-	'baa':{name:'Testinasdg',order:'descending',getScore:function(key){
-		return Math.round(Math.random()*10000);
-	}},
-
+	
 };
 
 
 q.drop = {
 	category:{
-		'woodcutting':1,
+		'woodcutting':0.25,
 	},
 	getDropMod:function(amount){
 		return Math.min(1,100 / amount);	//below 100 => 1, at 200 => 1/2, 300 => 1/3	
 	},
 	plan:{
-		'melee-mace':1/2,
-		'amulet-ruby':1/2,
-		'melee-spear':1/100,
+		'range-bow':1/100,
+		//'amulet-ruby':1/2,
+		//'melee-spear':1/100,
 	},
 	getExp:function(amount,key){
 		return {};	
@@ -65,7 +59,7 @@ q.drop = {
 }
 
 q.challenge = {
-	speedrunner:s.challenge('speedrun','1:05:10.10'),
+	speedrunner:s.challenge('speedrun','0:30:00.00'),
 };
 
 
@@ -451,10 +445,7 @@ q.map.goblinLand = function(){
 	a.load = function(spot){
 		m.skillPlot(spot.e3,'tree-red',0);
 		
-		m.actor(spot.n1,"system","target");
-		
 		//Quest
-		/*
 		m.actor(spot.n1,"npc","regular",{
 			name:'Ringo',
 			'sprite,name':"villager-male0",
@@ -462,7 +453,6 @@ q.map.goblinLand = function(){
 			nevermove:1,
 			dialogue:q.event.talkRingo,
 		});
-		*/
 		
 		m.loot(spot.q1,'!haveFlower',q.event.getFlower,"flower");
 		

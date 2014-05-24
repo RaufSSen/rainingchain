@@ -100,7 +100,7 @@ Db.query.highscore = function(d,cb){
 	
 	Quest.highscore.fetch(d.id,function(res){
 		for(var i in res){	//test if already there
-			if(List.nameToKey[res[i].username] === d.key){
+			if(List.nameToKey[res[i].username] === d.key){	//already in list, no need to add at end
 				cb({
 					info:res,
 					db:'highscore',
@@ -132,13 +132,13 @@ Db.query.highscore = function(d,cb){
 
 if(!SERVER){
 
-Db.query = function(db,id){
+Db.query = function(db,id,update){
 	if(!id || !db) return;
 	
 	var equip = Db[db][id];
-	if(equip) return equip;
+	if(!update && equip) return equip;
 	
-	if(equip === undefined){
+	if(update || equip === undefined){
 		Db[db][id] = 0;
 		socket.emit('queryDb', {db:db,id:id});
 	}

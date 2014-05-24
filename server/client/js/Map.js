@@ -1,21 +1,22 @@
 //Map
 Init.db.map = function(){
-    //[amount of sub-map in X, amount of sub-maps in Y]
     Db.map = {};
 	
-	Init.db.map.list = {
+	//[amount of sub-map in X, amount of sub-maps in Y]	(Check last image)
+    Init.db.map.list = {
 		'tutorial':[1,5],
 		'pvpF4A':[1,2],
 		'goblinLand':[4,8],
 		'goblinUnderground':[1,2],
 		'btt001':[1,2],
-		'minimizedMap':[1,2],
+		'simpleMap':[1,2],
 		'tinyTown':[1,2],
 	}
-	//map are loaded when needed. check Loop.actor
+	
 }
-
-Map = {}; 446
+//DONT TOUCH BELOW
+//map are loaded when needed. check Loop.actor
+Map = {}; 
 Map.creation = function(name){
 	var m = {};
 	m.name = name;

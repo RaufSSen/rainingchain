@@ -1367,8 +1367,12 @@ Draw.window.highscore = function (){ ctxrestore();
 	var rank = Db.query('highscore',main.windowList.highscore);
 	if(!rank) return;
 	
-	//Table
+	/*if(!main.windowList.highscore.have($("#highscoreWinSelectQuest")[0].value)){
+		$("#highscoreWinSelectQuest")[0].value = main.windowList.highscore.split('-')[0];
+		Draw.window.highscore.changeQuest();
+	}*/
 	
+	//Table
 	hq.table.style.left = 250 + 'px'; 
 	hq.table.style.top = 50 + 'px'; 
 	
@@ -1396,18 +1400,29 @@ Draw.window.highscore.changeQuest = function(){
 	var quest = $("#highscoreWinSelectQuest")[0].value;
 	
 	var str = '';
-	var bool = true;
 	for(var i in Db.highscoreList){
 		if(!i.have(quest)) continue;
-		if(bool){ Command.send('win,open,highscore,' + category); bool = false; }
 		str += '<option value="' + i + '">' + Db.highscoreList[i] + '</option>';
 	}	
 	$("#highscoreWinSelectCategory")[0].innerHTML = str;
 	
+	if(str)	Draw.window.highscore.changeCategory();
+	else html.highscoreWin.table.innerHTML = '';
+}
+Draw.window.highscore.changeCategory = function(){
+	var category = $("#highscoreWinSelectCategory")[0].value;
+	
+	Command.send('win,open,highscore,' + category);
 }
 
 
-
+Draw.window.highscore.update = function(){
+	if(Date.now() - Draw.window.highscore.update.lastClick > 2000){
+		Draw.window.highscore.update.lastClick = Date.now();
+		Db.query('highscore',main.windowList.highscore,true);
+	}	
+}
+Draw.window.highscore.update.lastClick = Date.now();
 
 
 

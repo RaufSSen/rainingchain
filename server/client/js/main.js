@@ -137,15 +137,19 @@ Init.game.other = function(data){
 	Db.highscoreList = data.other.highscore; //TOFIX crap name
 	
 	var str = '';
-	for(var i in Db.questNameConvert) str += '<option value="' + i + '">' + Db.questNameConvert[i] + '</option>';
+	dance:
+	for(var i in Db.questNameConvert){
+		for(var j in Db.highscoreList){
+			if(j.have(i)){	//aka at least 1 category for the quest
+				str += '<option value="' + i + '">' + Db.questNameConvert[i] + '</option>';
+				continue dance;
+			}
+		}	
+		
+	}
 	$("#highscoreWinSelectQuest")[0].innerHTML = str;
-	$(document).on('change','#highscoreWinSelectQuest',function(){
-		Draw.window.highscore.changeQuest();
-	});
-	
-	$(document).on('change','#highscoreWinSelectCategory',function(){
-		Command.send('win,open,highscore,' + this.value);
-	});
+	$(document).on('change','#highscoreWinSelectQuest',function(){Draw.window.highscore.changeQuest();});
+	$(document).on('change','#highscoreWinSelectCategory',function(){Draw.window.highscore.changeCategory});
 	
 	
 	$("#infoDay")[0].innerHTML = 'Info of the day: ' + data.other.infoDay;

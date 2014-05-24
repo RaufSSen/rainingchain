@@ -80,13 +80,15 @@ q.event = {
 		
 	},
 	talkJenny:function(key){
+		s.startQuest(key,true);
 		s.dialogue(key,'jenny','intro','first');
+		s.chat(key,"Press F to restart quickly.");
 	},
 	teleportCourse:function(key){
 		s.teleport(key,'btt001','q1','solo',1);
 		s.chrono(key,'timer','remove');
 		s.usePreset(key,'target');
-		s.freeze(key,2*25,q.event.startCourse);
+		s.freeze(key,1*25,q.event.startCourse);
 	},
 	startCourse:function(key){
 		s.chat(key,"GO!");
