@@ -57,6 +57,7 @@ Plan.creation = function(preplan){
 		'option':[	
 			{'name':'Examine','func':'Main.examine','param':['plan',plan.id]},
 			{'name':'Use','func':'Plan.use','param':[plan.id]},
+			//{'name':'Salvage','func':'Plan.salvage','param':[plan.id]},
 		]
 	});
 		
@@ -225,7 +226,17 @@ Plan.upgrade = function(){
 }
 
 
-
+Plan.salvage = function(key,id){
+	//transform equip into shard
+	var inv = List.main[key].invList;
+	if(Itemlist.have(inv,id)){
+		var plan = Db.plan[id];
+		if(!plan) return ERROR(3,'no plan');
+		
+		Itemlist.remove(inv,id);
+		Itemlist.add(inv,'shard-'+plan.color);
+	}
+}
 
 
 

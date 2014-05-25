@@ -38,7 +38,7 @@ Load.enterGame.testing = function(key){	//for quest creation
 		Db.quest[Quest.test.name].event._test.signIn(key);
 		
 		if(List.main[key].questActive !== Quest.test.name){
-			Quest.abandon(key,List.main[key].questActive);
+			if(List.main[key].questActive) Quest.abandon(key,List.main[key].questActive);
 			Quest.start(key,Quest.test.name);
 		}
 	}
@@ -115,7 +115,7 @@ Load.enterGame.initData = function(key,player,main){	//send data when log in
 	data.other.highscore = h;
 	
 	data.other.infoDay = Load.enterGame.infoDay.random();
-	data.other.questTest = Quest.test.name;
+	if(Server.testing) data.other.questTest = Quest.test.name;
 	
 	return data;
 }

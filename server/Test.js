@@ -64,7 +64,19 @@ Test.invincible = function(key){
 		Chat.add(key,'Not Invincible');
 	}
 }
-
+Test.ghost = function(key){
+	if(List.all[key].ghost){
+		Actor.permBoost(List.all[key],'Test.ghost');
+		Chat.add(key,'Not ghost');
+		List.all[key].ghost = 0;
+	} else {
+		List.all[key].ghost = 1;
+		Actor.permBoost(List.all[key],'Test.ghost',[
+			{stat:'maxSpd',value:40,type:'+'},
+			{stat:'acc',value:5,type:'+'},
+		]);	
+	}
+}
 
 Test.generateEquip = function(key,lvl,maxAmount){
 	var act = List.all[key];

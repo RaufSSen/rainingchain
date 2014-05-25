@@ -135,7 +135,10 @@ Input.event.key = function(code,dir,event){
 			for(var j = start ; j < Input.key.custom[i].keyCode.length; j++){
 				if(code === Input.key.custom[i].keyCode[j]){
 					Input.key.custom[i].func();
-					if(gameStarted) event.preventDefault();
+					if(gameStarted){
+						event.preventDefault();
+						console.log(1);
+					}
 				}
 			}
 		}

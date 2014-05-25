@@ -40,9 +40,11 @@ Draw.actor.chatHead = function(act){
 	var numX = Cst.WIDTH2+act.x-player.x;
 	var numY = Cst.HEIGHT2+act.y-player.y - 35 + spriteFromDb.hpBar*sizeMod;;
 	
-	ctx.fillStyle="yellow";
 	ctx.textAlign = 'center';
+	ctx.fillStyle="black";
 	ctx.fillText(act.chatHead.text,numX,numY);
+	ctx.fillStyle="yellow";
+	ctx.fillText(act.chatHead.text,numX-1,numY-1);
 	ctx.textAlign = 'left';
 	ctx.fillStyle="black";
 }		

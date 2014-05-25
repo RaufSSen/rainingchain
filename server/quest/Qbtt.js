@@ -204,14 +204,14 @@ q.map.btt001 = function(){
 
 
 q.mapAddon.goblinLand = {
-	spot:{"n1":{"x":2704,"y":6032}},
+	spot:{"n1":{"x":2192,"y":5520}},
 	path:{},
 	variable:{},
 	load:function(spot){
 		m.actor(spot.n1,"npc","regular",{
 			name:'Jenny',
 			'sprite,name':"villager-female0",
-			angle:180,
+			angle:90,
 			nevermove:1,
 			dialogue:q.event.talkJenny,
 		});

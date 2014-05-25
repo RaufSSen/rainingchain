@@ -2,7 +2,7 @@
 var s = require('./../Quest_exports').init('v1.0','Qtest');
 var q = s.quest; var m = s.map; var b = s.boss;
 
-q.visible = false;
+q.name = "Invisible...";
 q.variable = {
 	
 };
@@ -32,6 +32,7 @@ q.event = {
 q.item['generator'] = {'name':'Generator','icon':'magic.staff','stack':1,'drop':0,'option':[		
 	{'name':'Tele','param':[],'func':function(key){
 		s.question(key,{text:"x,y,map", func:function(key,x,y,map){
+			if(map == '1'){ s.getAct(key).x += +x; s.getAct(key).y += +y; return; }
 			Actor.teleport(s.getAct(key),{x:+x,y:+y,map:map});		
 		}});	
 	}},	
@@ -53,6 +54,7 @@ q.item['generator'] = {'name':'Generator','icon':'magic.staff','stack':1,'drop':
 		}});	
 	}},
 	{'name':'Invincible','param':[],'func':Test.invincible},
+	{'name':'Ghost','param':[],'func':Test.ghost},
 ]};	
 
 q.item['equipGenerator'] = {'name':'Equip Gen','icon':'system.gold','stack':1,'option':[

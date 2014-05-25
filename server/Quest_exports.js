@@ -39,6 +39,7 @@ exports.init = function(version,questname){	//}
 	s.quest = Quest.template(Q);
 	
 	s.startQuest = function(key,auto){
+		if(List.main[key].questActive === Q) return;
 		if(auto && !List.main[key].questActive) Quest.start(key,Q);
 		else Main.openWindow(List.main[key],'quest',Q);	
 	}
@@ -53,7 +54,7 @@ exports.init = function(version,questname){	//}
 	
 	s.get = function(key,attr){
 		if(!List.main[key]) return;	//case enemy
-		var mq = List.main[key].quest[Q];		
+		var mq = List.main[key].quest[Q];	
 		var a = mq[attr];
 		return typeof a === 'object' ? Tk.deepClone(a) : a;	//prevent setting
 	}
@@ -259,6 +260,7 @@ exports.init = function(version,questname){	//}
 		var spot = s.getSpot(s.getAct(key).map,Q,spot);
 		return Actor.creation({spot:spot,category:cat,variant:variant,lvl:lvl || 0,extra:parseExtra(extra)});
 	}
+	
 	s.actorGroup = function(key,spot,respawn,list,extra){
 		var spot = s.getSpot(s.getAct(key).map,Q,spot);
 		var tmp = [];
@@ -335,7 +337,6 @@ exports.init = function(version,questname){	//}
 		
 		var totalinit = Math.abs(zone[1] - zone[0])/32 + Math.abs(zone[3] - zone[2])/32 + 1; //one should have value, other be 0
 		var total = totalinit;	
-		
 		var a9 = Math.floor(total/9);	total -= a9*9;
 		var a5 = Math.floor(total/5);	total -= a5*5;
 		var a3 = Math.floor(total/3);	total -= a3*3;
@@ -357,7 +358,7 @@ exports.init = function(version,questname){	//}
 				}
 			}
 		}
-		if(zone[0] === zone[1]){	//horizontal
+		if(zone[0] === zone[1]){	//vertical
 			var y = zone[2] + 16;
 			for(var i in list){
 				var ext = Tk.deepClone(extra);
@@ -493,6 +494,7 @@ exports.init = function(version,questname){	//}
 		var extra = {context:name,name:name};
 		m.toggle(spot,viewedIf,on,off,'box',extra,Tk.deepClone(extra));
 	}
+	
 	m.loot.simple = function(name,viewedIf,open){ 
 		var spot = List.map['simpleMap@MAIN'].addon[Q].spot[m.actor.list[m.actor.count++]];
 		

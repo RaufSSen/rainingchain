@@ -668,7 +668,7 @@ Init.db.npc = function(){
 		"sprite":{'name':"loot-flowerOff",'sizeMod':1},
 		'nevercombat':1,
 		'nevermove':1,
-		"block":{size:[-1,1,-1,1]},
+		"block":{size:[0,0,0,0]},
 	}; //}
 	a["loot"]["flowerOn"] = template(a["loot"]["chestOff"],'loot-flowerOn');	
 	//}

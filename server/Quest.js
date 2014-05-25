@@ -183,7 +183,7 @@ Quest.reset = function(key,qid,abandon){
 	
 	main.questActive = '';
 	main.quest[qid] = newmq;
-	
+	Dialogue.end(key);
 }
 
 Quest.orb = function(key,quest,amount){	//when using orb on quest, only boost passive
@@ -260,6 +260,7 @@ Quest.challenge.template.speedrun = function(time,bonus){
 }
 
 Quest.challenge.template.survivor = function(amount,bonus){
+	amount = amount || 1;
 	return {
 		name:'Survivor',
 		description:'Complete the quest dying less than ' + amount + ' times.',

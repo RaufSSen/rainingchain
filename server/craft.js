@@ -183,7 +183,7 @@ Craft.equip.salvage = function(key,id){
 	var inv = List.main[key].invList;
 	if(Itemlist.have(inv,id)){
 		var equip = Db.equip[id];
-		if(!equip) return;
+		if(!equip) return ERROR(3,'no equip');
 		
 		Itemlist.remove(inv,id);
 		Itemlist.add(inv,'shard-'+equip.color);

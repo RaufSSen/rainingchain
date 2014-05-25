@@ -271,7 +271,7 @@ Init.db.sprite = function(){
 		"walk":{"startY":0,"frame":1,"sizeX":80,"sizeY":32,"dir":1,"spd":0,"walk":0,"next":"walk"},
 	}};
 	a["block-spike1x5"] ={"src":"picture/block-spike1x5.png","size":2,"preBumperBox":[ -8,72,-16,16 ],anim:{
-		"walk":{"startY":0,"frame":1,"sizeX":112,"sizeY":32,"dir":1,"spd":0,"walk":0,"next":"walk"},
+		"walk":{"startY":0,"frame":1,"sizeX":144,"sizeY":32,"dir":1,"spd":0,"walk":0,"next":"walk"},
 	}};
 	a["block-spike1x9"] ={"src":"picture/block-spike1x9.png","size":2,"preBumperBox":[ -8,104,-16,16 ],anim:{
 		"walk":{"startY":0,"frame":1,"sizeX":272,"sizeY":32,"dir":1,"spd":0,"walk":0,"next":"walk"},

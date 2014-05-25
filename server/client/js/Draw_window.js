@@ -1420,6 +1420,7 @@ Draw.window.highscore.update = function(){
 	if(Date.now() - Draw.window.highscore.update.lastClick > 2000){
 		Draw.window.highscore.update.lastClick = Date.now();
 		Db.query('highscore',main.windowList.highscore,true);
+		Chat.add(0,"Highscores take about 15 seconds to update. =/");
 	}	
 }
 Draw.window.highscore.update.lastClick = Date.now();
