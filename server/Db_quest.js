@@ -6,7 +6,7 @@ var questList = [
 	//'Qmytest',
 	//'QgimmeGold',
 ];
-Quest.test = 'QgoblinJewel';
+Quest.test = '';
 
 //##### DONT TOUCH BELOW ############
 Db.quest = {};
@@ -257,17 +257,17 @@ Quest.template.variable = function(){
 
 Quest.template.event = function(){
 	return {
-		_complete:null,
-		_start:null,
-		_abandon:null,
-		_signIn:null,
-		_hint:null,
-		_death:null,
+		_complete:Cst.func,
+		_start:Cst.func,
+		_abandon:Cst.func,
+		_signIn:Cst.func,
+		_hint:Cst.func,
+		_death:Cst.func,
 		_test:{
-			signIn:null,
-			firstSignIn:null,
+			signIn:Cst.func,
+			firstSignIn:Cst.func,
 		},
-		_getScoreMod:null,	//return NUMBER
+		_getScoreMod:Cst.func,	//return NUMBER
 	}
 }
 

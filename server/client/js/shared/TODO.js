@@ -1,8 +1,5 @@
 ==PRESDK==
 
-plan 2x drop
-
-
 
 
 

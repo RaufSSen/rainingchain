@@ -3,7 +3,10 @@ var db = requireDb();
 Load.enterGame = function(key,account,act,main,socket){ //Called when player logs in
 	if(account.lastSignIn === null){
 		Load.enterGame.first(key,account);
-		if(Server.testing && Quest.test.name) Db.quest[Quest.test.name].event._test.firstSignIn(key);
+		if(Server.testing && Quest.test.name){
+			console.log(Db.quest[Quest.test.name].event._test);
+			Db.quest[Quest.test.name].event._test.firstSignIn(key);
+		}
 	}
 	else if(Date.nowDate(account.lastSignIn) !== Date.nowDate())
 		Cycle.day.quest(key);

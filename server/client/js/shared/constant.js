@@ -12,7 +12,7 @@ Cst.ICON = 48;
 Cst.ITEM = 48;
 Cst.FACE = 48;
 Cst.FRICTION = 0.80;
-
+Cst.func = function(){};
 Cst.bigInt = Math.pow(10,10);
 
 Cst.SEC = 1000;
