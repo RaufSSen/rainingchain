@@ -63,7 +63,9 @@ Server.admin = [
 ];
 if(Server.testing) Server.admin = ['rc','sam','sama','admin','idk whats rc','idkwhatsrc']; 
 
-Server.isAdmin = function(key){
+Server.isAdmin = function(key,username){
+	if(Server.testing) return true;
+	if(username) return Server.admin.have(key);
 	return Server.admin.have(List.all[key].name);
 }
 

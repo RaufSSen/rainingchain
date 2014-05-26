@@ -257,7 +257,7 @@ Init.db.sprite = function(){
 	a["tree-red"] ={"src":"picture/tree-red.png","size":2,"preBumperBox":[ -32,32,-40,40 ]};
 	a["tree-down"] ={"src":"picture/tree-down.png","size":2,"preBumperBox":[ -32,32,-40,40 ]};
 	
-	a["teleport-door"] ={"src":"picture/teleport-door.png","size":1,"preBumperBox":[ -16,16,-8,40 ]};
+	a["teleport-door"] ={"src":"picture/teleport-door.png","size":2,"preBumperBox":[ -16,16,-8,40 ]};
 	a["teleport-zone"] ={"src":"picture/teleport-zone.png","size":1.5,"side":[0,1,2,3],"preBumperBox":[ -16,16,-16,16 ]};
 	a["teleport-underground"] ={"src":"picture/teleport-underground.png","size":2.5,"preBumperBox":[ -16,16,-16,16 ]};
 	a["teleport-well"] ={"src":"picture/teleport-well.png","size":2,"preBumperBox":[ -24,24,-24,24 ]};

@@ -134,7 +134,7 @@ Db.socket = {
 		online:1,
 		func:function(socket,d){
 			var act = List.all[socket.key];
-			if(act && act.name && Server.admin.have(act.name))
+			if(act && act.name && Server.isAdmin(socket.key))
 				Db.query.admin(socket,d);
 		},
 	},

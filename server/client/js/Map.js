@@ -11,6 +11,8 @@ Init.db.map = function(){
 		'btt001':[1,2],
 		'simpleMap':[1,2],
 		'tinyTown':[1,2],
+		'bobHouse':[1,2],
+		'dragonLair':[1,3],
 	}
 	
 }

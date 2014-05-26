@@ -134,7 +134,7 @@ exports.init = function(version,questname){	//}
 		Dialogue.start(key,{group:Q,npc:npc,convo:convo,node:node});
 	}
 
-	s.teleport = function(key,map,letter,instance,newmap){	//type: 0=immediate, 1=popup
+	s.teleport = function(key,map,letter,instance,newmap){	//
 		if(Quest.test.simple) return Chat.add(key,"Can't teleport because in simple mode.");
 		
 		if(List.main[key].questActive !== Q) return Chat.add(key,"Can't teleport because quest not active.");

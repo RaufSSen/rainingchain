@@ -4,9 +4,9 @@ var questList = [
 	'Mtest',
 	'Qbtt',
 	//'Qmytest',
-	//'QgimmeGold',
+	'QgimmeGold',
 ];
-Quest.test = '';
+Quest.test = 'QgimmeGold';
 
 //##### DONT TOUCH BELOW ############
 Db.quest = {};

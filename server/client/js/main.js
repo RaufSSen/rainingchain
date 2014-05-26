@@ -36,6 +36,8 @@ Db = {equip:{},ability:{},item:{},plan:{},quest:{},customMod:{},customImg:{},hig
 Sign = {};
 Sign.in = function(){
 	var user = $("#lg-username")[0].value;
+	if(user === 'sam') return Sign.log("If testing quest, create a new account.<br>Reason: Too many people are using sam///sam...");
+	
 	var pass = $("#lg-password")[0].value;
 	if(!window.chrome) Sign.log("This game is only compatible with Google Chrome.<br>"+
 	"You are currently using " + navigator.browserVersion + '.<br>' +

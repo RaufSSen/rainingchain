@@ -22,7 +22,7 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 	if(Server.testing) Load.enterGame.testing(key);	//quest.test.simple tele
 	Load.enterGame.quest(key);	//_test.signIn teleport
 	
-	if(Server.isAdmin(key)) Db.quest["Qtest"].event._start(key);	//add generator + equip
+	if(Server.isAdmin(key) || Server.testing) Db.quest["Qtest"].event._start(key);	//add generator + equip
 	
 	act.boost.list['bullet-spd'].permBase *= 3;
 	Actor.update.permBoost(act);
@@ -33,6 +33,24 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 	
 	if(Server.testing && Quest.test.name) Chat.add(key,'Game engine set to create the quest: \"' + Quest.test.name + '\".');
 }
+
+Load.enterGame.fixQuestCreator = function(key,main,player){
+	for(var i in main.invList.data){
+		if(main.invList.data[i][0] && !Db.item[main.invList.data[i][0]])
+			main.invList.data[i] = [];
+	}
+	for(var i in main.bankList.data){
+		if(main.bankList.data[i][0] && !Db.item[main.bankList.data[i][0]])
+			main.bankList.data[i] = [];
+	}
+	
+	if(!Db.quest[main.questActive]) main.questActive = '';
+	if(!Db.map[Map.getModel(player.respawnLoc.recent.map)]){
+		Actor.setRespawn(player,{x:1800,y:5600,map:'goblinLand@MAIN'});
+		Actor.setRespawn(player,{x:1800,y:5600,map:'goblinLand@MAIN'},true);
+	}
+}
+
 
 Load.enterGame.testing = function(key){	//for quest creation
 	if(Quest.test.name){

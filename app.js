@@ -1,6 +1,8 @@
 NODEJITSU = typeof process.env.NODEJITSU !== 'undefined';
 SERVER = true;
 
+
+
 //Create Server
 var http = require('http');
 var path = require('path');
@@ -21,6 +23,7 @@ app.use(express.bodyParser());
 app.use(express.static(path.resolve(__dirname, 'server/client')));	//need to be entered manually
 
 //Require
+try { require(serverPath + 'SAM'); SAM = true; } catch(err){ SAM = false; }	//BAD
 require(clientPath + 'essentialsShare');
 require(serverPath + (NODEJITSU ? 'Db_private' : 'Db'));
 require(serverPath + 'Server');
