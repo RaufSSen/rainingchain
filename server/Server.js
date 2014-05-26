@@ -7,7 +7,7 @@ var db = requireDb();
 
 pvp too much dmg
 reset pvp = bad
-
+4- ts("for(var i in List.main) Chat.question(i,{text:'https://twitter.com/rainingchain',func:function(){}});")
 */
 
 Server =  {
@@ -115,7 +115,9 @@ Server.ban = function(name){
 }
 */
 
-
+Server.getPlayerAmount = function(){
+	return Object.keys(List.main).length;
+}
 
 
 Server.reset = function(save){

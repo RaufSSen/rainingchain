@@ -81,10 +81,10 @@ q.variable = {
 
 q.event = {
 	_hint:function(key){
-		if(s.haveItem(key,'jewel')) return 'Give Jewel to Ringo.';
-		if(!s.get(key,'talkRingo')) return 'Talk to Ringo in Goblin Land.';
-		if(!s.get(key,'haveFlower')) return 'Get Flower in Goblin Land.';
-		if(!s.haveItem(key,'orc_sock') && !s.haveItem(key,'potion')) return 'Get Orc Sock in Goblin Land.';
+		if(s.haveItem(key,'jewel')) return 'Give Jewel to Ringo in Goblin Land, South West.';
+		if(!s.get(key,'talkRingo')) return 'Talk to Ringo in Goblin Land, South West.';
+		if(!s.get(key,'haveFlower')) return 'Get Flower in Goblin Land, Nort-West near Lake.';
+		if(!s.haveItem(key,'orc_sock') && !s.haveItem(key,'potion')) return 'Get Orc Sock in Goblin Land, North East.';
 		if(s.haveItem(key,'orc_sock') && !s.haveItem(key,'potion')) return 'Finish the potion.';
 		if(s.haveItem(key,'potion') && !s.haveItem(key,'jewel')) return 'Enter Camp and steal Jewel.';
 		return "BUG... :(";
@@ -106,8 +106,8 @@ q.event = {
 		
 	},
 	_abandon:function(key){
-		s.teleport(key,'goblinLand','n1');
 		s.setRespawn(key,'goblinLand','n1');
+		s.teleport(key,'goblinLand','n1');
 	},
 	_complete:function(key){	
 		s.set(key,'_complete',true);
@@ -434,6 +434,7 @@ q.dialogue['ringo'] = {'face':{'image':'villager-male.0','name':'Ringo'},
 };
 
 
+var RESPAWN = 25;
 q.map.goblinLand = function(){
 	var map = m.map();
 	map.name = "Goblin Land";
@@ -459,11 +460,11 @@ q.map.goblinLand = function(){
 		
 		m.loot(spot.q1,'!haveFlower',q.event.getFlower,"flower");
 		
-		m.actorGroup(spot.e1,25*15,[
+		m.actorGroup(spot.e1,RESPAWN,[
 			["orc","melee",2,{deathEvent:q.event.killOrc}],
 			["orc","range",1,{deathEvent:q.event.killOrc}],
 		]);	
-		m.actorGroup(spot.ek,25*15,[
+		m.actorGroup(spot.ek,RESPAWN,[
 			["orc","magic",3,{deathEvent:q.event.killOrc}],
 		]);	
 				
@@ -478,49 +479,49 @@ q.map.goblinLand = function(){
 		m.waypoint(spot.g3);
 			
 		
-		m.actorGroup(spot.e4,25*15,[
+		m.actorGroup(spot.e4,RESPAWN,[
 			["bee","normal",3],
 		]);	
 		
-		m.actorGroup(spot.e5,25*15,[
+		m.actorGroup(spot.e5,RESPAWN,[
 			["bee","normal",2],
 			["mosquito","normal",1],
 		]);	
 		
 		
-		m.actorGroup(spot.e6,25*15,[
+		m.actorGroup(spot.e6,RESPAWN,[
 			["bat","normal",3],
 			["plant","normal",1],
 		]);		
 		
-		m.actorGroup(spot.e7,25*15,[
+		m.actorGroup(spot.e7,RESPAWN,[
 			["larva","normal",4],
 			["mushroom","normal",1],
 		]);	
 		
-		m.actorGroup(spot.e8,25*15,[
+		m.actorGroup(spot.e8,RESPAWN,[
 			["bat","normal",2],
 		]);	
 		
-		m.actorGroup(spot.ea,25*15,[
+		m.actorGroup(spot.ea,RESPAWN,[
 			["larva","normal",2],
 			["plant","normal",2],
 		]);		
 		
-		m.actorGroup(spot.eb,25*15,[
+		m.actorGroup(spot.eb,RESPAWN,[
 			["larva","normal",4],
 		]);	
 		
-		m.actorGroup(spot.ec,25*15,[
+		m.actorGroup(spot.ec,RESPAWN,[
 			["mushroom","normal",2],
 			["mosquito","normal",1],
 		]);			
 		
-		m.actorGroup(spot.ed,25*15,[
+		m.actorGroup(spot.ed,RESPAWN,[
 			["plant","normal",6],
 		]);	
 		
-		m.actorGroup(spot.ef,25*15,[
+		m.actorGroup(spot.ef,RESPAWN,[
 			["mushroom","normal",1],
 			["bat","normal",2],
 		]);	

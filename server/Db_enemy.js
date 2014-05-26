@@ -127,7 +127,8 @@ Init.db.npc = function(){
 			
 			{'template':'dart','aiChance':[0.2,1,1],'extra':{
 				'bleed,baseChance':0.2,'chill,baseChance':0.4,'amount':5,'angle':25,
-				'dmg,main':50,'parabole':{'height':10,'min':10,'max':500,'timer':50},
+				'dmg,main':50,
+				//'parabole':{'height':50,'min':10,'max':500,'timer':50},
 				'curse':{'chance':1,'boost':[{'stat':'globalDmg','type':'*','value':0.5,'time':50},{'stat':'maxSpd','type':'+','value':0.1231231414,'time':50}]},
 			}},
 			[0.4,0.2,0.2]
@@ -250,7 +251,8 @@ Init.db.npc = function(){
 				'knock,baseChance':1,'knock,magn':2,'knock,time':1,
 			}},
 			{'template':'rangeBullet','aiChance':[0,0,1],'extra':{
-				'amount':5,'angle':45,'parabole':{'height':10,'min':10,'max':500,'timer':50},
+				'amount':5,'angle':45,
+				//'parabole':{'height':10,'min':10,'max':500,'timer':50},
 			}},
 			[1,1,1]
 		],
@@ -324,7 +326,8 @@ Init.db.npc = function(){
 			}},
 			{'template':'arrowBullet','aiChance':[0.5,1,1],'extra':{
 				'global':{period:{own:10,global:10}},
-				'amount':5,'angle':45,'parabole':{'height':10,'min':10,'max':500,'timer':50},
+				'amount':5,'angle':45,
+				//'parabole':{'height':10,'min':10,'max':500,'timer':50},
 			}},
 			[1,1,1]
 		],

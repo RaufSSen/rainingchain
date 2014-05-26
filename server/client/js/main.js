@@ -87,6 +87,7 @@ Init.game = function (data) {
 	Init.game.addCanvas('win','windowCanvas',10);
 	Init.game.addCanvas('passiveGrid','passiveGridCanvas',11);
 	Init.game.addCanvas('pop','popCanvas',30);
+	Init.game.addCanvas('uiHelper','uiHelper',40);
 			
 	$("#minimapCanvas").css({"border":'4px solid #000000',"background":'#000000','top':'0px'});
 	Draw.minimap.map.updateSize();

@@ -38,10 +38,30 @@ Help.closeAll = function(){
 			a[i].removeAttribute('open');
 }
 
-Help.icon = function(txt,x,y,size){
-	Draw.icon('system.question',x,y,size || 20,{
+Help.icon = function(txt,x,y,size,image){
+	var over = Draw.icon('system.question',x,y,size || 20,{
 		"left":{"func":Help.open,"param":[txt]},
 		'text':'Open Documentation',
 	});
+	
+	if(over && image && main.pref.displayHelp){
+		List.ctx.uiHelper.drawImage(Img.help[image],0,0,Img.help[image].width,Img.help[image].height,0,0,1280,720);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

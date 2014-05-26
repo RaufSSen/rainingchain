@@ -137,7 +137,6 @@ Input.event.key = function(code,dir,event){
 					Input.key.custom[i].func();
 					if(gameStarted){
 						event.preventDefault();
-						console.log(1);
 					}
 				}
 			}

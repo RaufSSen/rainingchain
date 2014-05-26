@@ -121,8 +121,13 @@ exports.init = function(version,questname){	//}
 	}
 	
 	
-	s.chat = Chat.add;
-	s.question = Chat.question;
+	s.chat = function(key,text){
+		Chat.add(key,text);
+	}
+	s.question = function(key,text,func,option){
+		if(option === undefined	) option = true;
+		Chat.question(key,{text:text,func:func,option:option});
+	}	
 	
 	s.dialogue = function(key,npc,convo,node){		
 		if(!s.get(key,'_active')){ s.startQuest(key); return; }

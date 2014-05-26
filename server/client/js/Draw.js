@@ -404,7 +404,9 @@ Draw.icon = function(info,x,y,size,text){
 	var button = Tk.deepClone(text);
 	if(typeof button === 'string') button = {text:button};
 	button.rect = [x,x+size,y,y + size];
-	Button.creation(0,button);	
+	Button.creation(0,button);
+
+	return Collision.PtRect(Collision.getMouse(),button.rect);
 }
 
 

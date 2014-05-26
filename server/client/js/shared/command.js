@@ -789,12 +789,12 @@ Command.pref.list = {
 	'volumeSfx':{name:'Volume Effects',initValue:100,min:0,max:100,description:'Volume Sound Effects.'},
 	'volumeMaster':{name:'Volume Master',initValue:100,min:0,max:100,description:'Volume Master. 0:Mute','func':function(value){ Song.beingPlayed.song.volume = value/100 * main.pref.volumeSong/100; }},
 	'puush':{name:'Allow Puush Link',initValue:0,min:0,max:2,description:'Allow Puush Link in chat. 0=never, 1=friend only, 2=always' },
+	'displayHelp':{name:'Display Help',initValue:1,min:0,max:1,description:'Display Help Image that explains the interface'},
 	'mapRatio':{name:'Map Ratio',initValue:5,min:2,max:10,description:'Minimap Size'},
 	'bankTransferAmount':{name:'X- Bank',initValue:1000,min:1,max:9999999999,description:'Amount of items transfered with Shift + Left Click'},
 	'orbAmount':{name:'X- Orb',initValue:1000,min:1,max:9999999999,description:'Amount of orbs used with X- option'},
 	'passiveView':{name:'Passive View',initValue:0,min:0,max:1,description:'Impact Passive Colors. 0:Access. 1:Popularity'},
 	'abilityDmgStatusTrigger':{name:'%Dmg Ability',initValue:10,min:0,max:100,description:'%Life Dealt per attack. Used to calculate chance to proc status.'}, //% life of monster per attack (used to calc % chance to trigger status)
-	'mapIconAlpha':{name:'Icon Alpha',initValue:100,min:0,max:100,description:'Minimap Icon Transparence.'},
 }
 Command.pref.verify = function(name,value){
 	var req = Command.pref.list[name];

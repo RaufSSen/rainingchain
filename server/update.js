@@ -89,12 +89,13 @@ Init.changeUpdate = function(){
 				{'array':['optionList'],'filter':Change.send.convert.optionList},
 				
 				{'array':['selectInv']},
+				{'array':['questActive']},
+				
 			],
 			'slow':[
 				{'array':['social','list']},	
 				
 				{'array':['quest']},
-				{'array':['questActive']},
 				
 				{'array':['passive']},	
 				{'array':['hideHUD']},

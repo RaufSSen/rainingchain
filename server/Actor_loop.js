@@ -2,6 +2,8 @@
 
 var ABILITYINTERVAL = 3;
 var SUMMONINTERVAL = 5;
+var STATUSINTERVAL = 3;
+
 
 Actor.loop = function(act){
 	if(act.dead){
@@ -28,8 +30,10 @@ Actor.loop = function(act){
 			Actor.loop.ability.charge(act);
 			Actor.loop.ability.test(act);
 		}
-		Actor.loop.regen(act);    
-		Actor.loop.status(act);	
+		if(interval(ABILITYINTERVAL)){
+			Actor.loop.regen(act);    
+			Actor.loop.status(act);	
+		}
 		Actor.loop.boost(act);
 		if(interval(SUMMONINTERVAL)) Actor.loop.summon(act);
 		if(interval(25)) Actor.loop.attackReceived(act); 	//used to remove attackReceived if too long
@@ -170,21 +174,24 @@ Actor.loop.status = function(act){
 	Actor.loop.status.knock(act);
 	Actor.loop.status.burn(act);
 	Actor.loop.status.bleed(act);
-	Actor.loop.status.stun(act);
-	Actor.loop.status.chill(act);
-	Actor.loop.status.drain(act);
+	if(act.status.stun.time > 0) Actor.loop.status.stun(act);
+	if(act.status.chill.stun > 0) Actor.loop.status.chill(act);
+	if(act.status.drain.time > 0) Actor.loop.status.drain(act);
 	
-	act.statusClient = '';
-	for(var i in Cst.status.list)	act.statusClient += act.status[Cst.status.list[i]].time > 0 ? '1' : '0';
+	if(Loop.interval(2*ABILITYINTERVAL)){	//ABILITYINTERVAL taking into consideration too...
+		act.statusClient = '';
+		for(var i in Cst.status.list)	act.statusClient += act.status[Cst.status.list[i]].time > 0 ? '1' : '0';
+	}
 }
 
-Actor.loop.status.chill = function(act){act.status.chill.time--;}
 Actor.loop.status.stun = function(act){act.status.stun.time--;}
+Actor.loop.status.chill = function(act){act.status.chill.time--;}
 Actor.loop.status.drain = function(act){act.status.drain.time--;}
 
 Actor.loop.status.knock = function(act){
 	var status = act.status.knock;
-	if(status.time-- > 0){ 
+	if(status.time > 0){
+		status.time -= ABILITYINTERVAL;
 		act.spdX = Tk.cos(status.angle)*status.magn;
 		act.spdY = Tk.sin(status.angle)*status.magn;
 	}
@@ -192,15 +199,17 @@ Actor.loop.status.knock = function(act){
 
 Actor.loop.status.burn = function(act){
 	var status = act.status.burn;
-	if(status.time-- > 0){
-		Actor.changeHp(act, -status.magn*act.hp);
+	if(status.time > 0){
+		status.time -= ABILITYINTERVAL;
+		Actor.changeHp(act, -status.magn*act.hp*ABILITYINTERVAL);
 	}
 }
 
 Actor.loop.status.bleed = function(act){
 	var status = act.status.bleed;
 	
-	if(status.time-- > 0){
+	if(status.time > 0){
+		status.time -= ABILITYINTERVAL;
 		Actor.changeHp(act, -status.magn);
 	}
 }
@@ -209,7 +218,7 @@ Actor.loop.status.bleed = function(act){
 
 Actor.loop.regen = function(act){
 	for(var i in act.resource){
-		act[i] = Math.min(act[i] + act.resource[i].regen,act.resource[i].max);
+		act[i] = Math.min(act[i] + act.resource[i].regen * ABILITYINTERVAL,act.resource[i].max);
 	}
 }
 

@@ -33,7 +33,10 @@ Img.preload = function(arr,cb){
 Img.frame = {};
 Img.frame.window = newImage('img/ui/interface/window.png');
 Img.frame.postit = newImage('img/ui/interface/postit.png');
+Img.help = {};
+Img.help.uihelper = newImage('img/ui/interface/uihelper.png');
 
+//List.ctx.uiHelper.drawImage(Img.frame.uihelper,0,0,Img.frame.uihelper.width,Img.frame.uihelper.height,0,0,1280,720);
 //Icon
 Img.icon = [];
 

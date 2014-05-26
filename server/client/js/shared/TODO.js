@@ -1,7 +1,23 @@
 ==PRESDK==
 
+/*
+Welcome to Raining Chain Beta! Here's everything you need to know:<br>
+-ASDW to move. <div class="u" style="color:blue" onclick="Input.init(1)">If AZERTY, click here.<div><br>
+-Left Click, Right Click, Shift-Left Click, Shift-Right Click, F, Space for abilities.<br>
+-Right-Click to interact (NPC, Inventory)
+-Use Gravestone to set respawn.
+-Completing quests grant Passive Points making your character stronger.
+-
 
 
+
+
+*/
+
+fix parabole
+
+popup for azerty
+ctrl -
 
 SKIPPED: trade, craft,db.filter, passive
 

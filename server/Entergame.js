@@ -4,7 +4,6 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 	if(account.lastSignIn === null){
 		Load.enterGame.first(key,account);
 		if(Server.testing && Quest.test.name){
-			console.log(Db.quest[Quest.test.name].event._test);
 			Db.quest[Quest.test.name].event._test.firstSignIn(key);
 		}
 	}
@@ -137,8 +136,6 @@ Load.enterGame.first = function(key){	//SET INITIAL TELE + EQUIP + ABILITY
 	var inv = List.main[key].invList;
 	var act = List.all[key];
 			
-	Chat.add(act.id,"Note: This is a very early beta. Expect things to change... A LOT.");
-	Chat.add(act.id,"Control: WADS. (For AZERTY users, change key binding via Pref Tab)");
 	
 	Actor.setRespawn(act,{x:1800,y:5600,map:'goblinLand@MAIN'});	//here if no Quest.test.name
 	

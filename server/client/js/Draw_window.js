@@ -416,7 +416,7 @@ Draw.window.ability.leftSide = function(){ ctxrestore();
 	
 	Button.creation(0,{
 		"rect":[s.x + 12, s.x + 12+90, s.y + 100-65+250, s.y + 100-65+250+60 ],
-		"left":{"func":Command.send,"param":['$win,open,binding']},
+		"left":{"func":function(){ Command.send('win,open,binding');},"param":[]},
 		'text':"Open Key Bindings Window"
 		});	
 }
@@ -855,7 +855,7 @@ Draw.window.quest.refresh = function(s,q){
 }
 
 Draw.window.quest.refreshIf = function(q,mq){
-	var str = Tk.stringify(q) + Tk.stringify(mq);
+	var str = Tk.stringify(q) + Tk.stringify(mq) + main.questActive;
 	var bool = Draw.refresh.winQuest !== str;
 	Draw.refresh.winQuest = str;
 	return bool;
@@ -888,21 +888,47 @@ Draw.window.quest.info = function(s,q,mq,hq){
 Draw.window.quest.start = function(s,q,mq,hq){
 	
 	hq.start.style.left = 200 + 45 + s.dw/2 + 'px'; 
-	hq.start.style.top = -45 + 'px'; 
+	hq.start.style.top = -65 + 'px'; 
 	
 	hq.start.style.font = s.charY*1.5 + 'px Kelly Slab';
 	
-	if(!mq._active){
-		var second = $('<p class="u gradientBoxesWithOuterShadows" style="cursor: pointer;">Start Quest</p>')[0];
-		second.onclick = function(){ Command.send('win,quest,start,' + q.id); };
+	hq.start.innerHTML = '';
+	console.log(2);
+	if(!main.questActive){
+		/*
+		var second = $()[0];
+		second.onclick = function(){ 
+			
+		};
 		second.title = "Start this quest.";
-	} else {
-		var second = $('<p class="u gradientBoxesWithOuterShadows" style="cursor: pointer;">Abandon Quest</p>')[0];
+		hq.start.appendChild(second);
+		hq.start.innerHTML += '<br>';
+		*/
+		
+		hq.start.innerHTML += '<button id="aaa" class="myButtonGreen" title="Start this quest" onclick="Command.send(\'win,quest,start,' + q.id + '\');">Start Quest</button>';
+		hq.start.innerHTML += '<br>';
+	}
+	if(main.questActive === q.id){
+		/*
+		var second = $('<button class="myButtonRed">Abandon Quest</button>')[0];
 		second.onclick = function(){Command.send('win,quest,abandon,' + q.id);}
 		second.title = "Abandon this quest. You will lose your progression and be teleported to the starting location.";
+		hq.start.appendChild(second);
+		hq.start.innerHTML += '<br>';
+		*/
+		hq.start.innerHTML += '<button class="myButtonRed" title="Abandon Quest" onclick="Command.send(\'win,quest,abandon,' + q.id + '\');">Abandon Quest</button>';
+		hq.start.innerHTML += '<br>';
 	}
-	hq.start.innerHTML = '';
-	hq.start.appendChild(second);
+	
+	if(main.questActive && main.questActive !== q.id){
+		/*var third = $('<button class="myButtonRed">Abandon Active Quest</button>')[0];
+		third.onclick = function(){Command.send('win,quest,abandon,' + main.questActive);}
+		third.title = "Abandon your active quest. (" + Db.questNameConvert[main.questActive] + ")";
+		hq.start.appendChild(third);*/
+		
+		hq.start.innerHTML += '<button class="myButtonRed" title="Abandon Active Quest (' +Db.questNameConvert[main.questActive] + ')" onclick="Command.send(\'win,quest,abandon,' + main.questActive + '\');">Abandon Active Quest</button>';
+		hq.start.innerHTML += '<br>';
+	}
 }	
 
 Draw.window.quest.left = function(s,q,mq,hq){

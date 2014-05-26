@@ -31,13 +31,13 @@ q.event = {
 
 q.item['generator'] = {'name':'Generator','icon':'magic.staff','stack':1,'drop':0,'option':[		
 	{'name':'Tele','param':[],'func':function(key){
-		s.question(key,{text:"x,y,map", func:function(key,x,y,map){
+		Chat.question(key,{text:"x,y,map", func:function(key,x,y,map){
 			if(map == '1'){ s.getAct(key).x += +x; s.getAct(key).y += +y; return; }
 			Actor.teleport(s.getAct(key),{x:+x,y:+y,map:map});		
 		}});	
 	}},	
 	{'name':'Item','param':[],'func':function(key){
-		s.question(key,{text:"item,amount", func:function(key,item,amount){
+		Chat.question(key,{text:"item,amount", func:function(key,item,amount){
 			if(Db.item[item])	Itemlist.add(key,item,amount || 1);
 			else Chat.add(key,'wrong');
 		}});	

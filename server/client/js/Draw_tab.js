@@ -41,7 +41,7 @@ Draw.tab.main = function (){ ctxrestore();
 	}
 	
 	//Help
-	Help.icon('interface_' + main.currentTab,Cst.WIDTH-20,s.oy-20,20);
+	Help.icon('interface_' + main.currentTab,Cst.WIDTH-40,s.oy-40,40,'uihelper');
 	
 	ctxrestore();
 	return s;
