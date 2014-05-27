@@ -46,6 +46,13 @@ Map.creation = function(name){
 	Db.map[name] = m;
 }
 
+
+Map.getMap = function(){
+	return Db.map[Db.mapNameConvert[player.map].graphic];
+}
+Map.getName = function(){
+	return Db.mapNameConvert[player.map].name;
+}
 //var image = newImage("img/map/goblinLand/goblinLandB.png");
 
 

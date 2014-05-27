@@ -23,13 +23,12 @@ List = {
 	sfx:{}, 	//all sfx
 };
 //local compilation of information so server doesnt send many times the same info
-Db = {equip:{},ability:{},item:{},plan:{},quest:{},customMod:{},customImg:{},highscore:{}};
+Db = {equip:{},ability:{},item:{},plan:{},quest:{},customMod:{},customImg:{},highscore:{},
+	highscoreList:{},questNameConvert:{},mapNameConvert:{}};
 
 
 
 //############################################
-
-
 
 
 //Log In
@@ -79,6 +78,13 @@ Init.game = function (data) {
 	Init.game.main(data);
 	Init.game.other(data);
 	
+	//Note: a part of Init.db are directly in index.html
+	Init.db.customBoost();
+	Init.db.stat();
+	Init.actor();
+	Init.db.ability();	//for orb/mod stuff
+	
+	
 	//Add Canvas. param2 = z-index
 	//-11: mapBelow
 	Init.game.addCanvas('stage','stage',-10);
@@ -99,11 +105,7 @@ Init.game = function (data) {
 	
 	for(var i in main.social.message){Chat.receive(main.social.message[i]);}	main.social.message = [];   //for offline pm
 	
-	//Note: a part of Init.db are directly in index.html
-	Init.db.customBoost();
-	Init.db.stat();
-	Init.actor();
-	Init.db.ability();	//for orb/mod stuff
+	
 	
 	Img.preload(Img.preloader,function(){   //load images
 		$("#startDiv")[0].style.display = "none"; 	//remove enter user and psw
@@ -135,6 +137,10 @@ Init.game.other = function(data){
 	Db.passiveGrid.width = 20;
 	
 	Db.questNameConvert = data.other.quest;	//TOFIX crap name
+	Db.mapNameConvert = data.other.map;	//TOFIX crap name
+	
+	if(data.other.firstSignIn) $( "#firstSignIn" ).dialog( "open" );
+	
 	
 	//highcore
 	Db.highscoreList = data.other.highscore; //TOFIX crap name

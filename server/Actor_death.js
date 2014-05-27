@@ -154,6 +154,8 @@ Actor.death.respawn = function(act){	//for player
 		act[i] = act.resource[i].max;
 	act.dead = 0;
 	
+	Actor.invincible(act,25*5);
+	
 	Server.log(3,act.id,'respawn',act.x,act.y,act.map);
 	
 }

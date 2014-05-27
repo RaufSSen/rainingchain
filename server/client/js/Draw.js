@@ -23,7 +23,7 @@ Draw.loop = function (){
 	Draw.bullet();
 	Draw.anim('a');  //above player
 	Draw.map('a');   //above player
-	
+	Draw.actor.chatHead();
 
 	Draw.screenEffect(main.screenEffect);
 	
@@ -72,7 +72,7 @@ Draw.map = function (layer){ ctxrestore();
 	var SIZEFACT = Draw.map.cst.sizeFact;	
 
 	ctx = List.ctx.stage;
-	var map = Db.map[player.map];
+	var map = Map.getMap();
 	
 	var IMAGERATIO = Draw.map.cst.imageRatio;
 	var iw = Cst.WIDTH / IMAGERATIO;
@@ -638,7 +638,7 @@ Draw.mapOtherSystemUnused = function(){
 	}
 
 	Draw.mapInit = function(layer){
-		var map = Db.map[player.map];
+		var map = Map.getMap();
 		var mapAmount = 10;
 		var width = 640;
 		var height = 360;

@@ -167,15 +167,17 @@ Draw.minimap = function (){ ctxrestore();
 	ctx.clearRect(0, 0, Cst.WIDTH, Cst.HEIGHT);
 	Draw.minimap.map();
 	Draw.minimap.icon();
+	Draw.minimap.below();
 }
 Draw.minimap.zoom = 16;
 
 Draw.minimap.map = function(){
 	var x = -(player.x)/Draw.minimap.zoom + Cst.WIDTH2/main.pref.mapRatio;	
 	var y = -(player.y)/Draw.minimap.zoom + Cst.HEIGHT2/main.pref.mapRatio;	
-	var im = Db.map[player.map].img.m;
+	ctx.drawImage(Map.getMap().img.m, x,y);
 	
-	ctx.drawImage(Db.map[player.map].img.m, x,y);
+	
+	//TODO add name
 }
 
 Draw.minimap.map.updateSize = function(){
@@ -187,16 +189,17 @@ Draw.minimap.map.updateSize = function(){
 	$("#minimapCanvas")[0].width = Cst.WIDTH/main.pref.mapRatio;	//not same than style.width
 	$("#minimapCanvas")[0].height = Cst.HEIGHT/main.pref.mapRatio;
 	
-	//hint
-	$("#hintDiv").css({
+	//minimapBelow
+	$("#minimapBelow").css({
 		left:Cst.WIDTH-Cst.WIDTH/main.pref.mapRatio,
 		width:Cst.WIDTH/main.pref.mapRatio,
-		height:100,
+		height:30,
 		top:Cst.HEIGHT/main.pref.mapRatio,	//height of map
 		fontFamily:'Kelly Slab',
 		fontSize:'20px',
 		whiteSpace:'normal',
 		color:'white',
+		backgroundColor:'black',
 	});
 	
 	//Perf
@@ -233,7 +236,15 @@ Draw.minimap.icon = function(){
 	
 	ctx.fillRect(1280/2/main.pref.mapRatio-2,720/2/main.pref.mapRatio-2,4,4);	//player icon
 }
+Draw.minimap.below = function(){
+	if(typeof player === 'undefined') return;	//TOFIX cuz on login, player doesnt exist...
+	Draw.setInnerHTML($("#minimapMap")[0],Db.mapNameConvert[player.map].name,'minimapMap');
+}
+Draw.minimap.below.change = function(num){
+	Command.send('pref,mapRatio,' + (main.pref.mapRatio + num));
+}
 //}
+
 
 
 Draw.hint = function(){
@@ -249,4 +260,15 @@ Draw.performance = function(){
 	var text = '<span title="Performance">' + Loop.performance.result + '</span>';
 	Draw.setInnerHTML($("#performanceDiv")[0],text,'performanceDiv');
 }
+
+
+
+
+
+
+
+
+
+
+
 

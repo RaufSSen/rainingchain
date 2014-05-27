@@ -1,156 +1,21 @@
 ==PRESDK==
 
+VIDEOTUTORIAL:
+info linux and mac
+tell not use sam//sam
+dont make town
 
 
 
 
+Here's the link to the video tutorial about the SDK: https://www.youtube.com/watch?v=3j4d2xkhJP4
+If you have any question, come back to the stream =p
 
 
 
-
-
-
-
-
-/*
-Welcome to Raining Chain Beta! Here's everything you need to know:<br>
--ASDW to move. <div class="u" style="color:blue" onclick="Input.init(1)">If AZERTY, click here.<div><br>
--Left Click, Right Click, Shift-Left Click, Shift-Right Click, F, Space for abilities.<br>
--Right-Click to interact (NPC, Inventory)
--Small Screen? Press Ctrl -.
--Use Gravestone to set respawn.
--Completing quests grant Passive Points making your character stronger.
--
-
-Episode 1: https://www.youtube.com/watch?v=3j4d2xkhJP4
-Episode 2: https://www.youtube.com/watch?v=xXNlgUgOCK4
-Episode 3: https://www.youtube.com/watch?v=iPYpTD139qo
-Episode 4: https://www.youtube.com/watch?v=i05rPPugDls
-Episode 5: https://www.youtube.com/watch?v=lKWoPmPsxCs
-Episode 6: https://www.youtube.com/watch?v=WYRcrGGPC88
-Episode 7: https://www.youtube.com/watch?v=5sbiov0mfVs
-
-
-Q: What is this game?  
-
-A: Raining Chain is an open-source MMORPG. Players contribute to the game by creating content via the [SDK](https://github.com/RainingChain/rc_sdk).  
-[Gameplay Footage](https://www.youtube.com/watch?v=Nc1suw35Lfw)  
-
-*****
-Q: Can I play the game now?  
-
-A: When I host an open-beta, you can play with other players at [rainingchain.com](http://rainingchain.com/), no download required.  
-When the server is not online, you can still play the game but you will need to [download](https://github.com/RainingChain/rainingchain) it.  
-[INFO](https://www.youtube.com/watch?v=xXNlgUgOCK4)  
-
-*****
-Q: When is the next open-beta?  
-
-A: I normally host a open-beta after finishing a new quest.  
-*****
-Q: How can I contribute to the project?  
-
-A: There are many ways you can contribute depending on your abilities.   
-
-- Take part in the Open-Beta.  
-
-- Apply as Closed-Beta Tester. INFO
-
-- Create Artwork. INFO
-
-- Create Quest. [INFO](https://www.youtube.com/watch?v=xXNlgUgOCK4)  
-
-- Show support by following stream and subscribing on [Youtube](https://www.youtube.com/rainingchain).  
-
-*****
-Q: What languages does the game use?
-
-A: The game uses Javascript on both client and server side. It uses a NodeJS server with socket.oi and Mongodb.
-
-*****
-Q: What engine/software do you use?
-
-A: I started the game from scratch. I made my own game engine. All the coding is done on Notepad++. Map creation is done on Tiled.
-
-*****
-Q: How long did it take to create this?
-
-A: I started the project around 1 year ago. I didn't have any programming experience at that time so it took a lot of time to get things started.
-
-*****
-Q: Did you make this all by yourself?
-
-A: I wrote the game engine and I did all the coding. A friend worked on the graphics. The songs were composed by newgrounders. [FULL CREDITS](https://github.com/RainingChain/rainingchain/blob/master/CREDITS)
-
-
-
-
-
-
-
-
-
-
-
-###Q: What is this game?  
-
-A: Raining Chain is an [open-source](https://github.com/RainingChain/rainingchain) MMORPG. Players contribute to the game by creating content via the [SDK](https://github.com/RainingChain/rc_sdk).  
-[Gameplay Footage](https://www.youtube.com/watch?v=Nc1suw35Lfw)  
-
-*****
-###Q: Can I play the game now?  
-
-A: When I host an open-beta, you can play with other players at [rainingchain.com](http://rainingchain.com/), no download required.  
-When the server is not online, you can still play the game but you will need to download it.  
-[INFO](https://www.youtube.com/watch?v=xXNlgUgOCK4)  
-
-*****
-###Q: When is the next open-beta?  
-
-A: I normally host a open-beta after finishing a new quest.  
-*****
-
-
-###Q: How can I contribute to the project?  
-
-A:  
-- Take part in the Open-Betas.  
-
-- Apply as Closed-Beta Tester. INFO
-
-- Create Artwork. INFO
-
-- Create Quest. [INFO](https://www.youtube.com/watch?v=xXNlgUgOCK4)  
-
-- Follow stream and subscribe on [Youtube](https://www.youtube.com/rainingchain). 
-***** 
-
-###Q: What languages does the game use?
-
-A: The game uses Javascript on both client and server side. It uses a NodeJS server with socket.io and Mongodb.
-
-*****
-###Q: What engine/software do you use?
-
-A: I started the game from scratch. I made my own game engine. All the coding is done on Notepad++. Map creation is done on Tiled.
-
-*****
-###Q: How long did it take to create this?
-
-A: I started the project around 1 year ago. I didn't have any programming experience at that time so it took a lot of time to get things started.
-*****
-
-###Q: Did you make this all by yourself?
-
-A: I wrote the game engine and I did all the coding. A friend worked on the graphics. The songs were composed by newgrounders. [FULL CREDITS](https://github.com/RainingChain/rainingchain/blob/master/CREDITS)
-*****
-
-*/
 
 fix parabole
 
-popup for azerty
-ctrl -
 
 SKIPPED: trade, craft,db.filter, passive
 
@@ -247,6 +112,99 @@ troll:
 
 
 
+SDK testers:
+
+
+NOT CONTACTED:
+krei20
+T4psa
+Noobiix // SkyBaxVG
+IhearThem
+
+
+rsn: thenaar
+skype: florianvanveen
+---------------
+twitch:Lwaldrip (named Lee)
+---------------
+twitch: neo_special
+--------------
+twitch: Macerzrs
+--------------
+rsn: tier zero
+twitch: Angelforddonger
+--------------
+rsn: backup voke
+twitch: zero
+skype: Ultrakiller1011
+
+
+
+/*
+
+
+Episode 1: https://www.youtube.com/watch?v=3j4d2xkhJP4
+Episode 2: https://www.youtube.com/watch?v=xXNlgUgOCK4
+Episode 3: https://www.youtube.com/watch?v=iPYpTD139qo
+Episode 4: https://www.youtube.com/watch?v=i05rPPugDls
+Episode 5: https://www.youtube.com/watch?v=lKWoPmPsxCs
+Episode 6: https://www.youtube.com/watch?v=WYRcrGGPC88
+Episode 7: https://www.youtube.com/watch?v=5sbiov0mfVs
+
+###Q: What is this game?  
+
+A: Raining Chain is an [open-source](https://github.com/RainingChain/rainingchain) MMORPG. Players contribute to the game by creating content via the [SDK](https://github.com/RainingChain/rc_sdk).  
+[Gameplay Footage](https://www.youtube.com/watch?v=Nc1suw35Lfw)  
+
+*****
+###Q: Can I play the game now?  
+
+A: When I host an open-beta, you can play with other players at [rainingchain.com](http://rainingchain.com/), no download required.  
+When the server is not online, you can still play the game but you will need to download it.  
+[INFO](https://www.youtube.com/watch?v=xXNlgUgOCK4)  
+
+*****
+###Q: When is the next open-beta?  
+
+A: I normally host a open-beta after finishing a new quest.  
+*****
+
+
+###Q: How can I contribute to the project?  
+
+A:  
+- Take part in the Open-Betas.  
+
+- Apply as Closed-Beta Tester. INFO
+
+- Create Artwork. INFO
+
+- Create Quest. [INFO](https://www.youtube.com/watch?v=xXNlgUgOCK4)  
+
+- Follow stream and subscribe on [Youtube](https://www.youtube.com/rainingchain). 
+***** 
+
+###Q: What languages does the game use?
+
+A: The game uses Javascript on both client and server side. It uses a NodeJS server with socket.io and Mongodb.
+
+*****
+###Q: What engine/software do you use?
+
+A: I started the game from scratch. I made my own game engine. All the coding is done on Notepad++. Map creation is done on Tiled.
+
+*****
+###Q: How long did it take to create this?
+
+A: I started the project around 1 year ago. I didn't have any programming experience at that time so it took a lot of time to get things started.
+*****
+
+###Q: Did you make this all by yourself?
+
+A: I wrote the game engine and I did all the coding. A friend worked on the graphics. The songs were composed by newgrounders. [FULL CREDITS](https://github.com/RainingChain/rainingchain/blob/master/CREDITS)
+*****
+
+*/
 
 
 

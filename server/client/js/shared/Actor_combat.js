@@ -38,16 +38,26 @@ Actor.getDef = function(act){
 }
 
 Actor.dodge = function(act,time,dist){
-	//invincibility
-	var oldtouch = act.damagedIf;
-	act.damagedIf = 'false';
-	Actor.setTimeout(act,'dodge',time,function(key){
-		List.all[key].damagedIf = oldtouch;	
-	});
+	
+	Actor.invincible(act,time);
 	
 	//movement
 	Actor.movePush(act,act.angle,dist/time,time)
 	
 }
+
+Actor.invincible = function(act,time){
+	//invincibility
+	var oldtouch = act.damagedIf;
+	act.damagedIf = 'false';
+	Actor.setTimeout(act,'Actor.invincible',time,function(key){
+		List.all[key].damagedIf = oldtouch;	
+	});
+
+}
+
+
+
+
 
 

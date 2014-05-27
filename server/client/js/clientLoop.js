@@ -53,7 +53,7 @@ Loop.player = function(){
 		Actor.update.permBoost(player);	
 	}
 	
-	if(!Db.map[player.map])
+	if(!Map.getMap())
 		Map.creation(player.map);
 	
 }

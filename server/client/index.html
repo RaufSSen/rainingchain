@@ -140,7 +140,18 @@
 		<div id="mainDiv" style="width: 1280px;  height:720px; margin: 0px auto;">
 		<div  id="gameDiv" class='posAbs' style="display:none; width:1280px; height:720px; overflow:hidden;">	<!--  -->
 			<div id="canvasDiv" class='posAbs'></div>
-			<div id="hintDiv" class='posAbs'></div>
+			
+			<div id="minimapBelow" class='posAbs'>	<!-- Draw.minimap.map.updateSize for position -->
+				<span style="background-color:black;">
+					<span onclick="Draw.minimap.below.change(-1)" title="Enlarge"> + </span>
+					<span onclick="Draw.minimap.below.change(1)" title="Minimize"> - </span>
+					
+					<span id="minimapMap"></span>
+				</span><br>
+				<div style="white-space:normal" id="hintDiv" class='posAbs'></div>
+			</div> 
+			
+			
 			<div id="performanceDiv" class='posAbs'></div>
 			<div id="contextDiv" style="white-space: nowrap; width:auto; padding:3px; z-index:100;" class='posAbs gradientBoxesWithOuterShadows'></div>
 			<div id="commandDiv" style="white-space: nowrap; width:auto; padding:3px; z-index:100;" class='posAbs gradientBoxesWithOuterShadows'></div>
@@ -218,6 +229,7 @@
 			
 			
 			
+			
 		</div>
 		
 		</div>
@@ -252,6 +264,10 @@
 	
 		<div id="hax" title="Hax List"></div>
 		
+		
+		<!-- first signin -->
+		<div id="firstSignIn" style="font-size:30px" title="Welcome to Raining Chain"></div>
+		
 		<div id="contactMe" title="Contact Me"> 
 			<select id="contactMeSelect">
 			  <option value="bug">Bug</option>
@@ -276,7 +292,8 @@
 		$( document ).tooltip();
 		$( document ).tooltip('option','show',100);
 		
-		
+		$( "#firstSignIn" ).dialog({autoOpen: false,width: 1200});
+		$.get('/js/firstSignIn.html').success(function(data){ $('#firstSignIn').html(data);});
 		
 		$( "#help" ).dialog({autoOpen: false,width: 1200});
 		$.get('/js/help.html').success(function(data){ $('#help').html(Init.help(data));});

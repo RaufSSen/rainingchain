@@ -11,7 +11,7 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 		Cycle.day.quest(key);
 		
 	db.update('account',{username:account.username},{'$set':{online:1,lastSignIn:Date.now()}},function(err, res) { if(err) throw err
-		socket.emit('signIn', { success:1, data:Load.enterGame.initData(key,act,main)});
+		socket.emit('signIn', { success:1, data:Load.enterGame.initData(key,act,main,account)});
 	});
 	
 	var time = Math.floor(account.timePlayedThisWeek/Cst.HOUR) + 'h ' + Math.floor(account.timePlayedThisWeek%Cst.HOUR/Cst.MIN) + 'm';
@@ -34,7 +34,7 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 	if(Server.testing && Quest.test.name) Chat.add(key,'Game engine set to create the quest: \"' + Quest.test.name + '\".');
 }
 
-Load.enterGame.fixQuestCreator = function(key,main,player){
+Load.enterGame.fixQuestCreator = function(key,main,player){	//cuz ppl share same db
 	for(var i in main.invList.data){
 		if(main.invList.data[i][0] && !Db.item[main.invList.data[i][0]])
 			main.invList.data[i] = [];
@@ -64,28 +64,10 @@ Load.enterGame.testing = function(key){	//for quest creation
 	}
 	
 	//tele
-	if(Quest.test.simple){
-		Actor.teleport(List.all[key],{map:'simpleMap',x:100,y:100});
-	} 
-	
-	if(!Quest.test.simple && Quest.test.name){	//teleport in a map related to quest
-		for(var i in Db.quest[Quest.test.name].map)
-			if(List.all[key].map.have(i)) return;	//no need to tele if already in a good map
-		
-		var m = Db.map[Object.keys(Db.quest[Quest.test.name].map)[0]];
-		
-		if(m && m.addon[Quest.test.name]){
-			var spot = m.addon[Quest.test.name].spot[Object.keys(m.addon[Quest.test.name].spot)[0]];
-			if(spot && spot.x){
-				Chat.question(key,{'text':'Teleport?','option':true,func:function(key){
-					Actor.teleport(List.all[key],{map:m.id,x:spot.x,y:spot.y});
-				}});
-			}
-		}
-	}
+	if(Quest.test.simple)	Actor.teleport(List.all[key],{map:'simpleMap',x:100,y:100});
 }
 
-Load.enterGame.initData = function(key,player,main){	//send data when log in
+Load.enterGame.initData = function(key,player,main,account){	//send data when log in
 	//Value sent to client when starting game
     var data = {'player':{},'main':{},'other':{}};
     var obj = {'player':player, 'main':main}
@@ -133,6 +115,12 @@ Load.enterGame.initData = function(key,player,main){	//send data when log in
 	
 	var h = {}; for(var i in Db.highscore) h[i] = Db.highscore[i].name;
 	data.other.highscore = h;
+	
+	
+	var m = {}; for(var i in Db.map) m[i] = {name:Db.map[i].name,graphic:Db.map[i].graphic};
+	data.other.map = m;
+	
+	data.other.firstSignIn = !account.lastSignIn;
 	
 	data.other.infoDay = Load.enterGame.infoDay.random();
 	if(Server.testing) data.other.questTest = Quest.test.name;

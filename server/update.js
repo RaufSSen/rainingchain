@@ -132,7 +132,7 @@ Init.changeUpdate = function(){
 			'reg':[
 				{'array':['spdX'],'filter':Math.round},
 				{'array':['spdY'],'filter':Math.round},
-				{'array':['map'],'filter':Change.send.convert.map},
+				{'array':['map'],'filter':Change.send.convert.map}, 
 				{'array':['hp'],'filter':Math.round},
 				{'array':['mana'],'filter':Math.round},
 				{'array':['sprite','name']},

@@ -6,7 +6,6 @@ Draw.actor = function (){
 		if(act.combat && act !== player){
 			Draw.actor.status(act); 
 		}
-		if(act.chatHead) Draw.actor.chatHead(act); 
 	}
 }	
 	
@@ -30,9 +29,16 @@ Draw.actor.sort = function(){
 	return drawSortList;	
 }
 
-Draw.actor.chatHead = function(act){
+Draw.actor.chatHead = function(){
+	for(var i in List.actor){
+		Draw.actor.chatHead.func(List.actor[i]);		
+	}
+	Draw.actor.chatHead.func(player);
+}	
+Draw.actor.chatHead.func = function(act){
+	if(!act.chatHead) return;
 	ctx = List.ctx.stage;
-	
+		
 	var spriteServer = act.sprite;
 	var spriteFromDb = Db.sprite[spriteServer.name];
 	var sizeMod = spriteFromDb.size* spriteServer.sizeMod;
@@ -47,7 +53,9 @@ Draw.actor.chatHead = function(act){
 	ctx.fillText(act.chatHead.text,numX-1,numY-1);
 	ctx.textAlign = 'left';
 	ctx.fillStyle="black";
-}		
+
+}
+	
 
 Draw.actor.status = function(act){	//hp + status
 	if(act.resource.hp.max <= 5) return; //QUICKFIX for targets
