@@ -1,5 +1,17 @@
 ==PRESDK==
 
+
+
+
+
+
+
+
+
+
+
+
+
 /*
 Welcome to Raining Chain Beta! Here's everything you need to know:<br>
 -ASDW to move. <div class="u" style="color:blue" onclick="Input.init(1)">If AZERTY, click here.<div><br>
@@ -74,6 +86,64 @@ A: I wrote the game engine and I did all the coding. A friend worked on the grap
 
 
 
+
+
+
+
+
+
+###Q: What is this game?  
+
+A: Raining Chain is an [open-source](https://github.com/RainingChain/rainingchain) MMORPG. Players contribute to the game by creating content via the [SDK](https://github.com/RainingChain/rc_sdk).  
+[Gameplay Footage](https://www.youtube.com/watch?v=Nc1suw35Lfw)  
+
+*****
+###Q: Can I play the game now?  
+
+A: When I host an open-beta, you can play with other players at [rainingchain.com](http://rainingchain.com/), no download required.  
+When the server is not online, you can still play the game but you will need to download it.  
+[INFO](https://www.youtube.com/watch?v=xXNlgUgOCK4)  
+
+*****
+###Q: When is the next open-beta?  
+
+A: I normally host a open-beta after finishing a new quest.  
+*****
+
+
+###Q: How can I contribute to the project?  
+
+A:  
+- Take part in the Open-Betas.  
+
+- Apply as Closed-Beta Tester. INFO
+
+- Create Artwork. INFO
+
+- Create Quest. [INFO](https://www.youtube.com/watch?v=xXNlgUgOCK4)  
+
+- Follow stream and subscribe on [Youtube](https://www.youtube.com/rainingchain). 
+***** 
+
+###Q: What languages does the game use?
+
+A: The game uses Javascript on both client and server side. It uses a NodeJS server with socket.io and Mongodb.
+
+*****
+###Q: What engine/software do you use?
+
+A: I started the game from scratch. I made my own game engine. All the coding is done on Notepad++. Map creation is done on Tiled.
+
+*****
+###Q: How long did it take to create this?
+
+A: I started the project around 1 year ago. I didn't have any programming experience at that time so it took a lot of time to get things started.
+*****
+
+###Q: Did you make this all by yourself?
+
+A: I wrote the game engine and I did all the coding. A friend worked on the graphics. The songs were composed by newgrounders. [FULL CREDITS](https://github.com/RainingChain/rainingchain/blob/master/CREDITS)
+*****
 
 */
 
