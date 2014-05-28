@@ -32,6 +32,16 @@ Load.enterGame = function(key,account,act,main,socket){ //Called when player log
 	Actor.setTimeout(act,'fixAbilityCharge',1*25,Load.enterGame.fixAbilityCharge);	//TOFIX
 	
 	if(Server.testing && Quest.test.name) Chat.add(key,'Game engine set to create the quest: \"' + Quest.test.name + '\".');
+	
+	//developper. TOFIX
+	setTimeout(function(){
+		db.findOne('report',{version:1},{message:1},function(err,res){	if(err) ERROR.err(err);
+			if(!List.all[key]) return;
+			if(res && res.message)	Chat.add(key,{type:'popup',text:res.message});		
+		});
+	},2000)
+	
+	
 }
 
 Load.enterGame.fixQuestCreator = function(key,main,player){	//cuz ppl share same db

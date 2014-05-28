@@ -54,7 +54,7 @@ Loop.player = function(){
 	}
 	
 	if(!Map.getMap())
-		Map.creation(player.map);
+		Map.creation(Map.getGraphic());
 	
 }
 Loop.player.old = {};

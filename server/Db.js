@@ -5,28 +5,15 @@ Init = {};
 Init.db = function(data){
 	data = data || {};
 	
-	if(SAM){
-		var MONGO = {
-			username: "public",
-			password: "public",
-			server: 'widmore.mongohq.com',
-			port: '10000',
-			db: 'public',
-			connectionString: function(){return 'mongodb://'+this.username+':'+this.password+'@'+this.server+':'+this.port+'/'+this.db;},
-			options: {server:{auto_reconnect: true,socketOptions:{connectTimeoutMS:Cst.HOUR,keepAlive:Cst.HOUR,socketTimeoutMS:Cst.HOUR}}}
-		};
-	}
-	else {
-		var MONGO = {
-			username: "public",
-			password: "public",
-			server: 'oceanic.mongohq.com',
-			port: '10064',
-			db: 'public',
-			connectionString: function(){return 'mongodb://'+this.username+':'+this.password+'@'+this.server+':'+this.port+'/'+this.db;},
-			options: {server:{auto_reconnect: true,socketOptions:{connectTimeoutMS:Cst.HOUR,keepAlive:Cst.HOUR,socketTimeoutMS:Cst.HOUR}}}
-		};
-	}
+	var MONGO = {
+		username: "public",
+		password: "public",
+		server: 'oceanic.mongohq.com',
+		port: '10064',
+		db: 'public',
+		connectionString: function(){return 'mongodb://'+this.username+':'+this.password+'@'+this.server+':'+this.port+'/'+this.db;},
+		options: {server:{auto_reconnect: true,socketOptions:{connectTimeoutMS:Cst.HOUR,keepAlive:Cst.HOUR,socketTimeoutMS:Cst.HOUR}}}
+	};
 	var databaseURI = MONGO.connectionString();
 	
 	var collections = ["report","customMod","player","main","ability","equip","account","clan",'plan','passiveCount','highscore','rscalc'];

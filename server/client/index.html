@@ -263,6 +263,7 @@
 		<div id="customMod" title="Use Custom Mods"></div>
 	
 		<div id="hax" title="Hax List"></div>
+		<div id="popupDialog" title="Important Message to Developers"></div>
 		
 		
 		<!-- first signin -->
@@ -291,6 +292,9 @@
 		
 		$( document ).tooltip();
 		$( document ).tooltip('option','show',100);
+		
+		$( "#popupDialog" ).dialog({autoOpen: false,width: 1200});
+		
 		
 		$( "#firstSignIn" ).dialog({autoOpen: false,width: 1200});
 		$.get('/js/firstSignIn.html').success(function(data){ $('#firstSignIn').html(data);});

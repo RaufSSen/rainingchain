@@ -4,6 +4,7 @@ Chat = {};
 Chat.send = function(){
 	//Send message to server.
 	var text = html.chat.input.value;
+	console.log(text);
 	Input.add('',false);
 	if(text[0] === '$'){  Command.send(text.slice(1)); return; }
 	
@@ -75,6 +76,7 @@ Chat.receive = function(pack){
 	if(pack.type === 'offlinepm')	Chat.receive.offlinepm(pack);	
 	if(pack.type === 'public') Chat.receive.public(pack);
 	if(pack.type === 'question') Chat.receive.question(pack);
+	if(pack.type === 'popup') Chat.receive.popup(pack);
 	
 	html.chat.text.scrollTop += 50;
 	html.pm.text.scrollTop += 50;
@@ -138,7 +140,12 @@ Chat.receive.question = function(pack){
 		$("#questionInput").prop('visibility', 'visible');
 	}
 }		
-		
+Chat.receive.popup = function(pack){
+	$("#popupDialog").html(pack.text);
+	$("#popupDialog").dialog('open');
+}	
+
+	
 Chat.receive.public.parse = function(text,from){
 	var friend = false;
 	for(var i in main.social.list.friend) if(i === from) friend = true;

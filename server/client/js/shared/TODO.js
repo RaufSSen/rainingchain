@@ -4,7 +4,8 @@ VIDEOTUTORIAL:
 info linux and mac
 tell not use sam//sam
 dont make town
-
+localhost : 3000, not .3000
+say cropping needs imagemagick
 
 
 
@@ -14,8 +15,7 @@ If you have any question, come back to the stream =p
 
 
 
-fix parabole
-
+linux send chat box
 
 SKIPPED: trade, craft,db.filter, passive
 
@@ -111,32 +111,6 @@ troll:
 
 
 
-
-SDK testers:
-
-
-NOT CONTACTED:
-krei20
-T4psa
-Noobiix // SkyBaxVG
-IhearThem
-
-
-rsn: thenaar
-skype: florianvanveen
----------------
-twitch:Lwaldrip (named Lee)
----------------
-twitch: neo_special
---------------
-twitch: Macerzrs
---------------
-rsn: tier zero
-twitch: Angelforddonger
---------------
-rsn: backup voke
-twitch: zero
-skype: Ultrakiller1011
 
 
 

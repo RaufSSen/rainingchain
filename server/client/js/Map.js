@@ -13,6 +13,7 @@ Init.db.map = function(){
 		'tinyTown':[1,2],
 		'bobHouse':[1,2],
 		'dragonLair':[1,3],
+		'firstTown':[2,4],
 	}
 	
 }
@@ -52,6 +53,9 @@ Map.getMap = function(){
 }
 Map.getName = function(){
 	return Db.mapNameConvert[player.map].name;
+}
+Map.getGraphic = function(){
+	return Db.mapNameConvert[player.map].graphic;
 }
 //var image = newImage("img/map/goblinLand/goblinLandB.png");
 
