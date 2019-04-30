@@ -1,0 +1,46 @@
+{
+  "name": "rainingchain",
+  "version": "1.5.18",
+  "description": "Zincirli",
+  "main": "app.js",
+  "scripts": {
+    "start": "node app.js"
+  },
+  "dependencies": {
+    "astar": "0.0.x",
+    "async": "~0.2.10",
+    "body-parser": "~1.11.0",
+    "busy": "0.1.x",
+    "compression": "^1.7.3",
+    "ejs": "~2.3.2",
+    "express": "^4.16.4",
+    "js-schema": "1.0.x",
+    "mongojs": "~0.9.11",
+    "nodemailer": "~0.6.5",
+    "raw.js": "^0.6.0",
+    "request": "^2.88.0",
+    "socket.io": "~1.0.6",
+    "tingodb": "^0.6.1",
+    "twit": "~1.1.20",
+    "xml2js": "0.4.x",
+    "yargs": "~3.6.0"
+  },
+  "engines": {
+    "node": "4.7.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/rainingchain/rainingchain"
+  },
+  "keywords": [
+    "node",
+    "heroku",
+    "express"
+  ],
+  "author": "Samuel Magnan-Levesque",
+  "bugs": {
+    "url": "https://github.com/rainingchain/rainingchain/issues"
+  },
+  "homepage": "https://github.com/rainingchain/rainingchain",
+  "license": "SEE LICENSE IN LICENSE.txt"
+}
